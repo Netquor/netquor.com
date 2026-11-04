@@ -1,17 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en-US" data-bs-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netquor Technologies</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="theme-color" content="#0b0e13">
+  <title>Netquor Technologies | Fargo, ND: Managed Networking, Ubiquiti &amp; VyOS SDN, Hosting, MDM</title>
+  <meta name="description" content="Fargo, North Dakota technology company serving the Midwest: Netquor SDN (Ubiquiti UniFi, VyOS, WireGuard, cloud and converged infrastructure, hosting and virtualization) and Netquor Fleet (affordable MDM, free 30-day trial, no minimum seats)." />
+  <meta name="keywords" content="Fargo ND IT services, Fargo managed network, Fargo technology company, Midwest managed IT, Ubiquiti UniFi installer Fargo, VyOS, software-defined networking, SDN, hosting and virtualization, converged infrastructure, cloud infrastructure, Proxmox, WireGuard VPN, structured cabling Fargo, MDM, mobile device management, cheap MDM, small business MDM, North Dakota, Minnesota, Moorhead, West Fargo" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <meta name="author" content="Netquor Technologies LLC" />
+  <link rel="canonical" href="https://netquor.com/" />
+  <meta name="geo.region" content="US-ND" />
+  <meta name="geo.placename" content="Fargo, North Dakota" />
+  <meta property="og:site_name" content="Netquor Technologies" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:url" content="https://netquor.com/" />
+  <meta property="og:title" content="Netquor Technologies | Fargo, ND: Managed Networking, Ubiquiti &amp; VyOS SDN, Hosting, MDM" />
+  <meta property="og:description" content="Fargo, North Dakota technology company serving the Midwest: Netquor SDN (Ubiquiti UniFi, VyOS, WireGuard, cloud and converged infrastructure, hosting and virtualization) and Netquor Fleet (affordable MDM, free 30-day trial, no minimum seats)." />
+  <meta property="og:image" content="https://netquor.com/nq-logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Netquor Technologies | Fargo, ND: Managed Networking, Ubiquiti &amp; VyOS SDN, Hosting, MDM" />
+  <meta name="twitter:description" content="Fargo, North Dakota technology company serving the Midwest: Netquor SDN (Ubiquiti UniFi, VyOS, WireGuard, cloud and converged infrastructure, hosting and virtualization) and Netquor Fleet (affordable MDM, free 30-day trial, no minimum seats)." />
+  <meta name="twitter:image" content="https://netquor.com/nq-logo.png" />
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://netquor.com/#org", "name": "Netquor Technologies LLC", "url": "https://netquor.com/", "logo": "https://netquor.com/nq-logo.png", "email": "hello@netquor.com", "telephone": "+1-888-919-2882"}, {"@type": ["ProfessionalService", "LocalBusiness"], "@id": "https://netquor.com/#local", "name": "Netquor Technologies", "url": "https://netquor.com/", "image": "https://netquor.com/nq-logo.png", "logo": "https://netquor.com/nq-logo.png", "email": "hello@netquor.com", "telephone": "+1-888-919-2882", "priceRange": "$$", "description": "Managed networking, Ubiquiti UniFi and VyOS software-defined networking, hosting and virtualization, Apple device management (MDM) and field IT services for small businesses in Fargo, North Dakota, Moorhead and the Midwest.", "address": {"@type": "PostalAddress", "addressLocality": "Fargo", "addressRegion": "ND", "addressCountry": "US"}, "areaServed": [{"@type": "City", "name": "Fargo, ND"}, {"@type": "City", "name": "West Fargo, ND"}, {"@type": "City", "name": "Moorhead, MN"}, {"@type": "State", "name": "North Dakota"}, {"@type": "State", "name": "Minnesota"}, {"@type": "State", "name": "South Dakota"}, {"@type": "AdministrativeArea", "name": "Midwest United States"}], "knowsAbout": ["Mobile device management", "MDM", "Apple device management", "Ubiquiti UniFi", "VyOS", "software-defined networking", "WireGuard VPN", "Proxmox virtualization", "converged infrastructure", "managed hosting", "structured cabling"], "parentOrganization": {"@id": "https://netquor.com/#org"}}, {"@type": "WebSite", "@id": "https://netquor.com/#site", "url": "https://netquor.com/", "name": "Netquor Technologies", "publisher": {"@id": "https://netquor.com/#org"}}]}</script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/devices.css@0.2.0/dist/devices.min.css">
     <style>
         :root {
-            --cyber-blue: #38bdf8;
-            --obsidian: #020617;
+            --cyber-blue: #5eaaf0;
+            --obsidian: #0b0e13;
             --slate-800: #1e293b;
         }
 
@@ -27,34 +49,9 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .hero-section {
-            padding: 100px 0;
-            background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.08) 0%, transparent 70%);
-        }
-
-        .brand-logo {
-            font-weight: 900;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, var(--cyber-blue), #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .service-card {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 28px;
-            padding: 2.5rem;
-            height: 100%;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .service-card:hover {
-            border-color: var(--cyber-blue);
-            transform: translateY(-10px);
-            background: rgba(30, 41, 59, 0.5);
-        }
-
+        
+              
+        
         .icon-accent {
             font-size: 2rem;
             color: var(--cyber-blue);
@@ -62,38 +59,43 @@
             display: inline-block;
         }
 
-        .btn-primary-cyber {
-            background: var(--cyber-blue);
-            color: var(--obsidian);
-            border: none;
-            border-radius: 50px;
-            padding: 12px 32px;
-            font-weight: 700;
-            transition: 0.3s;
-        }
-
-        .btn-primary-cyber:hover {
-            background: #7dd3fc;
-            box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
-        }
-
+        
         footer {
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             padding: 60px 0;
+        }
+
+        /* Logo is dark slate on transparent, so it sits on a light plate */
+        .brand-logo-img { height: 44px; width: auto; background: #f1f5f9; border-radius: 10px; padding: 3px 8px; }
+        .brand-logo-img-lg { height: 96px; padding: 6px 14px; border-radius: 14px; }
+
+        /* Space between the services cards above and this section */
+        #app-trigger { margin-top: 5rem; }
+        #local { position: relative; z-index: 1; background: var(--nq-bg); }
+        @media (max-width: 991px) { #app-trigger { margin-top: 4rem; padding-top: 1rem; } }
+
+        /* App cards: compact so the sticky section fits one viewport */
+        .app-card hr { margin: 0.75rem 0; }
+        .app-card p { margin-bottom: 0.5rem; }
+        @media (min-width: 992px) {
+            .app-card { padding: 0.8rem 1.1rem !important; margin-bottom: 0.65rem !important; }
+            .app-card .d-flex.align-items-center.mb-3 { margin-bottom: 0.5rem !important; }
+            .app-card .bg-info.p-3 { padding: 0.6rem !important; }
+            .app-card:last-of-type { margin-bottom: 0 !important; }
         }
 
         /* --- Updated Sticky & Overlay Logic --- */
         
         @media (min-width: 992px) {
             .sticky-wrapper {
-                height: 150vh;
+                min-height: 150vh;
                 position: relative;
             }
             .sticky-content {
                 position: -webkit-sticky;
                 position: sticky;
-                top: 0;
-                height: 100vh;
+                top: 70px; /* clear the sticky navbar */
+                min-height: calc(100vh - 70px);
                 display: flex;
                 align-items: center;
             }
@@ -116,7 +118,7 @@
         left: 50%;
         transform: translate(-50%, -20%) scale(0.8);
         opacity: 0;
-        transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        transition: opacity .4s ease, transform .4s ease;
         z-index: 1000;
         pointer-events: none;
         display: block;
@@ -139,7 +141,7 @@
         bottom: -10vh;
         width: 120vw; 
         height: 120vh;
-        background: rgba(2, 6, 23, 0.96);
+        background: rgba(11, 14, 19, .96);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         z-index: -1;
@@ -147,17 +149,15 @@
     }
 }
 
-        .phone-container {
+        .phone-container { /* neutral frame */
             position: relative;
             width: 225px;
             height: 450px;
             margin: 0 auto;
-            border: 12px solid #1e293b;
+            border: 10px solid var(--nq-s3);
             border-radius: 45px;
             overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            background: #020617;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: var(--nq-bg);
         }
 
         .phone-container::before {
@@ -168,7 +168,7 @@
             transform: translateX(-50%);
             width: 150px;
             height: 25px;
-            background: #1e293b;
+            background: var(--nq-s3);
             border-bottom-left-radius: 20px;
             border-bottom-right-radius: 20px;
             z-index: 10;
@@ -180,51 +180,174 @@
             object-fit: cover;
             display: block;
         }
+
+        section[id], header[id] { scroll-margin-top: 84px; }
+
+        /* --- Hello, Homelabbers --- */
+        .homelab { position: relative; padding: 90px 0 70px; overflow: hidden; }
+                .homelab .container { position: relative; }
+        .hello { margin: 0; }
+        .chip { display: inline-flex; align-items: center; gap: .4rem; padding: .35rem .8rem; border-radius: 50px; font-size: .82rem; font-weight: 600; color: #e2e8f0; background: rgba(56, 189, 248, 0.09); border: 1px solid rgba(56, 189, 248, 0.25); }
+        .chip i { color: var(--cyber-blue); }
+        .price-pop { display: inline-flex; align-items: baseline; gap: .35rem; padding: 8px 16px; border-radius: 12px; background: var(--nq-s1); border: 1px solid var(--nq-line-2); font-variant-numeric: tabular-nums; }
+        .price-pop b { font-family: var(--nq-display); font-size: 1.75rem; font-weight: 600; color: var(--nq-ink); }
+        .term { background: #090c10; border: 1px solid var(--nq-line-2); border-radius: 14px; overflow: hidden; font-family: var(--nq-mono); }
+        .term-bar { display: flex; align-items: center; gap: 7px; padding: .65rem .9rem; background: rgba(255, 255, 255, .04); border-bottom: 1px solid rgba(255, 255, 255, .06); }
+        .term-bar span { width: 10px; height: 10px; border-radius: 50%; background: var(--nq-s3); }
+        .term-bar em { margin-left: .5rem; font-style: normal; font-size: .75rem; color: var(--nq-ink-3); }
+        .term-body { padding: 1.1rem 1.2rem 1.3rem; font-size: .82rem; line-height: 1.75; color: #cbd5e1; }
+        .term-body .l { display: block; white-space: pre-wrap; overflow-wrap: anywhere; }
+        .typing .term-body .l { clip-path: inset(0 100% 0 0); }
+        .typing .term.play .term-body .l { animation: reveal .9s steps(34) forwards; animation-delay: var(--d, 0s); }
+        .term-body .p { color: var(--nq-accent-t); } .term-body .ok { color: var(--nq-ok); } .term-body .dim { color: var(--nq-ink-3); } .term-body .ip { color: var(--nq-ink); }
+        .term-body .cur { display: inline-block; width: .55em; height: 1.05em; background: var(--nq-accent-t); vertical-align: -.18em; animation: blink 1s steps(1) infinite; }
+        @keyframes reveal { to { clip-path: inset(0 0 0 0); } }
+        @keyframes blink { 50% { opacity: 0; } }
+        @media (prefers-reduced-motion: reduce) {
+                .typing .term-body .l, .typing .term.play .term-body .l { clip-path: none; animation: none; }
+        }
+            /* Product map: the logo's trace-and-node idea, linking the six products to one network. */
+        .nq-map { width: 100%; height: auto; display: block; }
+        .nq-map-lines path { stroke: var(--nq-accent); opacity: .85; }
+        .nq-map-nodes circle { fill: var(--nq-accent); }
+        .nq-map-labels text { font: 500 15px var(--nq-body); fill: var(--nq-ink); transition: fill .15s; }
+        .nq-map-labels text.sub { font: 400 12px var(--nq-mono); fill: var(--nq-ink-3); }
+        .nq-map-labels a { cursor: pointer; }
+        .nq-map-labels a:hover text:not(.sub), .nq-map-labels a:focus-visible text:not(.sub) { fill: var(--nq-accent-t); }
+        @media (max-width: 575.98px) { .nq-map-labels text { font-size: 17px; } .nq-map-labels text.sub { font-size: 14px; } }
     </style>
+    <link rel="stylesheet" href="nav.css?v=82c09fb9">
+    <link rel="stylesheet" href="nq.css?v=bdb6a477">
+    <script src="nav.js?v=e3b8eb1d"></script>
+    <script src="analytics.js?v=aedc133c" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600&display=swap">
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <i class="bi bi-shield-lock-fill text-info me-2 fs-3"></i>
-                <span class="h3 mb-0 brand-logo">Netquor</span>
-            </a>
+    <!-- nq-nav:start -->
+    <nav class="nq-nav" aria-label="Main">
+        <div class="nq-in">
+            <a class="nq-brand" href="index.html" aria-label="Netquor Technologies"><img src="brand/nq-mark.svg" alt="" width="32" height="32"><span>Netquor</span></a>
+            <button class="nq-burger" type="button" aria-expanded="false" aria-controls="nq-menu" aria-label="Menu"><span></span><span></span><span></span></button>
+            <div class="nq-menu" id="nq-menu">
+                <ul class="nq-links">
+                    <li class="nq-dd">
+                        <button class="nq-link nq-dd-btn" type="button" aria-expanded="false" aria-haspopup="true">Products <svg class="nq-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1.5 3.5 5 7l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                        <ul class="nq-dd-menu">
+                            <li><a href="https://www.allsourcehosting.com/" target="_blank" rel="noopener"><img src="allsource-icon.svg" alt="" width="20" height="20"><span><b>All Source Hosting</b><small>Homelab hosting marketplace: rent a VM or sell your lab</small></span></a></li>
+                            <li><a href="fleet.html"><i class="bi bi-apple" aria-hidden="true"></i><span><b>Netquor Fleet MDM</b><small>Apple MDM and Santa endpoint security for Mac</small></span></a></li>
+                            <li><a href="sdn.html"><i class="bi bi-diagram-3" aria-hidden="true"></i><span><b>Netquor SDN</b><small>Managed networking, Ubiquiti &amp; VyOS, hosting</small></span></a></li>
+                            <li><a href="network.html"><i class="bi bi-broadcast-pin" aria-hidden="true"></i><span><b>Network Solutions</b><small>AS403008: IPs and anycast over WireGuard</small></span></a></li>
+                            <li><a href="vpn.html"><i class="bi bi-shield-check" aria-hidden="true"></i><span><b>Netquor VPN</b><small>Local WireGuard VPN from $5/mo, up to 1 Gbps</small></span></a></li>
+                            <li><a href="homeassistant.html"><i class="bi bi-house-gear" aria-hidden="true"></i><span><b>Hosted Home Assistant</b><small>Managed smart home with a rented bridge</small></span></a></li>
+                            <li><a href="digitalaccess.html"><i class="bi bi-door-open" aria-hidden="true"></i><span><b>Digital Access</b><small>Access control without replacing your hardware</small></span></a></li>
+                            <li><hr></li>
+                            <li><a href="index.html#services"><i class="bi bi-tools" aria-hidden="true"></i><span><b>Engineering &amp; field services</b><small>Software, hardware repair, consulting</small></span></a></li>
+                        </ul>
+                    </li>
+                    <li><a class="nq-link" href="index.html#homelab">Homelab</a></li>
+                    <li><a class="nq-link" href="network.html#pricing">Pricing</a></li>
+                    <li><a class="nq-link" href="index.html#local">About</a></li>
+                </ul>
+                <div class="nq-cta">
+                    <a class="nq-signin" href="https://account.netquor.com/" target="_blank" rel="noopener">Sign in <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    <a class="nq-btn" href="mailto:hello@netquor.com">Contact</a>
+                </div>
+            </div>
         </div>
     </nav>
+    <!-- nq-nav:end -->
 
-    <header class="hero-section text-center">
+    <header class="hero-section">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <span
-                        class="badge rounded-pill bg-info bg-opacity-10 text-info px-4 py-2 mb-4 border border-info border-opacity-10">
-                        FULL-STACK TECHNICAL SOLUTIONS
-                    </span>
-                    <h1 class="display-4 fw-black mb-4">The <span class="text-info">Digital</span> Backbone <br>for a
-                        <span class="text-info"><br>Physical </span>World.
-                    </h1>
-                    <p class="lead text-muted mb-5">Netquor bridges the gap between high-level software engineering and
-                        boots-on-the-ground technical implementation. We specialize in automating legacy systems,
-                        securing networks, and maintaining the hardware that keeps your business connected.</p>
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <p class="nq-eyebrow">Fargo, ND &middot; serving the Midwest</p>
+                    <h1 class="mb-4">Managed networks, devices and access for small business</h1>
+                    <p class="lead text-muted mb-5" style="max-width: 34rem;">Netquor designs, hosts and supports the technology you run on: Ubiquiti and VyOS networks, Apple device management, VPN, routable IP space and building access. We serve businesses across Fargo-Moorhead, North Dakota, Minnesota and the Midwest.</p>
+                    <div class="d-flex flex-wrap align-items-center gap-3">
+                        <a href="mailto:hello@netquor.com" class="btn btn-primary-cyber btn-lg">Get in touch</a>
+                        <a href="#services" class="btn btn-outline-info btn-lg">See what we do</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <svg class="nq-map" viewBox="-40 0 700 440" role="group" aria-label="The Netquor platform: six products connected to one network">
+                        <g class="nq-map-lines" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M222 195H170L130 155V70"/><path d="M222 220H130"/><path d="M222 245H170L130 285V370"/>
+                            <path d="M378 195H430L470 155V70"/><path d="M378 220H470"/><path d="M378 245H430L470 285V370"/>
+                        </g>
+                        <g class="nq-map-nodes"><circle cx="130" cy="70" r="6"/><circle cx="130" cy="220" r="6"/><circle cx="130" cy="370" r="6"/><circle cx="470" cy="70" r="6"/><circle cx="470" cy="220" r="6"/><circle cx="470" cy="370" r="6"/></g>
+                        <image href="brand/nq-mark.svg" x="229" y="149" width="160" height="160"/>
+                        <g class="nq-map-labels">
+                            <a href="sdn.html"><text x="116" y="74" text-anchor="end">Netquor SDN</text><text x="116" y="92" text-anchor="end" class="sub">Ubiquiti, VyOS</text></a>
+                            <a href="fleet.html"><text x="116" y="224" text-anchor="end">Netquor Fleet</text><text x="116" y="242" text-anchor="end" class="sub">Apple MDM</text></a>
+                            <a href="network.html"><text x="116" y="374" text-anchor="end">Network Solutions</text><text x="116" y="392" text-anchor="end" class="sub">AS403008</text></a>
+                            <a href="vpn.html"><text x="484" y="74">Netquor VPN</text><text x="484" y="92" class="sub">WireGuard</text></a>
+                            <a href="homeassistant.html"><text x="484" y="224">Home Assistant</text><text x="484" y="242" class="sub">Hosted smart home</text></a>
+                            <a href="digitalaccess.html"><text x="484" y="374">Digital Access</text><text x="484" y="392" class="sub">Building entry</text></a>
+                        </g>
+                    </svg>
                 </div>
             </div>
         </div>
     </header>
 
-    <section class="pb-5">
+    <section class="homelab" id="homelab">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <p class="nq-eyebrow">For homelabbers</p>
+                    <h2 class="hello mb-4">Real IPs for your homelab</h2>
+                    <p class="lead text-muted mb-4">Your rack deserves real IPs. Bring up a WireGuard tunnel and get a static, routable IPv4 address and an IPv6 /56 from our own network, AS403008. Host your stuff without port-forwarding through a CGNAT or a rotating residential address.</p>
+                    <div class="d-flex flex-wrap gap-2 mb-4">
+                        <span class="chip"><i class="bi bi-globe2"></i> Static IPv4</span>
+                        <span class="chip"><i class="bi bi-hash"></i> IPv6 /56 included</span>
+                        <span class="chip"><i class="bi bi-shield-lock"></i> Plain WireGuard</span>
+                        <span class="chip"><i class="bi bi-diagram-3"></i> VyOS-friendly</span>
+                        <span class="chip"><i class="bi bi-calendar-x"></i> No contracts</span>
+                        <span class="chip"><i class="bi bi-mortarboard"></i> Half off for students</span>
+                    </div>
+                    <div class="d-flex flex-wrap align-items-center gap-3">
+                        <div class="price-pop"><span class="text-muted small">from</span><b>$6.49</b><span class="text-muted small">/ month</span></div>
+                        <a href="network.html#build" class="btn btn-primary-cyber btn-lg">Build your setup</a>
+                        <a href="network.html#pricing" class="btn btn-outline-info btn-lg rounded-pill px-4">See pricing</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="term" role="img" aria-label="Example terminal: bring up a WireGuard tunnel and get a routable public IP address">
+                        <div class="term-bar"><span></span><span></span><span></span><em>homelab ~ netquor</em></div>
+                        <div class="term-body" aria-hidden="true">
+                            <span class="l" style="--d:.3s"><span class="p">~ $</span> sudo wg-quick up netquor</span>
+                            <span class="l dim" style="--d:1.3s">[#] ip link add netquor type wireguard</span>
+                            <span class="l dim" style="--d:2.2s">[#] ip -4 address add <span class="ip">203.0.113.42</span>/32 dev netquor</span>
+                            <span class="l" style="--d:3.2s"><span class="p">~ $</span> curl -4 ifconfig.me</span>
+                            <span class="l ip" style="--d:4.2s">203.0.113.42   <span class="dim"># static, routable, yours</span></span>
+                            <span class="l" style="--d:5.2s"><span class="p">~ $</span> nc -vz 203.0.113.42 443</span>
+                            <span class="l ok" style="--d:6.2s">Connection succeeded!</span>
+                            <span class="l" style="--d:7s"><span class="p">~ $</span> <span class="cur"></span></span>
+                        </div>
+                    </div>
+                    <p class="text-muted small text-center mt-2 mb-0">Example output with a documentation address.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pb-5" id="services">
         <div class="container">
             <div class="row g-4">
                 <div class="col-md-4">
                     <div class="service-card shadow-lg">
                         <i class="bi bi-code-square icon-accent"></i>
-                        <h3 class="fw-bold mb-3">Software Engineering</h3>
+                        <h3 class="fw-bold mb-3">Software engineering</h3>
                         <p class="text-muted">Custom web applications, EJS-driven template engines, and scalable backend
                             architectures tailored to your workflow.</p>
                         <ul class="list-unstyled mt-4 small text-info">
-                            <li><i class="bi bi-check2 me-2"></i>Full-Stack Development</li>
-                            <li><i class="bi bi-check2 me-2"></i>API Design & Integration</li>
+                            <li><i class="bi bi-check2 me-2"></i>Full-stack development</li>
+                            <li><i class="bi bi-check2 me-2"></i>API design and integration</li>
                         </ul>
                     </div>
                 </div>
@@ -232,12 +355,12 @@
                 <div class="col-md-4">
                     <div class="service-card shadow-lg">
                         <i class="bi bi-cpu icon-accent"></i>
-                        <h3 class="fw-bold mb-3">Hardware & Repair</h3>
+                        <h3 class="fw-bold mb-3">Hardware and repair</h3>
                         <p class="text-muted">Precision diagnostics and repair for essential hardware. We keep your
                             local device ecosystem running at peak performance.</p>
                         <ul class="list-unstyled mt-4 small text-info">
-                            <li><i class="bi bi-check2 me-2"></i>Component Level Repair</li>
-                            <li><i class="bi bi-check2 me-2"></i>Hardware Optimization</li>
+                            <li><i class="bi bi-check2 me-2"></i>Component-level repair</li>
+                            <li><i class="bi bi-check2 me-2"></i>Hardware optimization</li>
                         </ul>
                     </div>
                 </div>
@@ -245,12 +368,12 @@
                 <div class="col-md-4">
                     <div class="service-card shadow-lg">
                         <i class="bi bi-person-gear icon-accent"></i>
-                        <h3 class="fw-bold mb-3">Field Consulting</h3>
+                        <h3 class="fw-bold mb-3">Field consulting</h3>
                         <p class="text-muted">Hands-on technical implementation and field infrastructure. We bridge the
                             gap between high-level theory and real-world deployment.</p>
                         <ul class="list-unstyled mt-4 small text-info">
-                            <li><i class="bi bi-check2 me-2"></i>Infrastructure Deployment</li>
-                            <li><i class="bi bi-check2 me-2"></i>Systems Integration</li>
+                            <li><i class="bi bi-check2 me-2"></i>Infrastructure deployment</li>
+                            <li><i class="bi bi-check2 me-2"></i>Systems integration</li>
                         </ul>
                     </div>
                 </div>
@@ -258,12 +381,12 @@
                 <div class="col-md-4">
                     <div class="service-card shadow-lg">
                         <i class="bi bi-router icon-accent"></i>
-                        <h3 class="fw-bold mb-3">Network Infrastructure</h3>
+                        <h3 class="fw-bold mb-3">Network infrastructure</h3>
                         <p class="text-muted">Professional low-voltage wiring, rack management, and Ubiquiti-based
                             network deployments for residential and commercial spaces.</p>
                         <ul class="list-unstyled mt-4 small text-info">
-                            <li><i class="bi bi-check2 me-2"></i>Structured Cabling & Cleanup</li>
-                            <li><i class="bi bi-check2 me-2"></i>Wi-Fi 6/7 Mesh Optimization</li>
+                            <li><i class="bi bi-check2 me-2"></i>Structured cabling and cleanup</li>
+                            <li><i class="bi bi-check2 me-2"></i>Wi-Fi 6/7 mesh optimization</li>
                         </ul>
                     </div>
                 </div>
@@ -271,24 +394,24 @@
                 <div class="col-md-4">
                     <div class="service-card shadow-lg">
                         <i class="bi bi-server icon-accent"></i>
-                        <h3 class="fw-bold mb-3">Hosting & Virtualization</h3>
+                        <h3 class="fw-bold mb-3">Hosting and virtualization</h3>
                         <p class="text-muted">Self-hosting solutions designed for privacy and control. We specialize in
                             state of the art virtual machine clusters and secure software-defined networking.</p>
                         <ul class="list-unstyled mt-4 small text-info">
-                            <li><i class="bi bi-check2 me-2"></i>Virtual Machines & Service Orchestration</li>
-                            <li><i class="bi bi-check2 me-2"></i>Secure Remote Access (VPN/SDN)</li>
+                            <li><i class="bi bi-check2 me-2"></i>Virtual machines and service orchestration</li>
+                            <li><i class="bi bi-check2 me-2"></i>Secure remote access (VPN/SDN)</li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="service-card shadow-lg">
                         <i class="bi bi-gear-wide-connected icon-accent"></i>
-                        <h3 class="fw-bold mb-3">Field Operations</h3>
+                        <h3 class="fw-bold mb-3">Field operations</h3>
                         <p class="text-muted">Specialized on-site technical deployment and hardware integration. We
                             bridge the gap between digital design and physical installation.</p>
                         <ul class="list-unstyled mt-4 small text-info">
-                            <li><i class="bi bi-check2 me-2"></i>Device Commissioning & Setup</li>
-                            <li><i class="bi bi-check2 me-2"></i>Infrastructure Troubleshooting</li>
+                            <li><i class="bi bi-check2 me-2"></i>Device commissioning and setup</li>
+                            <li><i class="bi bi-check2 me-2"></i>Infrastructure troubleshooting</li>
                         </ul>
                     </div>
                 </div>
@@ -300,30 +423,77 @@
         <div class="sticky-content container">
             <div class="row align-items-center g-5">
                 <div class="col-lg-6">
-                    <span class="text-info fw-bold text-uppercase tracking-widest small">Proprietary Software</span>
-                    <h2 class="display-5 fw-black mb-4">The Netquor <span class="text-info">App Ecosystem</span></h2>
-                    <p class="lead text-muted mb-4">We build the software that commands the hardware. Our applications are designed to modernize legacy environments without the cost of a full infrastructure overhaul.</p>
+                    <p class="nq-eyebrow">Proprietary software</p>
+                    <h2 class="display-5 fw-black mb-3">The Netquor app ecosystem</h2>
+                    <p class="lead text-muted mb-3">We build the software that commands the hardware. Our applications are designed to modernize legacy environments without the cost of a full infrastructure overhaul.</p>
                     
-                    <div class="card bg-dark border-info border-opacity-25 rounded-4 p-4 mb-4 shadow-sm">
+                    <div class="card app-card bg-dark border-info border-opacity-25 rounded-4 p-4 mb-4 shadow-sm">
                         <div class="d-flex align-items-center mb-3">
                             <div class="bg-info bg-opacity-10 p-3 rounded-3 me-3">
                                 <i class="bi bi-shield-lock-fill text-info fs-3"></i>
                             </div>
                             <div>
                                 <h4 class="fw-bold mb-0">Digital Access Engine</h4>
-                                <span class="badge bg-info bg-opacity-10 text-info small">Active Deployment</span>
+                                <span class="badge bg-info bg-opacity-10 text-info small">In deployment</span>
                             </div>
                         </div>
                         <p class="text-muted small">Modern access control solutions for MDU units with legacy door hardware, phone-enabled directories, and smart lock integrations.</p>
                         <hr class="border-white border-opacity-10">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <ul class="list-unstyled mb-0 small text-info d-flex gap-3">
-                                <li><i class="bi bi-phone me-1"></i>Mobile Entry</li>
-                                <li><i class="bi bi-chat-dots me-1"></i>AI Directory</li>
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                            <ul class="list-unstyled mb-0 small text-info d-flex flex-wrap gap-x-3 column-gap-3 row-gap-1">
+                                <li><i class="bi bi-phone me-1"></i>Mobile entry</li>
+                                <li><i class="bi bi-chat-dots me-1"></i>AI directory</li><li><a class="text-info" href="digitalaccess.html">Learn more</a></li>
                             </ul>
                             <a href="https://da.netquor.com/" target="_blank"
-                                class="btn btn-outline-info btn-sm rounded-pill px-3">Launch App <i
+                                class="btn btn-outline-info btn-sm rounded-pill px-3">Open app <i
                                     class="bi bi-box-arrow-up-right ms-2"></i></a>
+                        </div>
+                    </div>
+                    <div class="card app-card bg-dark border-info border-opacity-25 rounded-4 p-4 mb-4 shadow-sm">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-info bg-opacity-10 p-3 rounded-3 me-3">
+                                <img src="sdn-logo.svg" alt="Netquor SDN logo" width="32" height="32" class="d-block rounded-2">
+                            </div>
+                            <div>
+                                <h4 class="fw-bold mb-0">Netquor SDN</h4>
+                                <span class="badge bg-info bg-opacity-10 text-info small">In development</span>
+                            </div>
+                        </div>
+                        <p class="text-muted small mt-2">A software-defined networking platform for secure remote access, virtual machine orchestration, and network automation.</p>
+                            <hr class="border-white border-opacity-10">
+                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                <ul class="list-unstyled mb-0 small text-info d-flex flex-wrap gap-x-3 column-gap-3 row-gap-1">
+                                    <li><i class="bi bi-cloud me-1"></i>UniFi automation</li>
+                                    <li><i class="bi bi-shield-lock me-1"></i>Centralized monitoring</li>
+                                    <li><i class="bi bi-gear me-1"></i>VyOS SDN</li>
+                                </ul>
+                                <a href="sdn.html" class="btn btn-info btn-sm rounded-pill px-3 me-2">Overview</a><a href="https://sdn.netquor.com/" target="_blank"
+                                    class="btn btn-outline-info btn-sm rounded-pill px-3">Open app <i
+                                        class="bi bi-box-arrow-up-right ms-2"></i></a>
+                            </div>
+                    </div>
+                    <div class="card app-card bg-dark border-info border-opacity-25 rounded-4 p-4 mb-4 shadow-sm">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-info bg-opacity-10 p-3 rounded-3 me-3">
+                                <img src="fleet-logo.svg" alt="Netquor Fleet logo" width="32" height="32" class="d-block rounded-2">
+                            </div>
+                            <div>
+                                <h4 class="fw-bold mb-0">Netquor Fleet</h4>
+                                <span class="badge bg-info bg-opacity-10 text-info small">In development</span>
+                            </div>
+                        </div>
+                        <p class="text-muted small mt-2">Affordable mobile device management (MDM) for Mac, iPhone and iPad: free 30-day trial, no minimum seats, self-service app catalog and a fully-featured API.</p>
+                        <hr class="border-white border-opacity-10">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                            <ul class="list-unstyled mb-0 small text-info d-flex flex-wrap gap-x-3 column-gap-3 row-gap-1">
+                                <li><i class="bi bi-cloud me-1"></i>Cloud-native</li>
+                                <li><i class="bi bi-shield-lock me-1"></i>Full API</li>
+                                <li><i class="bi bi-gear me-1"></i>Customizable</li>
+                            </ul>
+                            <div class="d-flex gap-2">
+                                <a href="fleet.html" class="btn btn-info btn-sm rounded-pill px-3">Features &amp; Pricing</a>
+                                <a href="https://fleet.netquor.com/" target="_blank" class="btn btn-outline-info btn-sm rounded-pill px-3">Open app <i class="bi bi-box-arrow-up-right ms-2"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -342,14 +512,47 @@
         </div>
     </section>
 
+    <section class="py-5" id="local">
+        <div class="container" style="max-width: 900px;">
+            <div class="mb-5 pb-4 border-bottom border-white border-opacity-10" id="community">
+                <p class="nq-eyebrow">Our commitment</p>
+                <h2 class="fw-black mb-3">Small business first. Homelab always.</h2>
+                <p class="text-muted">We serve small businesses across Fargo-Moorhead and the Midwest, and we are proud champions of the homelab community: the people who learn by building. We vouch for learning networking, security and programming, and we build our products so that what you learn on them works anywhere.</p>
+                <div class="row g-3 mt-2">
+                    <div class="col-md-4"><div class="service-card p-4"><i class="bi bi-diagram-3 icon-accent mb-2"></i><h3 class="h5 fw-bold text-info">Networking</h3><p class="text-muted small mb-0">Routing, VLANs, BGP and WireGuard on standard, open tools like VyOS and Linux, so the skills carry to any network you touch.</p></div></div>
+                    <div class="col-md-4"><div class="service-card p-4"><i class="bi bi-shield-lock icon-accent mb-2"></i><h3 class="h5 fw-bold text-info">Security</h3><p class="text-muted small mb-0">Firewalls, VPNs, patching and backups, explained plainly. Ask us why we set something up the way we did. Questions are welcome.</p></div></div>
+                    <div class="col-md-4"><div class="service-card p-4"><i class="bi bi-code-square icon-accent mb-2"></i><h3 class="h5 fw-bold text-info">Programming</h3><p class="text-muted small mb-0">Our SDN and Fleet platforms have APIs you can script against, and our configs are plain text you can read, change and learn from.</p></div></div>
+                </div>
+                <h3 class="h5 fw-bold mt-5 mb-3">How we support it</h3>
+                <div class="row g-3">
+                    <div class="col-md-6"><div class="service-card p-4"><i class="bi bi-mortarboard icon-accent mb-2"></i><h3 class="h5 fw-bold text-info">Student &amp; learner pricing</h3><p class="text-muted small mb-2">Students and people learning get <strong>half off the Homelab plan</strong>: a real routable IP and an IPv6 /56 for about $3.25 a month. Email us from a school address, or tell us what you are studying.</p><a class="small text-info text-decoration-none" href="mailto:hello@netquor.com?subject=Student%20or%20learner%20pricing">Ask about it <i class="bi bi-arrow-right"></i></a></div></div>
+                    <div class="col-md-6"><div class="service-card p-4"><i class="bi bi-discord icon-accent mb-2"></i><div class="d-flex justify-content-between align-items-start"><h3 class="h5 fw-bold text-info">Fargo-Moorhead Homelab community</h3><span class="badge rounded-pill bg-info bg-opacity-10 text-info border border-info border-opacity-25">coming soon</span></div><p class="text-muted small mb-0">A Discord for homelabbers in the Fargo-Moorhead area: share builds, ask questions, swap parts and learn from each other. Opening soon.</p></div></div>
+                    <div class="col-md-6"><div class="service-card p-4"><img src="allsource-icon.svg" alt="" width="34" height="34" class="d-block mb-3" style="border-radius: 8px;"><h3 class="h5"><span>All Source Hosting</span></h3><p class="text-muted small mb-2">Our community marketplace for homelabs. Turn spare Proxmox capacity into income (hosts keep 88% of every payment), or rent a VM from a certified local lab instead of a big cloud. The host agent is open source, so you can read it before you run it.</p><a class="small text-info text-decoration-none" href="https://www.allsourcehosting.com/" target="_blank" rel="noopener">Explore the marketplace <i class="bi bi-box-arrow-up-right"></i></a></div></div>
+                    <div class="col-md-6"><div class="service-card p-4"><i class="bi bi-cloud-haze2 icon-accent mb-2"></i><h3 class="h5 fw-bold text-info">Local Cloud partners</h3><p class="text-muted small mb-2">Starting a colo or local hosting business? Find a partner and host on All Source Hosting as a Local Cloud. Netquor helps sponsor, and can provide an ASN and arrange an IP lease or assignment. We want to build an open distributed cloud, one city at a time.</p><a class="small text-info text-decoration-none" href="mailto:hello@netquor.com?subject=Local%20Cloud%20partner">Partner up <i class="bi bi-arrow-right"></i></a></div></div>
+                </div>
+            </div>
+            <p class="nq-eyebrow">Local to Fargo and the Midwest</p>
+            <h2 class="fw-black mb-3">Technology partner for Fargo-Moorhead and the Midwest</h2>
+            <p class="text-muted">Netquor Technologies is a Fargo, North Dakota company. We design and run business networks on <strong>Ubiquiti UniFi</strong> and <strong>VyOS</strong>, host and virtualize servers, connect sites with <strong>WireGuard</strong> VPN and software-defined networking, and manage Mac, iPhone and iPad fleets with <strong>Netquor Fleet MDM</strong>. We work with small businesses, property managers, schools and offices in Fargo, West Fargo, Moorhead, across North Dakota, Minnesota and South Dakota, and remotely anywhere in the Midwest.</p>
+            <div class="row g-3 mt-2">
+                <div class="col-md-6"><a class="text-decoration-none" href="sdn.html"><div class="service-card p-4"><h3 class="h5 fw-bold text-info">Netquor SDN</h3><p class="text-muted small mb-0">Managed networking, Ubiquiti and VyOS automation, cloud and converged infrastructure, hosting and virtualization services.</p></div></a></div>
+                <div class="col-md-6"><a class="text-decoration-none" href="network.html"><div class="service-card p-4"><h3 class="h5 fw-bold text-info">Network Solutions</h3><p class="text-muted small mb-0">AS403008: routable IPs and anycast for distributed applications, routed over WireGuard from Chicago, Dallas, New York and Kansas City.</p></div></a></div>
+                <div class="col-md-6"><a class="text-decoration-none" href="vpn.html"><div class="service-card p-4"><div class="d-flex justify-content-between align-items-start"><h3 class="h5 fw-bold text-info">Netquor VPN</h3><span class="badge rounded-pill bg-info bg-opacity-10 text-info border border-info border-opacity-25">from $5/mo</span></div><p class="text-muted small mb-2">Stop subscribing to commercial, over-subscribed VPNs. Trust local: WireGuard routed through our own network, from 25/25 Mbps up to 1 Gbps and 10 devices, with capacity checked daily and fast, friendly local support.</p><p class="small text-info mb-0">$5 &middot; $10 &middot; $20 &middot; $30 &nbsp;<i class="bi bi-arrow-right"></i></p></div></a></div>
+                <div class="col-md-6"><a class="text-decoration-none" href="digitalaccess.html"><div class="service-card p-4"><div class="d-flex justify-content-between align-items-start"><h3 class="h5 fw-bold text-info">Digital Access</h3><span class="badge rounded-pill bg-info bg-opacity-10 text-info border border-info border-opacity-25">free to start</span></div><p class="text-muted small mb-2">Modern access control without replacing your hardware: AI visitor automation and tenant self-service for property managers.</p><p class="small text-info mb-0">Community free &middot; Plus $9.99 &middot; Pro $59.99 &middot; Scale $199 &nbsp;<i class="bi bi-arrow-right"></i></p></div></a></div>
+                <div class="col-md-6"><a class="text-decoration-none" href="https://www.allsourcehosting.com/" target="_blank" rel="noopener"><div class="service-card p-4"><div class="d-flex justify-content-between align-items-start"><h3 class="h5 mb-0"><span>All Source Hosting</span></h3><span class="badge rounded-pill bg-info bg-opacity-10 text-info border border-info border-opacity-25">marketplace</span></div><p class="text-muted small mb-2">A crowd-sourced hosting marketplace from Netquor: rent a VM from a certified Midwest homelab, or sell your own spare capacity.</p><p class="small text-info mb-0">Visit allsourcehosting.com &nbsp;<i class="bi bi-box-arrow-up-right"></i></p></div></a></div>
+                <div class="col-md-6"><a class="text-decoration-none" href="homeassistant.html"><div class="service-card p-4"><div class="d-flex justify-content-between align-items-start"><h3 class="h5 fw-bold text-info">Hosted Home Assistant</h3><span class="badge rounded-pill bg-info bg-opacity-10 text-info border border-info border-opacity-25">from $12/mo</span></div><p class="text-muted small mb-2">Keep your integrations cloud-native. We run your assistant in the cloud for access anywhere, and rent you a small bridge that connects your home network.</p><p class="small text-info mb-0">Home &middot; Home Plus &middot; Home Pro &middot; Resilient &nbsp;<i class="bi bi-arrow-right"></i></p></div></a></div>
+                <div class="col-md-6"><a class="text-decoration-none" href="fleet.html"><div class="service-card p-4"><h3 class="h5 fw-bold text-info">Netquor Fleet MDM</h3><p class="text-muted small mb-0">Cheap, fully-featured Apple MDM with no minimum seats, self-service, hosted Santa endpoint security for Mac, and a free 30-day trial.</p></div></a></div>
+            </div>
+        </div>
+    </section>
+
     <section class="py-5 my-5">
         <div class="container">
             <div class="card editor-card p-5 text-center"
-                style="background: linear-gradient(rgba(56, 189, 248, 0.05), transparent); border: 1px solid rgba(56, 189, 248, 0.1); border-radius: 40px;">
-                <h2 class="fw-black mb-4">Ready to Architect Your Future?</h2>
-                <p class="text-muted mb-5 mx-auto" style="max-width: 600px;">Whether it's legacy systems needing a
-                    refresh, automating the mundane, or whatever your heart desires, we're here to help.</p>
-                <button class="btn btn-primary-cyber btn-lg px-5">&#8595; CONNECT WITH AN EXPERT &#8595;</button>
+                >
+                <h2 class="fw-black mb-4">Talk to us about your network</h2>
+                <p class="text-muted mb-5 mx-auto" style="max-width: 600px;">Legacy systems that need a refresh, routine work worth automating, or a new build from scratch: tell us what you are running and we will reply with a plan.</p>
+                <a href="mailto:hello@netquor.com" class="btn btn-primary-cyber btn-lg px-5">Get in touch</a>
             </div>
         </div>
     </section>
@@ -358,9 +561,9 @@
         <div class="container mb-5">
             <div class="row g-5 justify-content-center text-center">
                 <div class="col-md-5 col-lg-4">
-                    <div class="brand-logo h3 mb-3">Netquor</div>
+                    <img src="brand/nq-logo-banner-color-dark.svg" alt="Netquor Technologies" class="brand-logo-img brand-logo-img-lg mb-3" width="200" height="57">
                     <p class="text-muted small mx-auto" style="max-width: 300px;">
-                        High-performance technical services bridging the gap between hardware and code.
+                        Technical services that connect hardware and software.
                     </p>
                     <div class="d-flex align-items-center justify-content-center text-muted small mt-4">
                         <i class="bi bi-geo-alt-fill text-info me-2"></i>
@@ -369,7 +572,7 @@
                 </div>
 
                 <div class="col-md-5 col-lg-4">
-                    <h5 class="fw-bold mb-4 text-uppercase small tracking-widest text-info">Inquiries</h5>
+                    <h5 class="mb-4">Inquiries</h5>
                     <ul class="list-unstyled">
                         <li class="mb-2">
                             <a href="mailto:hello@netquor.com" class="text-decoration-none text-muted small">
@@ -387,15 +590,51 @@
         </div>
 
         <div class="container text-center border-top border-white border-opacity-10 pt-5">
-            <p class="text-muted small mb-0">&copy; 2026 Netquor Technologies. All Rights Reserved.</p>
+            <p class="text-muted small mb-0">&copy; 2026 Netquor Technologies LLC. All Rights Reserved.</p>
             <div class="mt-3">
                 <a href="terms.html" class="text-muted me-3 small text-decoration-none">Terms</a>
+                <a href="sdn.html" class="text-muted me-3 small text-decoration-none">Netquor SDN</a>
+                <a href="network.html" class="text-muted me-3 small text-decoration-none">Network Solutions</a>
+                <a href="vpn.html" class="text-muted me-3 small text-decoration-none">Netquor VPN</a>
+                <a href="digitalaccess.html" class="text-muted me-3 small text-decoration-none">Digital Access</a>
+                <a href="https://www.allsourcehosting.com/" target="_blank" rel="noopener" class="text-muted me-3 small text-decoration-none">All Source Hosting</a>
+                <a href="homeassistant.html" class="text-muted me-3 small text-decoration-none">Hosted Home Assistant</a>
+                <a href="fleet.html" class="text-muted me-3 small text-decoration-none">Netquor Fleet</a>
                 <a href="privacy.html" class="text-muted me-3 small text-decoration-none">Privacy</a>
             </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // The terminal types itself out when it scrolls into view (and shows everything at once without JavaScript).
+    (function () {
+        var t = document.querySelector('.term');
+        if (!t) return;
+        document.documentElement.classList.add('typing');
+        var done = false;
+        function play() {
+            if (done) return;
+            done = true;
+            t.classList.add('play');
+            window.removeEventListener('scroll', check);
+            window.removeEventListener('resize', check);
+        }
+        function check() {
+            var r = t.getBoundingClientRect();
+            if (r.top < window.innerHeight * 0.85 && r.bottom > window.innerHeight * 0.15) play();
+        }
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (es, o) {
+                es.forEach(function (e) { if (e.isIntersecting) { play(); o.disconnect(); } });
+            }, { threshold: 0.35 }).observe(t);
+        }
+        // A scroll check as well, in case the observer never reports (some embedded or throttled views).
+        window.addEventListener('scroll', check, { passive: true });
+        window.addEventListener('resize', check);
+        check();
+    })();
+    </script>
     <script>
         const observerOptions = { threshold: 0.6 };
         const observer = new IntersectionObserver((entries) => {

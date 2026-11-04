@@ -1,0 +1,61 @@
+/* Shared site navigation. Self-contained (no Bootstrap needed), so it looks the same on every page. Markup lives in tools/nav.html; run tools/build-nav.py after changing it. */
+.nq-nav { position: sticky; top: 0; z-index: 1030; background: rgba(11, 14, 19, .8); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(234, 241, 248, .09); font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif; font-size: 15px; line-height: 1.4; }
+.nq-nav.nq-static { position: relative; }
+.nq-nav *, .nq-nav *::before, .nq-nav *::after { box-sizing: border-box; }
+.nq-in { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; gap: 8px 24px; }
+.nq-brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: #eaf1f8; font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 600; font-size: 20px; letter-spacing: -.02em; }
+.nq-brand img { display: block; width: 32px; height: 32px; }
+.nq-brand:hover { color: #eaf1f8; }
+.nq-burger { margin-left: auto; display: none; width: 40px; height: 40px; border: 1px solid rgba(234, 241, 248, .16); border-radius: 10px; background: transparent; cursor: pointer; padding: 0; align-items: center; justify-content: center; flex-direction: column; gap: 5px; }
+.nq-burger span { display: block; width: 18px; height: 1.5px; background: #eaf1f8; border-radius: 2px; transition: transform .2s, opacity .2s; }
+.nq-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nq-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nq-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.nq-menu { display: flex; align-items: center; flex: 1 1 auto; gap: 16px; }
+.nq-links { display: flex; align-items: center; gap: 4px; list-style: none; margin: 0; padding: 0; }
+.nq-links > li { position: relative; }
+.nq-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 8px; color: #a2aebf; text-decoration: none; font: inherit; font-weight: 500; background: none; border: 0; cursor: pointer; transition: color .15s, background-color .15s; }
+.nq-link:hover, .nq-link:focus-visible, .nq-dd.open > .nq-link { color: #eaf1f8; background: rgba(234, 241, 248, .06); outline: none; }
+.nq-link:focus-visible { box-shadow: 0 0 0 2px #5eaaf0; }
+.nq-link.is-current { color: #eaf1f8; }
+.nq-caret { width: 10px; height: 10px; transition: transform .2s; }
+.nq-dd.open .nq-caret { transform: rotate(180deg); }
+.nq-dd-menu { display: none; position: absolute; left: 0; top: 100%; min-width: 360px; list-style: none; margin: 8px 0 0; padding: 8px; background: #11151c; border: 1px solid rgba(234, 241, 248, .12); border-radius: 14px; box-shadow: 0 24px 48px rgba(0, 0, 0, .5); }
+.nq-dd.open > .nq-dd-menu { display: block; }
+.nq-dd-menu a { display: flex; gap: 12px; align-items: flex-start; padding: 10px 12px; border-radius: 8px; color: #eaf1f8; text-decoration: none; }
+.nq-dd-menu a > i { color: #a2aebf; font-size: 1.0625rem; line-height: 1.3; width: 1.25rem; text-align: center; flex: none; }
+.nq-dd-menu a:hover, .nq-dd-menu a:focus-visible { background: rgba(234, 241, 248, .06); color: #fff; outline: none; }
+.nq-dd-menu a.is-current { background: rgba(47, 143, 224, .12); }
+.nq-dd-menu a.is-current > i { color: #5eaaf0; }
+.nq-dd-menu b { display: block; font-weight: 500; }
+.nq-dd-menu a > img { width: 1.25rem; height: 1.25rem; flex: none; margin-top: .1rem; border-radius: 5px; }
+.nq-dd-menu small { display: block; color: #7a8699; font-size: 13px; margin-top: 1px; }
+.nq-dd-menu hr { border: 0; border-top: 1px solid rgba(234, 241, 248, .09); margin: 6px 4px; opacity: 1; }
+.nq-cta { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+.nq-signin { display: inline-flex; align-items: center; gap: 6px; color: #a2aebf; text-decoration: none; font-weight: 500; transition: color .15s; }
+.nq-signin:hover { color: #eaf1f8; }
+.nq-signin svg { width: 10px; height: 10px; }
+.nq-btn { display: inline-flex; align-items: center; padding: 8px 16px; border-radius: 10px; font-weight: 500; font-size: 14px; text-decoration: none; background: #2f8fe0; color: #06101a; border: 1px solid #2f8fe0; transition: background-color .15s, border-color .15s; white-space: nowrap; }
+.nq-btn:hover { background: #4aa2ee; border-color: #4aa2ee; color: #06101a; }
+/* Without JavaScript: the menu is always shown, and the dropdown opens on hover or focus on desktop. */
+@media (min-width: 992px) { .nq-dd:hover > .nq-dd-menu, .nq-dd:focus-within > .nq-dd-menu { display: block; } }
+@media (max-width: 991.98px) {
+    .nq-in { flex-wrap: wrap; height: auto; min-height: 64px; padding: 12px 24px; }
+    .nq-js .nq-burger { display: inline-flex; }
+    .nq-js .nq-menu { display: none; flex: 1 0 100%; flex-direction: column; align-items: stretch; gap: 8px; padding: 6px 0 12px; }
+    .nq-js .nq-menu.open { display: flex; }
+    .nq-menu { flex: 1 0 100%; flex-direction: column; align-items: stretch; }
+    .nq-links { flex-direction: column; align-items: stretch; }
+    .nq-link { width: 100%; justify-content: space-between; }
+    .nq-dd-menu { position: static; min-width: 0; margin: 4px 0 6px; box-shadow: none; background: rgba(234, 241, 248, .03); }
+    .nq-dd:hover > .nq-dd-menu { display: none; }
+    .nq-dd.open > .nq-dd-menu { display: block; }
+    .nq-cta { margin-left: 0; }
+}
+/* With JavaScript, the phone menu and the Products list float over the page instead of pushing it down. */
+@media (max-width: 991.98px) {
+    .nq-js .nq-menu { position: absolute; top: 100%; left: 0; right: 0; flex: none; padding: 10px 24px 16px; background: #0b0e13; border-bottom: 1px solid rgba(234, 241, 248, .09); box-shadow: 0 24px 40px rgba(0, 0, 0, .55); }
+    .nq-js .nq-dd { position: static; }
+    .nq-js .nq-dd-menu { position: absolute; top: auto; left: 16px; right: 16px; margin: 6px 0 0; z-index: 2; background: #11151c; border: 1px solid rgba(234, 241, 248, .12); box-shadow: 0 24px 50px rgba(0, 0, 0, .65); max-height: calc(100vh - 150px); max-height: calc(100dvh - 150px); overflow-y: auto; }
+}
+@media (prefers-reduced-motion: reduce) { .nq-nav * { transition: none !important; } }

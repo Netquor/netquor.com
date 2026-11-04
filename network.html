@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en-US" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netquor Network Solutions: AS403008, Anycast &amp; IP as a Service</title>
+    <meta name="description" content="Routable IP space and anycast for distributed applications and workers, delivered over WireGuard tunnels from our own network, AS403008, with presence in Chicago, Dallas, New York and Kansas City.">
+    <meta name="keywords" content="AS403008, anycast, IP as a service, IPaaS, BGP, WireGuard tunnel, routable IP addresses, distributed applications, Chicago, Dallas, New York, Kansas City, Netquor">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+    <meta name="author" content="Netquor Technologies LLC">
+    <link rel="canonical" href="https://netquor.com/network.html">
+    <meta property="og:site_name" content="Netquor Technologies">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:url" content="https://netquor.com/network.html">
+    <meta property="og:title" content="Netquor Network Solutions: AS403008, Anycast &amp; IP as a Service">
+    <meta property="og:description" content="Routable IP space and anycast for distributed applications and workers, delivered over WireGuard tunnels, from Chicago, Dallas, New York and Kansas City.">
+    <meta property="og:image" content="https://netquor.com/nq-logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Netquor Network Solutions: AS403008, Anycast &amp; IP as a Service">
+    <meta name="twitter:description" content="Routable IP space and anycast for distributed applications and workers, delivered over WireGuard tunnels.">
+    <meta name="twitter:image" content="https://netquor.com/nq-logo.png">
+    <meta name="theme-color" content="#0b0e13">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://netquor.com/#org", "name": "Netquor Technologies LLC", "url": "https://netquor.com/"}, {"@type": "Service", "name": "Netquor Network Solutions", "serviceType": "IP as a Service and anycast, routed over WireGuard", "provider": {"@id": "https://netquor.com/#org"}, "url": "https://netquor.com/network.html", "description": "Routable IP space and anycast addresses for distributed applications and workers, delivered over WireGuard tunnels from Netquor's network, AS403008, with presence in Chicago, Dallas, New York and Kansas City."}]}</script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root { --cyber-blue: #5eaaf0; --obsidian: #0b0e13; }
+        body { background-color: var(--obsidian); color: #f8fafc; font-family: 'Inter', -apple-system, sans-serif; }
+        .navbar { backdrop-filter: blur(15px); background: rgba(2, 6, 23, 0.8); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .hero-section { padding: 90px 0 70px; background: none; }
+        .fw-black { font-weight: 900; }
+        .feature-card { background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 2rem; height: 100%; transition: border-color .3s, background .3s; }
+        .feature-card:hover { border-color: var(--cyber-blue); background: rgba(30, 41, 59, 0.5); }
+        .icon-accent { font-size: 1.8rem; color: var(--cyber-blue); margin-bottom: 1rem; display: inline-block; }
+        .btn-primary-cyber { background: var(--cyber-blue); color: var(--obsidian); border: none; border-radius: 50px; padding: 12px 32px; font-weight: 700; transition: .3s; }
+        .btn-primary-cyber:hover { background: #8cc4f7; color: var(--obsidian); box-shadow: none; }
+        .brand-logo-img { height: 44px; width: auto; background: #f1f5f9; border-radius: 10px; padding: 3px 8px; }
+        .pop { background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(47, 143, 224, 0.18); border-radius: 16px; padding: 1.1rem 1.25rem; text-align: center; }
+        .pop strong { display: block; font-size: 1.1rem; }
+        .step-num { width: 38px; height: 38px; border-radius: 50%; background: rgba(47, 143, 224, 0.12); color: var(--cyber-blue); font-weight: 800; display: inline-flex; align-items: center; justify-content: center; margin-bottom: .75rem; }
+        .builder { background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255,255,255,.08); border-radius: 28px; padding: 2rem; }
+        .seg { display: inline-flex; background: rgba(2,6,23,.6); border: 1px solid rgba(255,255,255,.1); border-radius: 50px; padding: 4px; gap: 4px; flex-wrap: wrap; }
+        .seg button { background: transparent; border: 0; color: #cbd5e1; padding: 8px 20px; border-radius: 50px; font-weight: 600; }
+        .seg button[aria-pressed="true"] { background: var(--cyber-blue); color: var(--obsidian); }
+        .tile { background: rgba(2,6,23,.55); border: 1px solid rgba(255,255,255,.09); border-radius: 16px; padding: .9rem 1rem; display: flex; align-items: center; gap: .75rem; justify-content: space-between; transition: border-color .2s; }
+        .tile.on { border-color: rgba(47, 143, 224,.55); }
+        .tile.off { opacity: .45; }
+        .step { display: inline-flex; align-items: center; gap: .4rem; }
+        .step button { width: 30px; height: 30px; border-radius: 8px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.05); color: #f8fafc; font-weight: 700; line-height: 1; }
+        .step button:hover:not(:disabled) { border-color: var(--cyber-blue); color: var(--cyber-blue); }
+        .step button:disabled { opacity: .35; cursor: not-allowed; }
+        .step .n { min-width: 1.6rem; text-align: center; font-variant-numeric: tabular-nums; }
+        .stack { display: flex; flex-direction: column-reverse; gap: 6px; min-height: 140px; justify-content: flex-start; }
+        .blk { border-radius: 12px; padding: .65rem 1rem; display: flex; justify-content: space-between; align-items: center; font-size: .9rem; background: rgba(47, 143, 224,.10); border: 1px solid rgba(47, 143, 224,.35); }
+        .blk.base { background: rgba(47, 143, 224,.22); border-color: var(--cyber-blue); font-weight: 700; }
+        .blk .amt { color: #94a3b8; font-variant-numeric: tabular-nums; }
+        .blk.drop { animation: drop .55s cubic-bezier(.2,.7,.2,1); }
+        @keyframes drop { 0% { transform: translateY(-70px); opacity: 0; } 55% { transform: translateY(5px); opacity: 1; } 78% { transform: translateY(-3px); } 100% { transform: translateY(0); } }
+        .total { font-variant-numeric: tabular-nums; }
+        @media (max-width: 575.98px) {
+            .builder { padding: 1.1rem; border-radius: 20px; }
+            .seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; width: 100%; border-radius: 14px; }
+            .seg button { padding: 8px 6px; border-radius: 10px; font-size: .9rem; white-space: nowrap; }
+            #seg-bill button:last-child { font-size: .8rem; white-space: normal; line-height: 1.15; }
+        }
+        @media (prefers-reduced-motion: reduce) { .blk.drop { animation: none; } }
+        footer { border-top: 1px solid rgba(255, 255, 255, 0.05); padding: 50px 0; }
+        .accordion { --bs-accordion-bg: transparent; --bs-accordion-border-color: rgba(255, 255, 255, 0.08); }
+        .accordion-button:not(.collapsed) { background: rgba(47, 143, 224, 0.07); color: #f8fafc; box-shadow: none; }
+    </style>
+    <link rel="stylesheet" href="nav.css?v=82c09fb9">
+    <link rel="stylesheet" href="nq.css?v=bdb6a477">
+    <script src="nav.js?v=e3b8eb1d"></script>
+    <script src="analytics.js?v=aedc133c" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600&display=swap">
+</head>
+
+<body>
+    <!-- nq-nav:start -->
+    <nav class="nq-nav" aria-label="Main">
+        <div class="nq-in">
+            <a class="nq-brand" href="index.html" aria-label="Netquor Technologies"><img src="brand/nq-mark.svg" alt="" width="32" height="32"><span>Netquor</span></a>
+            <button class="nq-burger" type="button" aria-expanded="false" aria-controls="nq-menu" aria-label="Menu"><span></span><span></span><span></span></button>
+            <div class="nq-menu" id="nq-menu">
+                <ul class="nq-links">
+                    <li class="nq-dd">
+                        <button class="nq-link nq-dd-btn is-current" type="button" aria-expanded="false" aria-haspopup="true">Products <svg class="nq-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1.5 3.5 5 7l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                        <ul class="nq-dd-menu">
+                            <li><a href="https://www.allsourcehosting.com/" target="_blank" rel="noopener"><img src="allsource-icon.svg" alt="" width="20" height="20"><span><b>All Source Hosting</b><small>Homelab hosting marketplace: rent a VM or sell your lab</small></span></a></li>
+                            <li><a href="fleet.html"><i class="bi bi-apple" aria-hidden="true"></i><span><b>Netquor Fleet MDM</b><small>Apple MDM and Santa endpoint security for Mac</small></span></a></li>
+                            <li><a href="sdn.html"><i class="bi bi-diagram-3" aria-hidden="true"></i><span><b>Netquor SDN</b><small>Managed networking, Ubiquiti &amp; VyOS, hosting</small></span></a></li>
+                            <li><a href="network.html" class="is-current" aria-current="page"><i class="bi bi-broadcast-pin" aria-hidden="true"></i><span><b>Network Solutions</b><small>AS403008: IPs and anycast over WireGuard</small></span></a></li>
+                            <li><a href="vpn.html"><i class="bi bi-shield-check" aria-hidden="true"></i><span><b>Netquor VPN</b><small>Local WireGuard VPN from $5/mo, up to 1 Gbps</small></span></a></li>
+                            <li><a href="homeassistant.html"><i class="bi bi-house-gear" aria-hidden="true"></i><span><b>Hosted Home Assistant</b><small>Managed smart home with a rented bridge</small></span></a></li>
+                            <li><a href="digitalaccess.html"><i class="bi bi-door-open" aria-hidden="true"></i><span><b>Digital Access</b><small>Access control without replacing your hardware</small></span></a></li>
+                            <li><hr></li>
+                            <li><a href="index.html#services"><i class="bi bi-tools" aria-hidden="true"></i><span><b>Engineering &amp; field services</b><small>Software, hardware repair, consulting</small></span></a></li>
+                        </ul>
+                    </li>
+                    <li><a class="nq-link" href="index.html#homelab">Homelab</a></li>
+                    <li><a class="nq-link" href="network.html#pricing">Pricing</a></li>
+                    <li><a class="nq-link" href="index.html#local">About</a></li>
+                </ul>
+                <div class="nq-cta">
+                    <a class="nq-signin" href="https://account.netquor.com/" target="_blank" rel="noopener">Sign in <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    <a class="nq-btn" href="mailto:hello@netquor.com">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- nq-nav:end -->
+
+    <header class="hero-section text-center">
+        <div class="container">
+            <div class="row justify-content-center"><div class="col-lg-9">
+                <span class="badge rounded-pill bg-info bg-opacity-10 text-info px-4 py-2 mb-4 border border-info border-opacity-10 d-table mx-auto">AS403008 &middot; Chicago &middot; Dallas &middot; New York &middot; Kansas City</span>
+                <h1 class="display-4 fw-black mb-4">Your IP addresses, <span class="text-info">anywhere</span> you run</h1>
+                <p class="lead text-muted mb-5 mx-auto" style="max-width: 760px;">Routable IP space and anycast for distributed applications and workers, delivered to you over WireGuard tunnels from our own network, AS403008.</p>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a href="mailto:hello@netquor.com?subject=Netquor%20Network%20Solutions%20quote" class="btn btn-primary-cyber btn-lg">Get a quote</a>
+                    <a href="#pricing" class="btn btn-outline-info btn-lg rounded-pill px-4">See pricing</a>
+                </div>
+            </div></div>
+        </div>
+    </header>
+
+    <main>
+        <section class="py-5" id="features">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="display-6 fw-black">Network Solutions</h2>
+                    <p class="text-muted mx-auto" style="max-width: 680px;">Addresses and routing as a service, so your applications keep the same IPs wherever they run.</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-4"><div class="feature-card"><i class="bi bi-globe2 icon-accent"></i><h3 class="h5 fw-bold">IP as a Service</h3><p class="text-muted small mb-0">Routable public IP addresses delivered to your servers, sites and clouds over a WireGuard tunnel. No new circuit, no waiting on your hosting provider to hand you address space.</p></div></div>
+                    <div class="col-md-6 col-lg-4"><div class="feature-card"><i class="bi bi-broadcast-pin icon-accent"></i><h3 class="h5 fw-bold">Anycast for distributed apps</h3><p class="text-muted small mb-0">One address announced from several locations, so clients reach a nearby instance. A fit for APIs, DNS, edge services and fleets of workers spread across clouds and regions.</p></div></div>
+                    <div class="col-md-6 col-lg-4"><div class="feature-card"><i class="bi bi-diagram-3 icon-accent"></i><h3 class="h5 fw-bold">Our own AS: AS403008</h3><p class="text-muted small mb-0">Your addresses are announced by Netquor's own autonomous system over BGP, so they stay yours as workloads move between providers.</p></div></div>
+                    <div class="col-md-6 col-lg-4"><div class="feature-card"><i class="bi bi-shield-lock icon-accent"></i><h3 class="h5 fw-bold">Routed over WireGuard</h3><p class="text-muted small mb-0">Traffic reaches you through encrypted WireGuard tunnels, from a laptop-sized VM to a Proxmox cluster or a router. Modern, simple and fast to deploy.</p></div></div>
+                    <div class="col-md-6 col-lg-4"><div class="feature-card"><i class="bi bi-geo-alt icon-accent"></i><h3 class="h5 fw-bold">Four locations</h3><p class="text-muted small mb-0">Presence in Chicago, Dallas, New York and Kansas City, with Fargo, North Dakota as home base, so you can land traffic near your users.</p></div></div>
+                    <div class="col-md-6 col-lg-4"><div class="feature-card"><i class="bi bi-braces icon-accent"></i><h3 class="h5 fw-bold">Managed with Netquor SDN</h3><p class="text-muted small mb-0">Tunnels, routes and addresses sit in the same dashboard and API as the rest of your Netquor SDN network, with one place to see and change what is announced.</p></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5" id="build">
+            <div class="container" style="max-width: 1100px;">
+                <div class="text-center mb-4">
+                    <h2 class="display-6 fw-black">Build it your way</h2>
+                    <p class="text-muted mx-auto" style="max-width: 640px;">Start with a plan, then snap on the blocks you need. The total updates as you go.</p>
+                </div>
+                <div class="builder">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                        <div class="seg" role="group" aria-label="Base plan" id="seg-plan">
+                            <button type="button" data-plan="homelab" aria-pressed="false">Homelab</button>
+                            <button type="button" data-plan="startup" aria-pressed="true">Startup</button>
+                            <button type="button" data-plan="business" aria-pressed="false">Business</button>
+                        </div>
+                        <div class="seg" role="group" aria-label="Billing" id="seg-bill">
+                            <button type="button" data-bill="month" aria-pressed="true">Monthly</button>
+                            <button type="button" data-bill="year" aria-pressed="false">Yearly (2 months free)</button>
+                        </div>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-lg-7">
+                            <div class="small text-muted mb-2">Add blocks</div>
+                            <div class="d-grid gap-2" id="tiles"></div>
+                            <noscript><p class="text-muted small mt-3">Add-ons: extra IPv4 $3.50, location $9, tunnel $4, volume $2/TB, anycast address $12, IPv6 /48 $3, bring your own prefix $15, dedicated transit gateway $10 per location, all per month.</p></noscript>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="small text-muted mb-2">Your stack</div>
+                            <div class="stack" id="stack" aria-live="polite"></div>
+                            <div class="border-top border-white border-opacity-10 mt-3 pt-3">
+                                <div class="d-flex justify-content-between align-items-baseline">
+                                    <span class="text-muted">Total</span>
+                                    <span><span class="display-6 fw-black total" id="total">$0</span> <span class="text-muted small" id="per">/ month</span></span>
+                                </div>
+                                <div class="small text-muted mt-2" id="summary"></div>
+                                <div class="small text-warning mt-2" id="hint" hidden></div>
+                                <a id="quote" class="btn btn-primary-cyber w-100 mt-3" href="mailto:hello@netquor.com?subject=Network%20Solutions%20quote">Request this setup</a>
+                                <p class="text-muted small mt-2 mb-0" id="note"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+        (function () {
+            var PLANS = {
+                homelab:  { name: 'Homelab',  price: 6.49,  inc: { ipv4: 1, loc: 1, tun: 1, tb: 2,    any: 0, v6: '/56', speed: '1 Gbps' } },
+                startup:  { name: 'Startup',  price: 37.49, inc: { ipv4: 4, loc: 2, tun: 3, tb: 5,    any: 1, v6: '/56', speed: '1 Gbps' } },
+                business: { name: 'Business', price: 129.49, inc: { ipv4: 8, loc: 4, tun: 8, tb: null, any: 2, v6: '/48', speed: '2.5 Gbps' } }
+            };
+            var ADDONS = [
+                { id: 'ipv4', name: 'Extra IPv4 address', price: 3.5, unit: 'address', max: 64 },
+                { id: 'loc',  name: 'Extra location',     price: 9,   unit: 'location', max: 4 },
+                { id: 'tun',  name: 'Extra tunnel',       price: 4,   unit: 'tunnel', max: 32 },
+                { id: 'tb',   name: 'Extra volume',       price: 2,   unit: 'TB', max: 100 },
+                { id: 'any',  name: 'Anycast address',    price: 12,  unit: 'address', max: 16 },
+                { id: 'v6',   name: 'Extra IPv6 /48',     price: 3,   unit: '/48', max: 16 },
+                { id: 'gw',   name: 'Dedicated transit gateway', price: 10, unit: 'per location', max: 4 },
+                { id: 'byo',  name: 'Bring your own prefix', price: 15, unit: '', max: 1 }
+            ];
+            var state = { plan: 'startup', bill: 'month', qty: {} };
+            var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var $ = function (id) { return document.getElementById(id); };
+            var money = function (n) { return '$' + n.toLocaleString('en-US', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }); };
+
+            function maxFor(a) {
+                var inc = PLANS[state.plan].inc;
+                if (a.id === 'loc') return 4 - inc.loc;                         // four locations in all
+                if (a.id === 'gw') return inc.loc + (state.qty.loc || 0);       // one gateway per location you use
+                return a.max;
+            }
+            function blocked(a) { return a.id === 'tb' && state.plan === 'business'; } // Business is billed on measured use
+            function clamp() {
+                ADDONS.forEach(function (a) {
+                    var m = blocked(a) ? 0 : maxFor(a);
+                    state.qty[a.id] = Math.max(0, Math.min(state.qty[a.id] || 0, m));
+                });
+            }
+            function renderTiles() {
+                $('tiles').innerHTML = '';
+                ADDONS.forEach(function (a) {
+                    var q = state.qty[a.id] || 0, off = blocked(a), m = off ? 0 : maxFor(a);
+                    var d = document.createElement('div');
+                    d.className = 'tile' + (q ? ' on' : '') + (off ? ' off' : '');
+                    d.innerHTML = '<div><div class="fw-semibold">' + a.name + '</div><div class="small text-muted">' + money(a.price) + ' / month' + (a.unit ? ' per ' + a.unit.replace(/^per /, '') : '') + (off ? ' (Business is billed on measured use)' : '') + '</div></div>' +
+                        '<div class="step"><button type="button" aria-label="Remove one ' + a.name + '"' + (q ? '' : ' disabled') + '>&minus;</button><span class="n">' + q + '</span><button type="button" aria-label="Add one ' + a.name + '"' + (q >= m ? ' disabled' : '') + '>+</button></div>';
+                    var b = d.querySelectorAll('button');
+                    b[0].onclick = function () { change(a, -1, 0); };
+                    b[1].onclick = function () { change(a, +1, 1); };
+                    $('tiles').appendChild(d);
+                });
+            }
+            function change(a, delta, which) {
+                var before = state.qty[a.id] || 0;
+                state.qty[a.id] = before + delta;
+                clamp();
+                render(delta > 0 ? a.id : null);
+                // Keep keyboard focus where it was (the tiles are rebuilt): the same button, or its neighbour if that one is now disabled.
+                var i = ADDONS.indexOf(a), btns = $('tiles').children[i].querySelectorAll('button');
+                var want = btns[which].disabled ? btns[1 - which] : btns[which];
+                if (!want.disabled) want.focus();
+            }
+            function totals() {
+                var inc = PLANS[state.plan].inc, q = state.qty;
+                var t = {
+                    ipv4: inc.ipv4 + (q.ipv4 || 0), loc: inc.loc + (q.loc || 0), tun: inc.tun + (q.tun || 0),
+                    tb: inc.tb === null ? null : inc.tb + (q.tb || 0), any: inc.any + (q.any || 0),
+                    v6: inc.v6 + (q.v6 ? ' + ' + q.v6 + ' extra /48' + (q.v6 > 1 ? 's' : '') : ''), gw: q.gw || 0, byo: !!q.byo
+                };
+                return t;
+            }
+            function render(dropId) {
+                clamp();
+                var plan = PLANS[state.plan], sum = plan.price, st = $('stack');
+                st.innerHTML = '';
+                var base = document.createElement('div');
+                base.className = 'blk base';
+                base.innerHTML = '<span>' + plan.name + ' plan</span><span class="amt">' + money(plan.price) + '</span>';
+                st.appendChild(base);
+                ADDONS.forEach(function (a) {
+                    var q = state.qty[a.id] || 0;
+                    if (!q) return;
+                    var cost = q * a.price; sum += cost;
+                    var b = document.createElement('div');
+                    b.className = 'blk' + (dropId === a.id && !reduce ? ' drop' : '');
+                    b.innerHTML = '<span>' + a.name + (q > 1 ? ' &times; ' + q : '') + '</span><span class="amt">' + money(cost) + '</span>';
+                    st.appendChild(b);
+                });
+                var yearly = state.bill === 'year', shown = yearly ? sum * 10 : sum;
+                $('total').textContent = money(shown);
+                $('per').textContent = yearly ? '/ year' : '/ month';
+                $('note').textContent = yearly ? 'Two months free: that is ' + money(sum * 2) + ' off a year.' : 'Month to month, no setup fee.';
+                var t = totals();
+                $('summary').textContent = t.ipv4 + ' IPv4, IPv6 ' + t.v6 + ', ' + t.loc + ' location' + (t.loc > 1 ? 's' : '') + ', ' + t.tun + ' tunnel' + (t.tun > 1 ? 's' : '') + ', up to ' + plan.inc.speed + (t.tb === null ? ', billed on measured use' : ', ' + t.tb + ' TB volume') + (t.any ? ', ' + t.any + ' anycast' : '') + (t.gw ? ', ' + t.gw + ' dedicated gateway' + (t.gw > 1 ? 's' : '') : '') + (t.byo ? ', your own prefix' : '') + '.';
+                var hint = $('hint'); hint.hidden = true;
+                if (t.any && t.loc < 2) { hint.hidden = false; hint.textContent = 'Anycast announces from more than one location: add a location to use it.'; }
+                var lines = ['Plan: ' + plan.name + ' (' + (yearly ? 'yearly' : 'monthly') + ')'];
+                ADDONS.forEach(function (a) { var q = state.qty[a.id] || 0; if (q) lines.push('+ ' + a.name + (q > 1 ? ' x ' + q : '')); });
+                lines.push('', t.ipv4 + ' IPv4, IPv6 ' + t.v6 + ', ' + t.loc + ' location' + (t.loc > 1 ? 's' : '') + ', ' + t.tun + ' tunnel' + (t.tun > 1 ? 's' : ''), 'Estimated total: ' + money(shown) + (yearly ? ' / year' : ' / month'), '', 'What I am building:');
+                $('quote').href = 'mailto:hello@netquor.com?subject=' + encodeURIComponent('Network Solutions: ' + plan.name + ' setup') + '&body=' + encodeURIComponent(lines.join('\n'));
+                renderTiles();
+            }
+            Array.prototype.forEach.call(document.querySelectorAll('#seg-plan button'), function (b) {
+                b.onclick = function () {
+                    state.plan = b.getAttribute('data-plan');
+                    Array.prototype.forEach.call(document.querySelectorAll('#seg-plan button'), function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+                    render(null);
+                };
+            });
+            Array.prototype.forEach.call(document.querySelectorAll('#seg-bill button'), function (b) {
+                b.onclick = function () {
+                    state.bill = b.getAttribute('data-bill');
+                    Array.prototype.forEach.call(document.querySelectorAll('#seg-bill button'), function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+                    render(null);
+                };
+            });
+            render(null);
+        })();
+        </script>
+
+        <section class="py-5" id="locations">
+            <div class="container" style="max-width: 900px;">
+                <h2 class="display-6 fw-black text-center mb-4">Where we are</h2>
+                <div class="row g-3">
+                    <div class="col-6 col-md-3"><div class="pop"><strong>Chicago</strong><span class="text-muted small">ORD</span></div></div>
+                    <div class="col-6 col-md-3"><div class="pop"><strong>Dallas</strong><span class="text-muted small">DFW</span></div></div>
+                    <div class="col-6 col-md-3"><div class="pop"><strong>New York</strong><span class="text-muted small">NYC</span></div></div>
+                    <div class="col-6 col-md-3"><div class="pop"><strong>Kansas City</strong><span class="text-muted small">MCI</span></div></div>
+                </div>
+                <p class="text-muted small text-center mt-3 mb-0">Need a location that is not listed? Ask. We add capacity where customers need it.</p>
+            </div>
+        </section>
+
+        <section class="py-5" id="how">
+            <div class="container" style="max-width: 1000px;">
+                <h2 class="display-6 fw-black text-center mb-5">How it works</h2>
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-3"><div class="step-num">1</div><h3 class="h6 fw-bold">Choose locations</h3><p class="text-muted small mb-0">Pick where your addresses should be announced: one location, or several for anycast.</p></div>
+                    <div class="col-md-6 col-lg-3"><div class="step-num">2</div><h3 class="h6 fw-bold">Connect a tunnel</h3><p class="text-muted small mb-0">Bring up a WireGuard tunnel from your server, router or cloud instance to our network. We give you the configuration.</p></div>
+                    <div class="col-md-6 col-lg-3"><div class="step-num">3</div><h3 class="h6 fw-bold">We announce your IPs</h3><p class="text-muted small mb-0">Your addresses are routed to you from AS403008 over BGP. Traffic arrives through the tunnel.</p></div>
+                    <div class="col-md-6 col-lg-3"><div class="step-num">4</div><h3 class="h6 fw-bold">Run anywhere</h3><p class="text-muted small mb-0">Move or add workloads and keep the same addresses. Add locations when you want more reach.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5" id="pricing">
+            <div class="container" style="max-width: 1100px;">
+                <div class="text-center mb-5">
+                    <h2 class="display-6 fw-black">Simple pricing</h2>
+                    <p class="text-muted mx-auto" style="max-width: 640px;">Month to month, no setup fee. IPv6 is included on every plan. We love homelabs, so the entry plan is built for them.</p>
+                </div>
+                <div class="row g-4 align-items-stretch">
+                    <div class="col-lg-4"><div class="feature-card d-flex flex-column">
+                        <h3 class="h5 fw-bold text-info">Homelab</h3>
+                        <div class="my-3"><span class="display-5 fw-black">$6.49</span><span class="text-muted"> / month</span></div>
+                        <ul class="list-unstyled small text-muted mb-4 flex-grow-1">
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>1 routable IPv4 address</li>
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>IPv6 /56 (256 subnets)</li>
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>1 location of your choice</li>
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>1 WireGuard tunnel, up to 1 Gbps</li>
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>2 TB fair-use volume, slowed and never surprise-billed</li>
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>Standard WireGuard and VyOS configs</li>
+                            <li><i class="bi bi-check2 text-info me-2"></i>Community and email support</li>
+                        </ul>
+                        <a href="mailto:hello@netquor.com?subject=Network%20Solutions%20-%20Homelab" class="btn btn-outline-info rounded-pill">Start with Homelab</a>
+                    </div></div>
+                    <div class="col-lg-4"><div class="feature-card d-flex flex-column" style="border-color: rgba(47, 143, 224,.5);">
+                        <h3 class="h5 fw-bold text-info">Startup</h3>
+                        <div class="my-3"><span class="display-5 fw-black">$37.49</span><span class="text-muted"> / month</span></div>
+                        <ul class="list-unstyled small text-muted mb-4 flex-grow-1">
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>4 routable IPv4 addresses</li>
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>IPv6 /56, or a /48 on request</li>
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>2 locations</li>
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>1 anycast address</li>
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>3 WireGuard tunnels, up to 1 Gbps</li>
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>5 TB fair-use volume</li>
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>Optional BGP session</li>
+                            <li><i class="bi bi-check2 text-info me-2"></i>Email support, one business day</li>
+                        </ul>
+                        <a href="mailto:hello@netquor.com?subject=Network%20Solutions%20-%20Startup" class="btn btn-primary-cyber">Choose Startup</a>
+                    </div></div>
+                    <div class="col-lg-4"><div class="feature-card d-flex flex-column">
+                        <h3 class="h5 fw-bold text-info">Business</h3>
+                        <div class="my-3"><span class="text-muted">from </span><span class="display-5 fw-black">$129.49</span><span class="text-muted"> / month</span></div>
+                        <ul class="list-unstyled small text-muted mb-4 flex-grow-1">
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>8 or more routable IPv4 addresses</li>
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>IPv6 /48 included</li>
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>Up to all four locations</li>
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>Anycast and BGP included</li>
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>2.5 Gbps burst included; 5 or 10 Gbps by quote</li>
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>Parallel tunnels as the speed needs</li>
+                            <li class="mb-2"><i class="bi bi-check2 text-info me-2"></i>Usage above the commit billed on measured use</li>
+                            <li><i class="bi bi-check2 text-info me-2"></i>Priority support, same day</li>
+                        </ul>
+                        <a href="mailto:hello@netquor.com?subject=Network%20Solutions%20-%20Business" class="btn btn-outline-info rounded-pill">Talk to us</a>
+                    </div></div>
+                </div>
+                <p class="text-muted small text-center mt-3 mb-0">Speeds are "up to" and depend on the endpoints at your end. Fair-use applies. Prices in USD.</p>
+                <p class="text-center small mt-2 mb-0"><i class="bi bi-mortarboard text-info me-1"></i> <span class="text-muted">Student or learner? The Homelab plan is half price.</span> <a class="text-info text-decoration-none" href="mailto:hello@netquor.com?subject=Student%20or%20learner%20pricing">Ask us</a></p>
+            </div>
+        </section>
+
+        <section class="py-5">
+            <div class="container" style="max-width: 900px;">
+                <h2 class="display-6 fw-black text-center mb-4">Good fits</h2>
+                <div class="row g-3">
+                    <div class="col-md-6"><div class="feature-card"><h3 class="h6 fw-bold text-info">Workers and agents across clouds</h3><p class="text-muted small mb-0">Give distributed workers stable, allow-listable addresses, whichever provider they land on.</p></div></div>
+                    <div class="col-md-6"><div class="feature-card"><h3 class="h6 fw-bold text-info">Anycast services</h3><p class="text-muted small mb-0">DNS, APIs, game servers and edge endpoints that should answer from the closest location.</p></div></div>
+                    <div class="col-md-6"><div class="feature-card"><h3 class="h6 fw-bold text-info">Static IPs for hosting providers that do not offer them</h3><p class="text-muted small mb-0">Get routable addresses on a VPS, a home lab or a small office link.</p></div></div>
+                    <div class="col-md-6"><div class="feature-card"><h3 class="h6 fw-bold text-info">Migrations</h3><p class="text-muted small mb-0">Move between providers without renumbering: the addresses stay, and the tunnel follows the workload.</p></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5">
+            <div class="container" style="max-width: 820px;">
+                <h2 class="display-6 fw-black text-center mb-4">Questions</h2>
+                <div class="accordion" id="faq">
+                    <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q0">What is IP as a Service?</button></h3><div id="q0" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body text-muted small">It means we provide routable public IP addresses as a service. The addresses are announced from our network and delivered to you over a WireGuard tunnel, so you do not need to own address space or run BGP yourself.</div></div></div>
+                    <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q1">What is anycast and when do I want it?</button></h3><div id="q1" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body text-muted small">Anycast announces the same IP address from more than one location. Clients are sent to a nearby one, and if a location goes away, traffic goes to another. It suits stateless or replicated services such as DNS, APIs and edge workers.</div></div></div>
+                    <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q2">Why WireGuard?</button></h3><div id="q2" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body text-muted small">WireGuard is encrypted, simple to configure and runs well on small servers, routers and cloud instances. A tunnel works from almost anywhere you can run Linux, VyOS or a WireGuard client.</div></div></div>
+                    <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q3">What speeds can I expect?</button></h3><div id="q3" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body text-muted small">Homelab and Startup plans run up to 1 Gbps per tunnel, and Business includes up to 2.5 Gbps, with 5 and 10 Gbps available by quote using parallel tunnels. Speed is burst capacity, not a promise for every moment: it also depends on the hardware and the internet connection at your end, and a single flow is limited by one CPU core at each end. Tell us your target and we will size it with you.</div></div></div>
+                    <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q4">Can I bring my own IP addresses?</button></h3><div id="q4" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body text-muted small">Ask us. We can talk through announcing address space you own alongside, or instead of, addresses we provide.</div></div></div>
+                    <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q5">How is this priced?</button></h3><div id="q5" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body text-muted small">Plans start at $6.49 a month. Homelab and Startup are fixed prices, Business starts at $99 and larger speeds are quoted from the addresses and locations you need. See the pricing above, or send us what you are building and we will reply within a business day.</div></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5 my-4">
+            <div class="container">
+                <div class="card p-5 text-center">
+                    <h2 class="fw-black mb-3">Tell us what you are building</h2>
+                    <p class="text-muted mb-4 mx-auto" style="max-width: 560px;">Which locations, how many addresses, and what runs behind them. We reply within a business day.</p>
+                    <div class="d-flex flex-wrap justify-content-center gap-3">
+                        <a class="btn btn-primary-cyber btn-lg" href="mailto:hello@netquor.com?subject=Netquor%20Network%20Solutions">hello@netquor.com</a>
+                        <a class="btn btn-outline-info btn-lg rounded-pill px-4" href="tel:+18889192882">+1 (888) 919-2882</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container text-center">
+            <p class="text-muted small mb-1">Netquor Technologies LLC &middot; Fargo, North Dakota &middot; AS403008</p>
+            <p class="text-muted small mb-0">&copy; 2026 Netquor Technologies LLC. All Rights Reserved.</p>
+            <div class="mt-3">
+                <a href="index.html" class="text-muted me-3 small text-decoration-none">Home</a>
+                <a href="sdn.html" class="text-muted me-3 small text-decoration-none">Netquor SDN</a>
+                <a href="fleet.html" class="text-muted me-3 small text-decoration-none">Netquor Fleet</a>
+                <a href="terms.html" class="text-muted me-3 small text-decoration-none">Terms</a>
+                <a href="privacy.html" class="text-muted me-3 small text-decoration-none">Privacy</a>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
