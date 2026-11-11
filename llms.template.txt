@@ -2,7 +2,7 @@
 
 > Fargo, North Dakota technology company serving the Midwest. Managed networking (Ubiquiti UniFi, VyOS, WireGuard), Apple device management, routable IP space on our own network (AS403008), VPN, hosted Home Assistant, building access control, and a virtual receptionist and business phone system in early access.
 
-Netquor Technologies LLC is based in Fargo, North Dakota and serves small businesses across Fargo-Moorhead, North Dakota, Minnesota and the Midwest. Contact: hello@netquor.com, +1 (888) 717-1701. Service status: https://status.netquor.com/.
+Netquor Technologies LLC is based in Fargo, North Dakota and serves small businesses across Fargo-Moorhead, North Dakota, Minnesota and the Midwest. Contact: hello@netquor.com, +1 (888) 717-1701. Service status: https://status.netquor.com/. Our story: https://www.netquor.com/story.html.
 
 ## Products
 - [Netquor Phone](https://phone.netquor.com/): A virtual receptionist and business phone system, in early access. Planned launch price from {{price:phone.planned_launch.month}} a month; billing is not built yet, so nobody is charged during early access. The first 100 founding partners keep the launch price for 24 months. A self-hosted option exists, with terms at launch. Sample calls on that site are scripted and there are no customer case studies yet.

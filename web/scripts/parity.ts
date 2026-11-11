@@ -1,10 +1,13 @@
 // parity.ts: `bun run parity <page>.html` or `bun run parity --all`. Compares a migrated Svelte page with its legacy file (text blocks, links and images, metadata and JSON-LD, external scripts and stylesheets, ids scripts need). Exit code 1 when anything differs. Intended differences go in migration/parity-allow.json with a reason. See migration/README.md.
 //   --no-build   use the existing web/build (otherwise it is rebuilt first)
 //   --base URL   compare against a server that is already running (it must serve the seed prices); no build, no server started
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { checkPage, migratedPaths, pageKey, pagePathFor, startServer } from "./parity/run";
 import { PAGES } from "../src/lib/pages";
 
 const args = process.argv.slice(2);
+const REPO_ROOT = join(import.meta.dir, "..", "..");
 const flag = (name: string) => args.includes(name);
 const valueOf = (name: string) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : undefined; };
 const base = valueOf("--base");
@@ -16,7 +19,11 @@ if (!flag("--all") && names.length === 0) usage();
 const migrated = migratedPaths();
 let paths: string[];
 if (flag("--all")) {
-    paths = PAGES.map((p) => p.path).filter((p) => migrated.has(p));
+    // A page that has no legacy HTML file in the repo root (written new in Svelte, like story.html) has nothing to compare with.
+    const legacyExists = (p: string) => p === "/" ? existsSync(join(REPO_ROOT, "index.html")) : existsSync(join(REPO_ROOT, p.slice(1)));
+    const newPages = PAGES.map((p) => p.path).filter((p) => migrated.has(p) && !legacyExists(p));
+    if (newPages.length) console.log(`new pages with no legacy file (skipped): ${newPages.map(pageKey).join(", ")}`);
+    paths = PAGES.map((p) => p.path).filter((p) => migrated.has(p) && legacyExists(p));
     const waiting = PAGES.map((p) => p.path).filter((p) => !migrated.has(p));
     console.log(`${paths.length} migrated page(s) to check; ${waiting.length} not migrated yet: ${waiting.map(pageKey).join(", ") || "none"}`);
     if (paths.length === 0) process.exit(0);

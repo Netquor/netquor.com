@@ -23,6 +23,7 @@ export const PAGES: readonly PageEntry[] = [
     { path: "/readiness.html", priority: 0.7, changefreq: "monthly" },
     { path: "/startups.html", priority: 0.7, changefreq: "monthly" },
     { path: "/referrals.html", priority: 0.6, changefreq: "monthly" },
+    { path: "/story.html", priority: 0.5, changefreq: "monthly" },
     { path: "/compare.html", priority: 0.8, changefreq: "monthly" },
     { path: "/partners.html", priority: 0.6, changefreq: "monthly" },
     { path: "/terms.html", priority: 0.2, changefreq: "yearly" },

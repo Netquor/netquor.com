@@ -20,7 +20,7 @@ else:
     s = s.replace('+1 (888) 717-1701</a></p>', '+1 (888) 717-1701</a></p>\n                    ' + block, 1)
 
 # structured data: sameAs on the Organization
-m = re.search(r'<script type="application/ld\+json">(.*?)</script>', s, re.S)
+m = re.search(r'<script type="application/ld\+json"[^>]*>(.*?)</script>', s, re.S)
 d = json.loads(m.group(1))
 for g in d["@graph"]:
     if g.get("@id") == "https://www.netquor.com/#org":
