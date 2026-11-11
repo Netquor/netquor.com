@@ -15,7 +15,7 @@ OLD_BOOTSTRAP_NAV = re.compile(r'[ \t]*<nav class="navbar navbar-expand-lg stick
 # page -> how to place the nav the first time: "replace" an old Bootstrap navbar, "body" (right after <body>), or "before:<marker>" (above a page's own header)
 PAGES = {
     "index.html": "replace", "sdn.html": "replace", "network.html": "replace", "vpn.html": "replace", "homeassistant.html": "replace", "digitalaccess.html": "body",
-    "privacy.html": "body", "terms.html": "body", "fleet.html": 'before:<header class="nav">',
+    "privacy.html": "body", "terms.html": "body", "subnet-calculator.html": "body", "central.html": "body", "readiness.html": "body", "partners.html": "body", "compare.html": "body", "referrals.html": "body", "startups.html": "body", "fleet.html": 'before:<header class="nav">',
 }
 STATIC = {"fleet.html"}          # pages with their own sticky bar below: the shared nav scrolls away instead of stacking
 FILE_FOR = {"index.html": "index.html"}
@@ -40,6 +40,7 @@ def _ver(name: str) -> str:
     """A short fingerprint of the file, so browsers fetch a changed nav.css / nav.js instead of reusing a cached copy."""
     return hashlib.md5((ROOT / name).read_bytes()).hexdigest()[:8]
 
+NUDGE_PAGES = {"fleet.html", "vpn.html", "network.html", "sdn.html", "homeassistant.html", "digitalaccess.html", "central.html"}
 NO_THEME = {"fleet.html"}          # Fleet keeps its own stylesheet
 
 def ensure_assets(html: str, page_name: str = "") -> str:
@@ -49,11 +50,13 @@ def ensure_assets(html: str, page_name: str = "") -> str:
         html = html.replace("</head>", '    <link rel="stylesheet" href="nav.css">\n    <script src="nav.js"></script>\n</head>', 1)
     if 'analytics.js' not in html:
         html = html.replace("</head>", '    <script src="analytics.js" defer></script>\n</head>', 1)
-    if "family=Space+Grotesk" not in html:
-        html = html.replace("</head>", '    <link rel="preconnect" href="https://fonts.googleapis.com">\n    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600&display=swap">\n</head>', 1)
+    if "family=IBM+Plex+Sans" not in html:
+        html = html.replace("</head>", '    <link rel="preconnect" href="https://fonts.googleapis.com">\n    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">\n</head>', 1)
     if 'href="nq.css' not in html and page_name not in NO_THEME:
         html = re.sub(r'(<link rel="stylesheet" href="nav\.css[^"]*">)', r'\1\n    <link rel="stylesheet" href="nq.css">', html, count=1)
     html = re.sub(r'href="nq\.css[^"]*"', f'href="nq.css?v={_ver("nq.css")}"', html)
+    if page_name in NUDGE_PAGES and 'nudge.js' not in html:
+        html = html.replace("</head>", '    <script src="nudge.js" defer></script>\n</head>', 1)
     html = re.sub(r'src="analytics\.js[^"]*"', f'src="analytics.js?v={_ver("analytics.js")}"', html)
     html = re.sub(r'href="nav\.css[^"]*"', f'href="nav.css?v={_ver("nav.css")}"', html)
     html = re.sub(r'src="nav\.js[^"]*"', f'src="nav.js?v={_ver("nav.js")}"', html)

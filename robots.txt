@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://netquor.com/sitemap.xml
+Sitemap: https://www.netquor.com/sitemap.xml

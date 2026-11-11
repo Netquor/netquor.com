@@ -1,0 +1,8 @@
+[Unit]
+Description=Pull and restart the netquor.com web image if it changed
+After=docker.service network-online.target
+Requires=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/netquor-site-update

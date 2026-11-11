@@ -1,0 +1,47 @@
+# Deny by default, then allow exactly what the image needs. Nothing secret or private can get in by accident
+# (no .env, .git, .agents, tools, mockups, deploy, node_modules, build output).
+*
+
+# server package (API, worker, price logic) and the seed prices
+!server/package.json
+!server/bun.lock
+!server/tsconfig.json
+!server/src
+!server/data/prices.seed.json
+!server/data/catalog-map.json
+!server/scripts
+
+# web package (SvelteKit)
+!web/package.json
+!web/bun.lock
+!web/tsconfig.json
+!web/vite.config.ts
+!web/src
+
+# legacy pages and assets (served from /app/legacy; the web process applies its own allowlist on top)
+!*.html
+!*.css
+!*.js
+!*.svg
+!*.png
+!*.jpg
+!*.jpeg
+!*.gif
+!*.webp
+!*.avif
+!*.ico
+!*.webmanifest
+!readiness-data.json
+!llms.template.txt
+!brand
+!fleet
+
+# container entrypoint
+!deploy/entrypoint.sh
+
+# never, even when matched above
+**/node_modules
+**/.env
+**/.env.*
+**/.DS_Store
+**/*.test.ts

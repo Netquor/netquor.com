@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Netquor background mock-up</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#12161c;--s1:#1b212b;--s2:#222a36;--ink:#eaf1f8;--ink2:#a9b6c6;--ink3:#8794a7;--acc:#2f8fe0;--accT:#5eaaf0;--pain:#d9a441;--line:rgba(234,241,248,.08)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "IBM Plex Sans",system-ui,sans-serif}
+.bar{position:sticky;top:0;z-index:5;display:flex;gap:8px;align-items:center;padding:12px 24px;background:rgba(18,22,28,.92);border-bottom:1px solid var(--line)}
+.bar span{color:var(--ink3);font:400 13px "IBM Plex Mono",monospace;margin-right:8px}
+.bar button{min-height:44px;padding:0 16px;border-radius:10px;border:1px solid var(--line);background:var(--s1);color:var(--ink2);font:500 14px "IBM Plex Sans";cursor:pointer;transition:background-color .15s,color .15s}
+.bar button[aria-pressed=true]{background:var(--s3,#2a3342);color:var(--ink);border-color:rgba(94,170,240,.5)}
+.bar button:focus-visible,.pp:focus-visible{outline:2px solid var(--accT);outline-offset:2px}
+.hero{position:relative;min-height:560px;overflow:hidden;display:flex;align-items:center;padding:64px 24px;border-bottom:1px solid var(--line)}
+.hero canvas,.hero svg.bg{position:absolute;inset:0;width:100%;height:100%}
+.hero .txt{position:relative;max-width:640px;margin:0 auto 0 max(0px,calc((100% - 1120px)/2))}
+.hero h1{font:500 clamp(32px,5vw,52px)/1.1 "IBM Plex Sans";margin:0 0 16px;letter-spacing:-.02em}
+.hero p{color:var(--ink2);margin:0 0 24px;max-width:52ch}
+.btn{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:10px;background:var(--ink);color:#12161c;font-weight:500;text-decoration:none}
+.btn.g{background:transparent;color:var(--ink);border:1px solid var(--line);margin-left:8px}
+.note{max-width:1120px;margin:0 auto;padding:32px 24px;color:var(--ink2);font-size:15px}
+.note b{color:var(--ink);font-weight:500}
+.note code{font:400 13px "IBM Plex Mono";color:var(--accT)}
+.sec{max-width:1120px;margin:0 auto;padding:48px 24px}
+.sec h2{font:500 28px/1.2 "IBM Plex Sans";margin:0 0 8px}
+.sec>p{color:var(--ink2);margin:0 0 32px;max-width:60ch}
+/* pain visual */
+.pain{display:grid;grid-template-columns:1fr 64px 1fr;gap:24px;align-items:stretch}
+.col{border:1px solid var(--line);border-radius:16px;padding:24px;background:var(--s1)}
+.col h3{font:400 13px "IBM Plex Mono";color:var(--ink3);margin:0 0 16px}
+.job{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:10px;margin-bottom:8px;background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.28);color:var(--ink)}
+.job i{width:8px;height:8px;border-radius:50%;background:var(--pain);flex:none}
+.job small{margin-left:auto;font:400 12px "IBM Plex Mono";color:var(--pain)}
+.who{display:flex;align-items:center;gap:12px;margin-top:16px;color:var(--ink2);font-size:14px}
+.who b{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--s2);color:var(--ink);font-weight:500}
+.mid{display:grid;place-items:center}
+.mid svg{width:64px;height:64px}
+.col.nq{border-color:rgba(94,170,240,.4)}
+.col.nq .job{background:rgba(47,143,224,.1);border-color:rgba(94,170,240,.35)}
+.col.nq .job i{background:var(--accT)}
+.col.nq .job small{color:var(--accT)}
+.col.nq .who b{background:rgba(47,143,224,.18);color:var(--accT)}
+.cap{margin-top:16px;color:var(--ink3);font-size:13px}
+@media(max-width:760px){.pain{grid-template-columns:1fr}.mid{transform:rotate(90deg);height:40px}.hero{min-height:480px}}
+@media(prefers-reduced-motion:reduce){.pulse{display:none}}
+</style></head><body>
+<div class="bar" role="group" aria-label="Background variant"><span>background</span>
+<button class="pp" data-v="a" aria-pressed="true">A  Quiet grid + traces</button>
+<button class="pp" data-v="b" aria-pressed="false">B  A + one pulse (recommended)</button>
+<button class="pp" data-v="c" aria-pressed="false">C  Particle field (for comparison)</button></div>
+
+<section class="hero" id="hero">
+<svg class="bg" id="svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice"></svg>
+<canvas id="cv" aria-hidden="true"></canvas>
+<div class="txt"><h1>Phones, networks and hosting for small teams, run by people you can call</h1>
+<p>Netquor Phone is in early access. Fleet, SDN, VPN and hosting are live from our own network in Fargo, LAX, London and Tokyo.</p>
+<a class="btn" href="#">Talk to us</a><a class="btn g" href="#">See the products</a></div>
+</section>
+<div class="note" id="note"></div>
+
+<section class="sec"><h2>One person doing three jobs</h2>
+<p>Amber marks work that lands on one person. Blue marks what Netquor takes over. Colour carries the meaning, so nothing here is decoration.</p>
+<div class="pain">
+<div class="col"><h3>Today</h3>
+<div class="job"><i></i>IT and network<small>nights</small></div>
+<div class="job"><i></i>Phones and lines<small>weekdays</small></div>
+<div class="job"><i></i>Hosting and backups<small>weekends</small></div>
+<div class="who"><b>1</b>One person, no backup</div></div>
+<div class="mid"><svg viewBox="0 0 64 64" fill="none" stroke="#5eaaf0" stroke-width="1.5"><path d="M8 32h30l6-10 6 20 6-10h0"/><circle cx="56" cy="32" r="3" fill="#5eaaf0"/></svg></div>
+<div class="col nq"><h3>With Netquor</h3>
+<div class="job"><i></i>Network, SDN and VPN<small>us</small></div>
+<div class="job"><i></i>Phone and Fleet<small>us</small></div>
+<div class="job"><i></i>Hosting<small>us</small></div>
+<div class="who"><b>1</b>Same person, one call to make</div></div></div>
+<div class="cap">Honest framing: this describes who does the work, not a saving. Savings stay in the calculators.</div></section>
+
+<script>
+const svg=document.getElementById('svg'),cv=document.getElementById('cv'),ctx=cv.getContext('2d'),hero=document.getElementById('hero');
+const note=document.getElementById('note');
+const NOTES={
+a:'<b>A, quiet grid and traces.</b> 48px hairline grid at 6% mist, six right-angle traces ending in nodes (the logo\'s circuit language). Static SVG, zero JavaScript, zero CPU. Fades to Night at the edges so text sits on calm space. <b>Unslop verdict:</b> passes, because it describes the product (network paths) and nothing glows.',
+b:'<b>B, A plus one pulse.</b> One short blue segment travels along one trace at a time, every ~6 seconds, like a packet. About 60 lines of canvas, paused off-screen and when the tab is hidden, removed entirely under reduced motion. This is the single bright moment. <b>Unslop verdict:</b> passes, motion explains something (traffic on a path) and is tiny. Needs a pause control only if it runs over 5 seconds continuously, it does not.',
+c:'<b>C, particle field.</b> Shown so you can compare. Drifting dots with connecting lines. <b>Unslop verdict:</b> fails. It is the generic "tech" background that fits any product, loops forever, competes with the headline and costs CPU. particles.js is unmaintained and tsParticles adds a large bundle, so a custom version would be the only option anyway. Not recommended.'
+};
+let variant='a',raf=0,W=0,H=0,visible=true,paths=[],pulse=null,parts=[];
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function build(){
+ W=hero.clientWidth;H=hero.clientHeight;svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+ cv.width=W*devicePixelRatio;cv.height=H*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+ const g=48;let s=`<defs><linearGradient id="f" x1="0" x2="1"><stop offset="0" stop-color="#12161c" stop-opacity=".95"/><stop offset=".55" stop-color="#12161c" stop-opacity=".55"/><stop offset="1" stop-color="#12161c" stop-opacity="0"/></linearGradient>
+ <pattern id="p" width="${g}" height="${g}" patternUnits="userSpaceOnUse"><path d="M${g} 0H0V${g}" fill="none" stroke="#eaf1f8" stroke-opacity=".06"/></pattern></defs>
+ <rect width="100%" height="100%" fill="url(#p)"/>`;
+ // traces on the right half: right-angle polylines snapped to grid
+ paths=[];const snap=v=>Math.round(v/g)*g;
+ const seeds=[[.55,.18,[[2,0],[2,3],[6,3],[6,5]]],[.62,.42,[[0,0],[4,0],[4,2],[7,2]]],[.5,.7,[[0,0],[3,0],[3,-2],[8,-2]]],[.7,.1,[[0,0],[0,4],[3,4],[3,7]]],[.58,.88,[[0,0],[5,0],[5,-3],[9,-3]]],[.78,.55,[[0,0],[2,0],[2,3],[5,3]]]];
+ for(const [fx,fy,pts] of seeds){const ox=snap(W*fx),oy=snap(H*fy);const P=pts.map(([a,b])=>[ox+a*g,oy+b*g]).filter(([x,y])=>x<=W+g);paths.push(P);
+  s+=`<polyline points="${P.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#2f8fe0" stroke-opacity=".35" stroke-width="1.5" stroke-linejoin="round"/>`;
+  const e=P[P.length-1];s+=`<circle cx="${e[0]}" cy="${e[1]}" r="3.5" fill="#12161c" stroke="#5eaaf0" stroke-opacity=".7" stroke-width="1.5"/>`;}
+ s+=`<rect width="100%" height="100%" fill="url(#f)"/>`;svg.innerHTML=s;
+ parts=Array.from({length:70},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4}));
+}
+function segLen(P){let L=0;for(let i=1;i<P.length;i++)L+=Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]);return L}
+function at(P,d){for(let i=1;i<P.length;i++){const l=Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]);if(d<=l){const t=d/l;return[P[i-1][0]+(P[i][0]-P[i-1][0])*t,P[i-1][1]+(P[i][1]-P[i-1][1])*t]}d-=l}return P[P.length-1]}
+let last=0,nextAt=800;
+function frame(t){
+ raf=requestAnimationFrame(frame);if(!visible||document.hidden)return;
+ ctx.clearRect(0,0,W,H);
+ if(variant==='b'){
+  if(!pulse&&t>nextAt){const P=paths[Math.floor(Math.random()*paths.length)];pulse={P,L:segLen(P),d:0}}
+  if(pulse){pulse.d+=Math.min(t-last,50)*.18;const tail=70;
+   for(let k=0;k<tail;k+=3){const d=pulse.d-k;if(d<0||d>pulse.L)continue;const [x,y]=at(pulse.P,d);ctx.fillStyle=`rgba(94,170,240,${(1-k/tail)*.9})`;ctx.fillRect(x-1.5,y-1.5,3,3)}
+   if(pulse.d>pulse.L+70){pulse=null;nextAt=t+5500}}
+ }
+ if(variant==='c'){
+  ctx.fillStyle='rgba(94,170,240,.7)';ctx.strokeStyle='rgba(94,170,240,.18)';
+  for(const p of parts){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,1.8,0,6.3);ctx.fill()}
+  for(let i=0;i<parts.length;i++)for(let j=i+1;j<parts.length;j++){const a=parts[i],b=parts[j];if(Math.hypot(a.x-b.x,a.y-b.y)<110){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}}
+ }
+ last=t;
+}
+function set(v){variant=v;pulse=null;nextAt=0;svg.style.display=v==='c'?'none':'block';note.innerHTML=NOTES[v];
+ document.querySelectorAll('.pp').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v));}
+document.querySelectorAll('.pp').forEach(b=>b.onclick=()=>set(b.dataset.v));
+new IntersectionObserver(e=>visible=e[0].isIntersecting).observe(hero);
+addEventListener('resize',build);build();{const q=new URLSearchParams(location.search).getAll('v').find(x=>NOTES[x]);set(q||'a');}
+if(!reduce)raf=requestAnimationFrame(frame);
+</script></body></html>

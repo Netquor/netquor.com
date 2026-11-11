@@ -1,0 +1,7 @@
+{
+  "_help": "Paste the full profile URL for each account you create, then run: python3 tools/build-social.py. Empty entries add nothing to the site.",
+  "facebook": "",
+  "x": "https://x.com/netquor",
+  "instagram": "",
+  "linkedin": ""
+}

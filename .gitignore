@@ -1,1 +1,5 @@
 .DS_Store
+.env.deploy
+
+# Internal planning notes: local only, this repo is public
+.agents/
