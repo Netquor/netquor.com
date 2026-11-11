@@ -2,11 +2,12 @@
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { baselineText } from "../../baselineFiles";
 import { PRICE_FALLBACKS } from "../../priceFallbacks";
 import { renderSvelte } from "../../server/svelteHarness";
 
 const WEB = join(import.meta.dir, "../../../..");
-const legacy = readFileSync(join(WEB, "../fleet.html"), "utf8");
+const legacy = baselineText("fleet.html");
 const seedPrices = Object.fromEntries(Object.entries(PRICE_FALLBACKS));
 const data = { prices: seedPrices, priceVersion: 1, origin: "https://www.netquor.com", assets: { fleetJs: "a", fleetCss: "a", nav: "a", navJs: "a", analytics: "a", nudge: "a" } };
 

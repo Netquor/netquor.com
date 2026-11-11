@@ -1,4 +1,4 @@
-// runtime.ts: the process-wide objects the hooks and routes share: the price cache, the Elysia app, the legacy server. Built lazily on first use (never at import time, so `vite build` does not start anything) and once per process.
+// runtime.ts: the process-wide objects the hooks and routes share: the price cache, the Elysia app, the static-file server. Built lazily on first use (never at import time, so `vite build` does not start anything) and once per process.
 import { readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { readWebEnv, type WebEnv } from "./env";
@@ -11,7 +11,7 @@ export interface Runtime extends HandleRuntime {
     env: WebEnv;
     /** The llms.txt template text, read fresh when its file changes. */
     llmsTemplate(): string;
-    /** Short content hash of a legacy asset for ?v= cache busting, the same scheme tools/build-nav.py writes into the legacy pages (md5, 8 hex); memoized per mtime. */
+    /** Short content hash of a static asset for ?v= cache busting (md5, 8 hex); memoized per mtime. */
     assetVersion(name: string): string;
 }
 
@@ -20,11 +20,10 @@ export interface RuntimeParts {
     api: HandleRuntime["api"];
     env: WebEnv;
     cachePages: boolean;
-    log?: (line: string) => void;
 }
 
 export const createRuntime = (p: RuntimeParts): Runtime => {
-    const legacy = createLegacyServer({ legacyDir: p.env.legacyDir, prices: p.prices, log: p.log });
+    const legacy = createLegacyServer({ legacyDir: p.env.legacyDir });
     const versions = new Map<string, { mtimeMs: number; v: string }>();
     let template: { mtimeMs: number; text: string } | null = null;
     return {

@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import { stampHtml } from "#server/prices/stamp";
+import { baselineText } from "./baselineFiles";
 import { withPrices } from "./jsonld";
 import { PRICE_FALLBACKS, resetPriceWarnings } from "./priceFallbacks";
 import { snap } from "./server/testkit";
@@ -45,7 +44,7 @@ describe("withPrices", () => {
         expect(() => withPrices({ a: { x: 1 } }, { "/a": "vpn.from.month" }, prices)).toThrow(/not a string or a number/);
     });
     test("gives the same JSON-LD as the legacy stamper does for the legacy home page", () => {
-        const html = readFileSync(join(import.meta.dir, "../../../index.html"), "utf8");
+        const html = baselineText("index.html");
         const m = /<script type="application\/ld\+json" data-price-map='([^']*)'>([\s\S]*?)<\/script>/.exec(html);
         expect(m).not.toBeNull();
         const map = JSON.parse(m![1]) as Record<string, string>;

@@ -1,18 +1,20 @@
-// visual.ts: pixel diff of every page, legacy file against the built SvelteKit page.
+// visual.ts: pixel diff of every page, the baseline (legacy site at the legacy-baseline-2026-11 tag, extracted under .baseline/) against the built SvelteKit page.
 //
 //   bun run visual                     all pages, 1280x900 and 390x844
 //   bun run visual vpn.html fleet.html some pages          (--no-build reuses web/build)
 //   VISUAL_OUT=/some/dir bun run visual                     where the PNGs go (default: a temp folder)
 //
-// The legacy pages are served from the repository root by the legacy server code (seed prices) on one port, the built server (seed prices, temp data folder) on another. Headless Chrome takes a full-page screenshot of each at both sizes with reduced motion on (so fx.js and bg.js stay static), CSS animations and transitions off, the background canvas hidden and web fonts loaded. Nothing outside temp folders is written. Dev only: needs pngjs and pixelmatch.
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+// The legacy pages are served from the baseline directory (seed prices stamped in) on one port, the built server (seed prices, temp data folder) on another. Headless Chrome takes a full-page screenshot of each at both sizes with reduced motion on (so fx.js and bg.js stay static), CSS animations and transitions off, the background canvas hidden and web fonts loaded. Nothing outside temp folders is written. Dev only: needs pngjs and pixelmatch.
+import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { PNG } from "pngjs";
 import pixelmatch from "pixelmatch";
 import { PAGES } from "../src/lib/pages";
-import { createLegacyServer } from "../src/lib/server/legacyServer";
-import type { Snapshot } from "../src/lib/server/types";
+import type { Snapshot } from "#server/prices/types";
+import { baselineDirSync } from "./baseline/dir";
+import { serveBaseline } from "./baseline/server";
+import { stampBaselineHtml } from "./baseline/stamp";
 import { REPO, pageKey, startServer } from "./parity/run";
 
 const CHROME = process.env.CHROME ?? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
@@ -110,14 +112,20 @@ const pad = (img: PNG, w: number, h: number): PNG => {
 const args = process.argv.slice(2);
 const build = !args.includes("--no-build");
 const wanted = args.filter((a) => !a.startsWith("--"));
-const pages = PAGES.filter((p) => wanted.length === 0 || wanted.includes(pageKey(p.path)));
+const hasBaselinePage = (path: string): boolean => existsSync(join(baselineDirSync(), path === "/" ? "index.html" : path.slice(1)));
+const pages = PAGES.filter((p) => wanted.length === 0 || wanted.includes(pageKey(p.path))).filter((p) => {
+    if (hasBaselinePage(p.path)) return true;
+    console.log(`${pageKey(p.path)}: no page in the baseline (written new in Svelte), skipped`);
+    return false;
+});
 const outDir = process.env.VISUAL_OUT ?? join(tmpdir(), "nq-visual");
 mkdirSync(outDir, { recursive: true });
 
 const seed = JSON.parse(await Bun.file(join(REPO, "server/data/prices.seed.json")).text()) as Snapshot;
-const legacy = createLegacyServer({ scope: "baseline", legacyDir: REPO, prices: { get: () => seed, version: () => seed.version }, log: () => {} });
-const legacyHttp = Bun.serve({ port: 0, hostname: "127.0.0.1", fetch: (req) => legacy.serve(req, new URL(req.url)) ?? new Response("not found", { status: 404 }) });
-const legacyBase = `http://127.0.0.1:${legacyHttp.port}`;
+const baselineDir = baselineDirSync();
+console.log(`baseline: ${baselineDir}`);
+const legacyHttp = serveBaseline({ dir: baselineDir, transformHtml: (html, rel) => stampBaselineHtml(html, rel, seed) });
+const legacyBase = legacyHttp.base;
 const svelte = await startServer({ build, log: (s) => console.log(s) });
 const profile = mkdtempSync(join(tmpdir(), "nq-visual-chrome-"));
 const chrome = await startChrome(profile);
@@ -146,9 +154,11 @@ try {
         }
     }
 } finally {
-    chrome.cdp.close(); chrome.stop(); svelte.stop(); legacyHttp.stop(true);
+    chrome.cdp.close(); chrome.stop(); svelte.stop(); legacyHttp.stop();
     rmSync(profile, { recursive: true, force: true });
 }
 console.log(`\nbrowser console, errors and warnings (${problems.length}):`);
 for (const q of problems) console.log("  " + q);
 console.log(`\nworst ${worst.toFixed(3)}%; ${over.length} above ${THRESHOLD_PCT}%${over.length ? ": " + over.join(", ") : ""}`);
+// A visual check that cannot fail is decoration: exit non-zero when any page is above the threshold (console noise stays advisory).
+if (over.length) process.exit(1);

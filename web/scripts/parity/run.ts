@@ -1,11 +1,12 @@
-// run.ts: renders a migrated page from a built server on a free loopback port (seed prices) and the legacy file through the legacy server code (same seed prices), and compares them.
+// run.ts: renders a migrated page from a built server on a free loopback port (seed prices) and the legacy page from the baseline (the legacy site as of the legacy-baseline tag, stamped with the same seed prices), and compares them.
 import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { PAGES } from "../../src/lib/pages";
-import { createLegacyServer } from "../../src/lib/server/legacyServer";
 import { routePathsFromGlob } from "../../src/lib/server/files";
-import type { Snapshot } from "../../src/lib/server/types";
+import type { Snapshot } from "#server/prices/types";
+import { baselineDirSync } from "../baseline/dir";
+import { stampBaselineHtml } from "../baseline/stamp";
 import { loadAllow } from "./allow";
 import { compareFacts, formatReport, type Report } from "./compare";
 import { extractFacts } from "./extract";
@@ -32,18 +33,17 @@ export const pageKey = (path: string): string => (path === "/" ? "index.html" : 
 
 const readSeed = (): Snapshot => JSON.parse(readFileSync(SEED, "utf8")) as Snapshot;
 
-/** The legacy page through the legacy server (stamped with the seed), and the text of its local scripts. */
-export const legacyPage = async (path: string, legacyDir = REPO): Promise<{ html: string; scripts: string[] }> => {
+/** The legacy page from the baseline directory (stamped with the seed prices the way the old server did), and the text of its local scripts. `legacyDir` defaults to the baseline extracted from the tag. */
+export const legacyPage = async (path: string, legacyDir: string = baselineDirSync()): Promise<{ html: string; scripts: string[] }> => {
     const snap = readSeed();
-    const server = createLegacyServer({ scope: "baseline", legacyDir, prices: { get: () => snap, version: () => snap.version }, log: () => {} });
-    const url = new URL(`http://legacy.invalid${path}`);
-    const res = server.serve(new Request(url), url);
-    if (!res || res.status !== 200) throw new Error(`the legacy server does not serve ${path} (is the file in the page registry and on disk?)`);
-    const html = await res.text();
+    const rel = path === "/" ? "index.html" : path.slice(1);
+    const file = join(legacyDir, rel);
+    if (!PAGES.some((p) => p.path === path) || !existsSync(file)) throw new Error(`the legacy site does not serve ${path} (is the file in the page registry and in ${legacyDir}?)`);
+    const html = stampBaselineHtml(readFileSync(file, "utf8"), rel, snap);
     const scripts: string[] = [];
     for (const src of extractFacts(html, path).localScriptSrcs) {
-        const file = join(legacyDir, ...src.slice(1).split("/"));
-        if (!src.includes("..") && existsSync(file)) scripts.push(readFileSync(file, "utf8"));
+        const f = join(legacyDir, ...src.slice(1).split("/"));
+        if (!src.includes("..") && existsSync(f)) scripts.push(readFileSync(f, "utf8"));
     }
     return { html, scripts };
 };
@@ -69,7 +69,7 @@ export const startServer = async (o: { build: boolean; log?: (s: string) => void
         cwd: WEB,
         env: {
             PATH: process.env.PATH ?? "", HOME: root, PORT: String(port), HOST: "127.0.0.1", ORIGIN: base, ADDRESS_HEADER: "X-Real-IP",
-            LEGACY_DIR: REPO, PRICES_DIR: dataDir, DATA_DIR: dataDir, PRICES_SEED_FILE: SEED, LEAD_FILE: join(dataDir, "leads.jsonl"),
+            LEGACY_DIR: REPO /* runtime assets only (images, manifest, calculator scripts, llms template); the old pages come from the baseline */, PRICES_DIR: dataDir, DATA_DIR: dataDir, PRICES_SEED_FILE: SEED, LEAD_FILE: join(dataDir, "leads.jsonl"),
             PRICING_WEBHOOK_SECRET: "parity-throwaway-secret-0123456789abcdef", SITE_ORIGIN: "https://www.netquor.com", ALLOWED_ORIGINS: `https://www.netquor.com,${base}`,
         },
         stdout: "ignore", stderr: "ignore",

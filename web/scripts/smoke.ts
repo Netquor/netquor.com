@@ -1,9 +1,10 @@
-// smoke.ts: builds the app, starts the BUILT server under Bun on a free loopback port with a temp data folder, a temp seed and a temp copy of the legacy site, and checks the behaviour that matters end to end. Run with `bun run smoke`. Touches nothing outside temp folders; secrets here are throwaway test values.
+// smoke.ts: builds the app, starts the BUILT server under Bun on a free loopback port with a temp data folder, a temp seed and a small synthetic assets folder (what the image holds at /app/legacy, with private canaries planted around it), and checks the behaviour that matters end to end. Run with `bun run smoke`. Touches nothing outside temp folders; secrets here are throwaway test values.
 import { createHmac } from "node:crypto";
-import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { connect } from "node:net";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
+import { baselineDirSync } from "./baseline/dir";
 
 const web = resolve(import.meta.dir, "..");
 const repo = resolve(web, "..");
@@ -22,31 +23,24 @@ console.log("build");
 const built = Bun.spawnSync(["bun", "run", "build"], { cwd: web, stdout: "ignore", stderr: "inherit" });
 if (built.exitCode !== 0) { console.error("build failed"); process.exit(1); }
 
-// 2. temp world: data folder, seed, a copy of the legacy site (what the image holds at /app/legacy) with private canaries planted around it
+// 2. temp world: data folder, seed, and a synthetic assets folder (the shape of /app/legacy: images, the manifest, the three calculator scripts, the llms template) with private canaries planted around it. No file of the old site is needed; the old site (the baseline from the legacy-baseline tag) is only the oracle for the pilot page comparison below.
 const root = mkdtempSync(join(tmpdir(), "nq-smoke-"));
 const dataDir = join(root, "data"), legacy = join(root, "legacy");
 mkdirSync(dataDir); mkdirSync(legacy);
-for (const e of readdirSync(repo, { withFileTypes: true })) {
-    if (e.name.startsWith(".")) continue;
-    if (e.isFile()) cpSync(join(repo, e.name), join(legacy, e.name));
-    else if (e.name === "brand" || e.name === "fleet") cpSync(join(repo, e.name), join(legacy, e.name), { recursive: true });
-}
-for (const p of ["server/.env", "server/src/secret.ts", ".git/config", ".env", "tools/secret.txt", "mockups/x.html", ".agents/note.md", "deploy/x.yml", "web/.env", "brand/.hidden.png", "private.html", "notes.template.txt"]) {
-    mkdirSync(join(legacy, p, ".."), { recursive: true });
-    writeFileSync(join(legacy, p), CANARY);
-}
-// The repository's own fleet.html may not carry price markers yet; the copy gets one so the price flow is exercised on it too.
-let fleetPatched = false;
-{
-    const f = join(legacy, "fleet.html");
-    const html = readFileSync(f, "utf8");
-    if (!/data-price="fleet\.mac\.month"/.test(html)) {
-        const patched = html.replace(/<strong>\$5\.95<\/strong> per Mac \/ month/, '<strong data-price="fleet.mac.month" data-fmt="usd">$5.95</strong> per Mac / month');
-        assert(patched !== html, "smoke: could not place a price marker in the copy of fleet.html");
-        writeFileSync(f, patched);
-        fleetPatched = true;
-    }
-}
+const put = (rel: string, content: string | Uint8Array) => { mkdirSync(join(legacy, rel, ".."), { recursive: true }); writeFileSync(join(legacy, rel), content); };
+const PNG_1X1 = Uint8Array.from(atob("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="), (c) => c.charCodeAt(0));
+const SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1"><rect width="1" height="1"/></svg>';
+for (const f of ["brand/og.png", "fleet/img/console.png"]) put(f, PNG_1X1);
+for (const f of ["favicon.svg", "fleet/favicon.svg", "nq-logo.svg"]) put(f, SVG);
+put("favicon.ico", PNG_1X1);
+put("site.webmanifest", JSON.stringify({ name: "smoke", icons: [] }));
+put("subnet-calc.js", "/* smoke fixture: subnet calculator */\n(function(){window.__subnet=1})();\n");
+put("cost-calc.js", "/* smoke fixture: cost calculator */\n(function(){window.__cost=1})();\n");
+put("bundle-calc.js", "/* smoke fixture: bundle calculator */\n(function(){window.__bundle=1})();\n");
+put("llms.template.txt", "# Netquor\n\nFleet is {{price:fleet.mac.month}} per Mac per month.\n");
+// The old site's own files, planted as canaries: the runtime allowlist must refuse them even when the folder holds them.
+for (const p of ["server/.env", "server/src/secret.ts", ".git/config", ".env", "tools/secret.txt", "mockups/x.html", ".agents/note.md", "deploy/x.yml", "web/.env", "brand/.hidden.png", "private.html", "notes.template.txt", "package.json", "Dockerfile",
+    "nq.css", "nav.css", "nav.js", "fx.js", "bg.js", "nudge.js", "analytics.js", "readiness.js", "fleet/site.css", "fleet/site.js", "fleet/pricing.js", "brand/colors.css", "readiness-data.json", "index.html", "fleet.html", "subnet-calculator.html"]) put(p, CANARY);
 const seed = JSON.parse(readFileSync(join(repo, "server/data/prices.seed.json"), "utf8"));
 seed.prices["fleet.mac.month"].amountCents = 612; // differs from every baked-in page text, so a stamped value can only have come from the seed
 const seedFile = join(root, "seed.json");
@@ -89,7 +83,7 @@ try {
         const { r, body } = await text("/");
         eq(r.status, 200, "status"); eq(priceOf(body, "fleet.mac.month"), "$6.12", "fleet.mac.month in /");
     });
-    await check("/fleet.html is 200 and shows the seed's Fleet Mac price" + (fleetPatched ? " (marker placed in the temp copy)" : ""), async () => {
+    await check("/fleet.html is 200 and shows the seed's Fleet Mac price", async () => {
         const { r, body } = await text("/fleet.html");
         eq(r.status, 200, "status"); eq(priceOf(body, "fleet.mac.month"), "$6.12", "fleet.mac.month in /fleet.html");
     });
@@ -195,7 +189,7 @@ try {
         const { body } = await text("/robots.txt"); assert(/User-agent: \*\nAllow: \//.test(body) && body.includes("Sitemap: https://www.netquor.com/sitemap.xml"), body);
     });
 
-    console.log("pilot page: /subnet-calculator.html (SvelteKit) against its legacy copy");
+    console.log("pilot page: /subnet-calculator.html (SvelteKit) against its baseline (legacy) page");
     const visible = (html: string): string => html
         .replace(/<head[\s\S]*?<\/head>/gi, " ").replace(/<(script|style)[\s\S]*?<\/\1>/gi, " ").replace(/<!--[\s\S]*?-->/g, "").replace(/<[^>]+>/g, " ")
         .replace(/&(copy|middot|amp|lt|gt|quot|nbsp|#39);/g, (_m, n: string) => ({ copy: "©", middot: "·", amp: "&", lt: "<", gt: ">", quot: '"', nbsp: " ", "#39": "'" })[n]!)
@@ -207,15 +201,17 @@ try {
         og: [...html.matchAll(/<meta property="(og:[a-z:]+)" content="([^"]*)"/g)].map((m) => `${m[1]}=${m[2]}`).sort(),
         ld: JSON.parse(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/.exec(html)?.[1] ?? "null"),
     });
-    const legacyHtml = readFileSync(join(legacy, "subnet-calculator.html"), "utf8");
+    const baseline = baselineDirSync();
+    console.log(`baseline: ${baseline}`);
+    const legacyHtml = readFileSync(join(baseline, "subnet-calculator.html"), "utf8");
     const svelte = await text("/subnet-calculator.html");
     await check("served by SvelteKit (not the legacy file), server-rendered with the page content", () => {
         eq(svelte.r.status, 200, "status"); assert(svelte.body.includes("sveltekit") || svelte.body.includes("__sveltekit"), "SvelteKit markers"); assert(svelte.body.includes("Subnet calculator"), "content in the HTML");
     });
     await check("visible text is identical to the legacy page", () => { eq(visible(svelte.body), visible(legacyHtml), "text"); });
     await check("title, description, canonical, Open Graph and JSON-LD are identical", () => { eq(meta(svelte.body), meta(legacyHtml), "metadata"); });
-    await check("it loads subnet-calc.js unchanged and the island's source is the same bytes", async () => {
-        const js = await text("/subnet-calc.js"); eq(js.body, readFileSync(join(legacy, "subnet-calc.js"), "utf8"), "subnet-calc.js"); assert(/<script src="\/subnet-calc\.js\?v=[0-9a-f]+"/.test(svelte.body), "script tag");
+    await check("it loads subnet-calc.js and serves the file's bytes unchanged", async () => {
+        const js = await text("/subnet-calc.js"); eq(js.body, readFileSync(join(legacy, "subnet-calc.js"), "utf8"), "subnet-calc.js (served as the file holds it)"); assert(/<script src="\/subnet-calc\.js\?v=[0-9a-f]+"/.test(svelte.body), "script tag");
     });
     await check("the price in the page follows the cache (Price component)", async () => {
         const n2 = structuredClone(next); n2.version = next.version + 1; n2.updatedAt = new Date().toISOString(); n2.prices["network.from.month"].amountCents = 699;
@@ -254,9 +250,9 @@ try {
     ];
     for (const p of denied) await check(`denied: ${p}`, async () => { const r = await raw(p); assert(r.status !== 200, `status ${r.status}`); assert(!r.body.includes(CANARY), "canary content was served"); });
     await check("the allowlist still serves what it should", async () => { for (const p of ["/brand/og.png", "/favicon.svg", "/fleet/favicon.svg", "/fleet/img/console.png", "/site.webmanifest", "/subnet-calc.js", "/cost-calc.js", "/bundle-calc.js"]) eq((await get(p)).status, 200, p); });
-    // The temp legacy folder still holds every file of the repository root, as a development checkout does. The runtime allowlist must refuse the hand-written site's own stylesheets, scripts, pages and data even so.
+    // The folder holds the old site's stylesheets, scripts, pages and data as planted canaries. The runtime allowlist must refuse them even so.
     await check("the legacy stylesheets, scripts and pages are not served, though the folder holds them", async () => {
-        for (const p of ["/nq.css", "/nav.css", "/nav.js", "/fx.js", "/bg.js", "/nudge.js", "/analytics.js", "/readiness.js", "/fleet/site.css", "/fleet/site.js", "/fleet/pricing.js", "/brand/colors.css", "/readiness-data.json"]) eq((await get(p)).status, 404, p);
+        for (const p of ["/nq.css", "/nav.css", "/nav.js", "/fx.js", "/bg.js", "/nudge.js", "/analytics.js", "/readiness.js", "/fleet/site.css", "/fleet/site.js", "/fleet/pricing.js", "/brand/colors.css", "/readiness-data.json"]) { const r = await raw(p); eq(r.status, 404, p); assert(!r.body.includes(CANARY), "canary content was served"); }
     });
 } finally {
     stop();

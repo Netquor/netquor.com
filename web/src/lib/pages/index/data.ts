@@ -1,5 +1,6 @@
-// Data for the home page (/), moved out of the markup. Text here is plain unless a field is documented as HTML. Prices inside strings are written as {{price.key}} tokens and drawn by Rich.svelte from the live price cache. The legacy page is index.html at the repository root.
+// Data for the home page (/), moved out of the markup. Text here is plain unless a field is documented as HTML. Prices inside strings are written as {{price.key}} tokens and drawn by Rich.svelte from the live price cache. The legacy page lives only in the legacy-baseline-2026-11 tag (see scripts/baseline).
 import type { PriceMap } from "#lib/jsonld.ts";
+import { sameAs } from "#lib/social.ts";
 
 export const SEO = {
     "title": "Netquor Technologies | Fargo, ND: Managed Networking, Ubiquiti & VyOS SDN, Hosting, MDM",
@@ -20,12 +21,7 @@ export const JSON_LD = {
             "logo": "https://www.netquor.com/brand/nq-logo-primary-plate-600w.png",
             "email": "hello@netquor.com",
             "telephone": "+1-888-717-1701",
-            "sameAs": [
-                "https://www.facebook.com/people/Netquor-Technologies/61596308317634/",
-                "https://x.com/netquor",
-                "https://www.linkedin.com/company/netquor",
-                "https://github.com/Netquor"
-            ]
+            "sameAs": sameAs()
         },
         {
             "@type": [

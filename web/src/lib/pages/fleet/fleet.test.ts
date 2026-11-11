@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { startServer, WEB } from "../../../../scripts/parity/run";
+import { baselineText } from "../../baselineFiles";
 import { PRICE_FALLBACKS } from "../../priceFallbacks";
 import { renderSvelte } from "../../server/svelteHarness";
 import { snap } from "../../server/testkit";
@@ -10,9 +11,8 @@ import { description, jsonLd, PRICE_MAP } from "./seo";
 import { centsOf, discounted, plainText, richHtml, splitTokens, usd, usd0 } from "./tokens";
 
 const ROUTE = "routes/(fleet)/fleet.html/+page.svelte";
-const REPO = join(WEB, "..");
 const seedPrices = Object.fromEntries(Object.entries(PRICE_FALLBACKS)) as Record<string, { amountCents: number; currency: "USD"; unit: string }>;
-const legacy = readFileSync(join(REPO, "fleet.html"), "utf8");
+const legacy = baselineText("fleet.html");
 const data = (prices: Record<string, number> = {}) => ({ prices: { ...seedPrices, ...snap(3, prices).prices }, priceVersion: 3, origin: "https://www.netquor.com", assets: {} });
 
 describe("tokens", () => {

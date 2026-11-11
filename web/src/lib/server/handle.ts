@@ -1,6 +1,6 @@
 // handle.ts: the request pipeline behind hooks.server.ts, written against plain objects so it can be tested without SvelteKit.
 //   1. /api/*, /hooks/*, /health*  -> the Elysia app (client address passed in x-nq-client-ip, overwriting anything the visitor sent)
-//   2. a path no SvelteKit route matches but the legacy allowlist serves -> the legacy page or asset (stamped per request)
+//   2. a path no SvelteKit route matches but the static allowlist serves -> the image, web manifest or calculator script
 //   3. everything else -> SvelteKit (migrated pages, sitemap.xml, robots.txt, llms.txt, 404)
 import { createHash } from "node:crypto";
 import { CLIENT_IP_HEADER } from "#server/lib/clientIp";

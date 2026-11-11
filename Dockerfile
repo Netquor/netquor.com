@@ -34,8 +34,8 @@ RUN cd server && bun install --frozen-lockfile --production && cd ../web && bun 
 
 # ---- legacy: the files the runtime serves from /app/legacy (the .dockerignore already limits the context to them) ----
 # Images, the web manifest, the llms.txt template (read, never served) and the three pure calculation scripts the pages load by URL.
-# The hand-written HTML pages, nq.css, nav.css, nav.js, fx.js and the other legacy scripts are not in the image: the web process
-# bundles the pages' own styles and behavior, and its allowlist (web/src/lib/server/legacy.ts) refuses those names in any case.
+# Nothing else is in the image: the web process bundles the pages' own styles and behavior, and its allowlist (web/src/lib/server/legacy.ts)
+# refuses any other name. The legacy HTML, CSS and scripts are no longer in the working tree at all (they live in the legacy-baseline-2026-11 tag).
 FROM --platform=$BUILDPLATFORM alpine:3.22 AS legacy
 WORKDIR /ctx
 COPY . /ctx

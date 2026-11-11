@@ -1,51 +1,34 @@
-// legacyServer.ts: serves the hand-written pages (and their assets) from the legacy folder. Pages that carry data-price markers are stamped with the current snapshot per request, memoized per (file, mtime, cache version), so a price change shows on the very next request and nothing is written to disk. The "version" in every memo key and ETag is prices.version(), the cache's monotonic counter, never the snapshot's own number (an operator rebase can reuse or lower that). Conditional requests answer 304 from the file's mtime and that version alone, without reading or stamping.
+// legacyServer.ts: serves the runtime's static files from the static folder (the repository root in development, /app/legacy in the image): images, the web manifest and the three calculator scripts, per the allowlist in legacy.ts. No HTML is served from disk and nothing is stamped; the pages are Svelte routes. Conditional requests answer 304 from the file's mtime and size alone. The old URL shapes of the pages keep their canonical redirects (/index.html to /, a trailing slash to the .html URL), decided by the page registry alone.
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
-import { stampHtml, hasPriceMarkers } from "#server/prices/stamp";
 import { legacyPageFiles } from "../pages";
-import { assetEtag, ASSET_CACHE_CONTROL, conditional, contentTypeFor, HTML_CACHE_CONTROL, IMMUTABLE_CACHE_CONTROL, pageEtag } from "./http";
-import { classifyLegacyPath, statLegacy, type LegacyScope } from "./legacy";
-import type { PriceSource } from "./types";
+import { assetEtag, ASSET_CACHE_CONTROL, conditional, contentTypeFor, IMMUTABLE_CACHE_CONTROL } from "./http";
+import { classifyLegacyPath, statLegacy } from "./legacy";
 
 export interface LegacyServerOptions {
+    /** The static folder. */
     legacyDir: string;
-    prices: PriceSource;
-    /** Page files the server may serve; default from the registry. */
+    /** Page files whose old URL shapes redirect; default from the registry. */
     pages?: ReadonlySet<string>;
-    log?: (line: string) => void;
-    /** What may be served. Default "runtime" (images, the web manifest, the three calculator scripts). "baseline" serves the whole hand-written site and is for the local comparison tools only. */
-    scope?: LegacyScope;
 }
 
-/** The ?v= value tools/build-nav.py writes into the pages: the first 8 hex characters of the file's md5. */
+/** The ?v= value for a static file: the first 8 hex characters of the file's md5. */
 export const assetFingerprint = (bytes: Uint8Array): string => createHash("md5").update(bytes).digest("hex").slice(0, 8);
-
-interface Memo { mtimeMs: number; version: number; body: string }
 
 const redirectTo = (status: number, location: string): Response => new Response(null, { status, headers: { location } });
 
-/** One URL per page: /index.html is a 301 to /, and a trailing slash on a page (/fleet.html/) is a 308 to the .html URL. The query string is kept. Only for registered pages. In the baseline scope the page file must also exist; in the runtime scope the registry alone decides, since the image holds no HTML. */
-const canonicalRedirect = (url: URL, pages: ReadonlySet<string>, legacyDir: string, scope: LegacyScope): Response | null => {
+/** One URL per page: /index.html is a 301 to /, and a trailing slash on a page (/fleet.html/) is a 308 to the .html URL. The query string is kept. Only for registered pages; the registry alone decides, since no HTML is read from disk. */
+const canonicalRedirect = (url: URL, pages: ReadonlySet<string>): Response | null => {
     const trimmed = url.pathname.replace(/\/+$/, "");
     const slashed = trimmed !== url.pathname && trimmed !== "";
     if (trimmed !== "/index.html" && !slashed) return null;
-    if (scope === "runtime") {
-        if (!/^\/[A-Za-z0-9_][A-Za-z0-9_.-]*\.html$/.test(trimmed) || !pages.has(trimmed.slice(1))) return null;
-    } else {
-        const match = classifyLegacyPath(trimmed, pages, scope);
-        if (!match || match.kind !== "page" || !statLegacy(legacyDir, match)) return null;
-    }
+    if (!/^\/[A-Za-z0-9_][A-Za-z0-9_.-]*\.html$/.test(trimmed) || !pages.has(trimmed.slice(1))) return null;
     if (trimmed === "/index.html") return redirectTo(301, `/${url.search}`);
     return redirectTo(308, `${trimmed}${url.search}`);
 };
 
 export const createLegacyServer = (o: LegacyServerOptions) => {
     const pages = o.pages ?? legacyPageFiles();
-    const scope: LegacyScope = o.scope ?? "runtime";
-    const log = o.log ?? ((l: string) => console.error(l));
-    const memo = new Map<string, Memo>();
-    const warned = new Set<string>();
-    const stats = { stamps: 0 };
     const fingerprints = new Map<string, { mtimeMs: number; size: number; v: string }>();
     const fingerprintOf = (rel: string, path: string, mtimeMs: number, size: number): string => {
         const hit = fingerprints.get(rel);
@@ -55,53 +38,20 @@ export const createLegacyServer = (o: LegacyServerOptions) => {
         return v;
     };
 
-    const renderPage = (rel: string, path: string, mtimeMs: number): string => {
-        // Both reads are synchronous, so the pair is consistent.
-        const version = o.prices.version();
-        const snapshot = o.prices.get();
-        const hit = memo.get(rel);
-        if (hit && hit.mtimeMs === mtimeMs && hit.version === version) return hit.body;
-        const raw = readFileSync(path, "utf8");
-        let body = raw;
-        if (hasPriceMarkers(raw)) {
-            try { body = stampHtml(raw, snapshot, rel); stats.stamps++; } catch (e) {
-                // A key the snapshot lacks: serve the page as written (its own text is a valid price) and say so once per version.
-                const k = `${rel}@${version}`;
-                if (!warned.has(k)) { warned.add(k); log(`legacy: ${rel} not stamped at price version ${version}: ${e instanceof Error ? e.message.split("\n")[0] : "error"}`); }
-            }
-        }
-        memo.set(rel, { mtimeMs, version, body });
-        return body;
-    };
-
     return {
-        stats,
-        /** The response for a GET or HEAD of this path, or null when the path is not a legacy file. */
+        /** The response for a GET or HEAD of this path, or null when the path is not a served static file. */
         serve(request: Request, url: URL): Response | null {
             if (request.method !== "GET" && request.method !== "HEAD") return null;
-            const redirect = canonicalRedirect(url, pages, o.legacyDir, scope);
+            const redirect = canonicalRedirect(url, pages);
             if (redirect) return redirect;
-            const match = classifyLegacyPath(url.pathname, pages, scope);
+            const match = classifyLegacyPath(url.pathname);
             if (!match) return null;
             const file = statLegacy(o.legacyDir, match);
             if (!file) return null;
-            const type = contentTypeFor(match.rel);
-            if (match.kind === "page") {
-                const version = o.prices.version();
-                const etag = pageEtag(file.mtimeMs, version);
-                const headers = { "content-type": type, "cache-control": HTML_CACHE_CONTROL };
-                // Answer a revalidation before doing any work.
-                const quick = conditional(request, null, headers, etag);
-                if (quick.status === 304) return quick;
-                // The snapshot may have moved between reading the version and rendering; the ETag must name what was rendered.
-                const body = renderPage(match.rel, file.path, file.mtimeMs);
-                const rendered = memo.get(match.rel);
-                return conditional(request, body, headers, pageEtag(file.mtimeMs, rendered ? rendered.version : version));
-            }
             // Immutable only when ?v= is this file's own fingerprint; any other value (stale, made up) gets the short cache.
             const v = url.searchParams.get("v");
             const immutable = v !== null && v === fingerprintOf(match.rel, file.path, file.mtimeMs, file.size);
-            const headers = { "content-type": type, "cache-control": immutable ? IMMUTABLE_CACHE_CONTROL : ASSET_CACHE_CONTROL };
+            const headers = { "content-type": contentTypeFor(match.rel), "cache-control": immutable ? IMMUTABLE_CACHE_CONTROL : ASSET_CACHE_CONTROL };
             const etag = assetEtag(file.mtimeMs, file.size);
             const quick = conditional(request, null, headers, etag);
             if (quick.status === 304) return quick;

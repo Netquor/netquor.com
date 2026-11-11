@@ -6,7 +6,7 @@ import { renderSvelte } from "../../server/svelteHarness";
 import { CATEGORIES, TABS, type Part } from "./data";
 
 const REPO = join(import.meta.dir, "../../../../..");
-const inventory = JSON.parse(readFileSync(join(REPO, "web/migration/price-inventory.json"), "utf8")).pages["compare.html"] as { key: string | null; kind: string }[];
+const seedKeys = new Set(Object.keys((JSON.parse(readFileSync(join(REPO, "server/data/prices.seed.json"), "utf8")) as { prices: Record<string, unknown> }).prices));
 const data = { assets: assetVersions((f) => `h-${f.replace(/\W/g, "")}`), origin: "https://www.netquor.com", prices: {}, priceVersion: 1 };
 
 const priceKeys = CATEGORIES.flatMap((c) => c.rows.flatMap((r) => r.price.filter((p): p is Exclude<Part, string> => typeof p !== "string").map((p) => p.price)));
@@ -16,9 +16,8 @@ describe("compare data", () => {
         expect(CATEGORIES.map((c) => `#${c.id}`)).toEqual(TABS.map((t) => t.href));
         for (const c of CATEGORIES) { expect(c.rows[0].mine).toBe(true); expect(c.view.length).toBeGreaterThan(20); }
     });
-    test("every Netquor price on the page is a price key from the inventory, and every inventory price key of the table is used", () => {
-        const inv = new Set(inventory.filter((e) => e.key).map((e) => e.key));
-        for (const k of priceKeys) expect(inv.has(k)).toBe(true);
+    test("every Netquor price on the page is a key of the price seed (the source of truth), and the expected keys of the table are used", () => {
+        for (const k of priceKeys) expect(seedKeys.has(k)).toBe(true);
         // the nav's vpn.from.month is the shell's; the table's own keys are all rendered
         for (const k of ["fleet.mac.month", "fleet.mobile.month", "phone.planned_launch.month", "vpn.to.month", "network.from.month", "homeassistant.from.month", "digitalaccess.plus.month"]) expect(priceKeys).toContain(k);
     });

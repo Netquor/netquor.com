@@ -18,9 +18,8 @@
 !web/vite.config.ts
 !web/src
 
-# What the runtime serves from /app/legacy: images, the web manifest and the three pure calculation scripts the pages load by URL
-# (src/lib/assets.ts). Not the hand-written HTML pages, nav.css, nq.css, nav.js, fx.js and the other legacy scripts: the Svelte app
-# bundles its own behavior and styles. Those files stay in the repository as the local comparison baseline and never enter the image.
+# What the runtime serves from /app/legacy: images, the web manifest, the llms.txt template (read, never served) and the three pure
+# calculation scripts the pages load by URL (src/lib/assets.ts). Nothing else at the top level, and no blanket *.js, *.css or *.html.
 !subnet-calc.js
 !cost-calc.js
 !bundle-calc.js

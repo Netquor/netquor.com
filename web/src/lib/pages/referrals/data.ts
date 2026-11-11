@@ -1,4 +1,4 @@
-// The copy of /referrals.html, moved from tools/make-program-pages.py. The $25 credit is the referral program's amount, not a product price (migration/price-inventory.md: derived), so it is plain text.
+// The copy of /referrals.html, moved from the original generated page (tools/make-program-pages.py in tag legacy-baseline-2026-11). The $25 credit is the referral program's amount, not a product price, so it is plain text.
 import type { ProgramPageData } from "../programs/types";
 
 export const referralsMeta = {

@@ -1,13 +1,11 @@
 // Differential test: the legacy fleet/pricing.js (loaded in a sandbox, untouched) against pricing.ts at the seed prices, over a grid of inputs. Every output must be identical, field for field.
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import vm from "node:vm";
+import { baselineText } from "../../baselineFiles";
 import { PRICE_FALLBACKS } from "../../priceFallbacks";
 import { fleetPricesFrom } from "./prices";
 import { createPricing } from "./pricing";
 
-const LEGACY = join(import.meta.dir, "../../../../../fleet/pricing.js");
 
 interface LegacyApi {
     compare(i: unknown): unknown;
@@ -21,7 +19,7 @@ interface LegacyApi {
 }
 
 const loadLegacy = (): LegacyApi => {
-    const src = readFileSync(LEGACY, "utf8");
+    const src = baselineText("fleet/pricing.js");
     const body = src.replace(/export\s*\{([\s\S]*?)\}\s*;?\s*$/, (_m, names: string) => `return { ${names} };`);
     expect(body).not.toBe(src);
     return vm.runInNewContext(`(function () {\n${body}\n})()`, Object.create(null)) as LegacyApi;

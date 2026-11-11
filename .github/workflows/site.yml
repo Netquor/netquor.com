@@ -1,7 +1,9 @@
 name: site
 
-# Tests and type-checks the server and web packages, then builds the netquor.com web image, smoke-tests the containers
-# (deploy/smoke.sh waits for the image's own Docker HEALTHCHECK) and publishes it to GHCR on every push to main.
+# Tests and type-checks the server and web packages on every pull request and push to main, then (push to main only) builds the
+# netquor.com web image, smoke-tests the containers (deploy/smoke.sh waits for the image's own Docker HEALTHCHECK) and publishes it to GHCR.
+# The tests that use the retired hand-written site as an oracle read it from the git tag legacy-baseline-2026-11, so the test job
+# checks out the full history with tags (fetch-depth 0).
 # doc-iad-c-02 pulls the new image (netquor-site-update.timer) unless it is in local deploy mode; nothing SSHes in from here.
 on:
   push:
@@ -9,7 +11,13 @@ on:
     paths-ignore:
       - '.agents/**'
       - 'mockups/**'
-      - 'tools/**'
+      - '**/*.md'
+      - 'deploy/edge/holding/**'
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - '.agents/**'
+      - 'mockups/**'
       - '**/*.md'
       - 'deploy/edge/holding/**'
   workflow_dispatch:
@@ -26,6 +34,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history and tags: the baseline tag legacy-baseline-2026-11 must be present
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.2
@@ -45,6 +55,7 @@ jobs:
 
   publish:
     needs: test
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: read

@@ -1,18 +1,18 @@
 import { afterEach, describe, expect, test } from "bun:test";
 import { handleRequest, isApiPath, withClientIp, type HandleEvent, type HandleRuntime } from "./handle";
 import { createLegacyServer } from "./legacyServer";
-import { mutablePrices, PAGE, snap, tempLegacy } from "./testkit";
+import { mutablePrices, snap, tempLegacy } from "./testkit";
 
 let t: ReturnType<typeof tempLegacy> | undefined;
 afterEach(() => t?.cleanup());
 
 const world = (o: { routeIds?: Record<string, string>; cachePages?: boolean; address?: string | Error } = {}) => {
-    t = tempLegacy({ "fleet.html": PAGE(), "subnet-calculator.html": "<p>LEGACY subnet</p>", "nq.css": "a{}" });
+    t = tempLegacy({ "subnet-calculator.html": "<p>STRAY subnet</p>", "cost-calc.js": "calc", "favicon.svg": "<svg/>" });
     const prices = mutablePrices(snap(1));
     const seen: { api: Request[]; resolved: string[] } = { api: [], resolved: [] };
     const rt: HandleRuntime = {
         prices,
-        legacy: createLegacyServer({ legacyDir: t.dir, prices, scope: "baseline" }),
+        legacy: createLegacyServer({ legacyDir: t.dir }),
         api: async (r) => { seen.api.push(r); return new Response(JSON.stringify({ ok: true }), { headers: { "content-type": "application/json" } }); },
         cachePages: o.cachePages ?? true,
     };
@@ -47,29 +47,30 @@ describe("routing", () => {
         expect(seen.api.length).toBe(3);
         expect(seen.resolved).toEqual([]);
     });
-    test("a legacy page is served stamped, without SvelteKit", async () => {
+    test("a static asset is served without SvelteKit", async () => {
         const { run, seen } = world();
-        const r = await run("/fleet.html");
+        const r = await run("/cost-calc.js");
         expect(r.status).toBe(200);
-        expect(await r.text()).toContain(">$5.95<");
+        expect(await r.text()).toBe("calc");
         expect(seen.resolved).toEqual([]);
     });
-    test("route group ids still take precedence over a legacy file of the same name", async () => {
+    test("route group ids still take precedence over a stray file of the same name", async () => {
         for (const id of ["/(site)/subnet-calculator.html", "/(fleet)/subnet-calculator.html"]) {
             const { run, seen } = world({ routeIds: { "/subnet-calculator.html": id } });
             expect(await (await run("/subnet-calculator.html")).text()).toBe("<p>SVELTE subnet 595</p>");
             expect(seen.resolved).toEqual(["/subnet-calculator.html"]);
         }
     });
-    test("a SvelteKit route takes precedence over a legacy file of the same name", async () => {
+    test("a SvelteKit route takes precedence over a stray file of the same name", async () => {
         const { run, seen } = world({ routeIds: { "/subnet-calculator.html": "/subnet-calculator.html" } });
         const r = await run("/subnet-calculator.html");
         expect(await r.text()).toBe("<p>SVELTE subnet 595</p>");
         expect(seen.resolved).toEqual(["/subnet-calculator.html"]);
     });
-    test("without the route the legacy file is served", async () => {
-        const { run } = world();
-        expect(await (await run("/subnet-calculator.html")).text()).toBe("<p>LEGACY subnet</p>");
+    test("a stray HTML file on disk is never served, even without the route", async () => {
+        const { run, seen } = world();
+        expect(await (await run("/subnet-calculator.html")).text()).not.toContain("STRAY");
+        expect(seen.resolved).toEqual(["/subnet-calculator.html"]);
     });
     test("an unlisted path is a SvelteKit 404, never a file", async () => {
         const { run, seen } = world();
@@ -106,9 +107,9 @@ describe("client address", () => {
 });
 
 describe("headers and page caching", () => {
-    test("security headers on pages, assets and API answers", async () => {
+    test("security headers on assets and API answers", async () => {
         const { run } = world();
-        for (const p of ["/fleet.html", "/nq.css", "/health"]) {
+        for (const p of ["/cost-calc.js", "/favicon.svg", "/health"]) {
             const r = await run(p);
             expect(r.headers.get("x-content-type-options")).toBe("nosniff");
             expect(r.headers.get("x-frame-options")).toBe("SAMEORIGIN");

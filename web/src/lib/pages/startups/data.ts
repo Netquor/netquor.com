@@ -1,4 +1,4 @@
-// The copy of /startups.html, moved from tools/make-program-pages.py. The two per-device figures in the first table row are half of the published Fleet monthly prices, computed from the price snapshot (see migration/price-inventory.md: derived), so they follow a price change.
+// The copy of /startups.html, moved from the original generated page (tools/make-program-pages.py in tag legacy-baseline-2026-11). The two per-device figures in the first table row are half of the published Fleet monthly prices, computed from the price snapshot, so they follow a price change.
 import { cents, usd, type Prices } from "../programs/money";
 import type { ProgramPageData } from "../programs/types";
 

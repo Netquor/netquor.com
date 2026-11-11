@@ -270,4 +270,4 @@ The scenarios not listed here pass with no allowlist: `nav`, `fx`, `bg`, `nudge`
 - The harness turns off CSS smooth scrolling (`html { scroll-behavior: auto !important }`) so snapshots never catch a scroll in flight. Smooth scrolling is cosmetic.
 - It answers Google Analytics requests with an empty 200 and replaces `window.print` with a counter.
 - Web fonts are awaited before the first snapshot; fonts are not behavior but they change box sizes.
-- The legacy side is served by a plain static server: no price stamping, no caching headers, no `/index.html` redirect. The Svelte side is the real built server.
+- The legacy side is the baseline (the `legacy-baseline-2026-11` tag, extracted under `.baseline/`), served by a plain static server (`scripts/baseline/server.ts`): no price stamping, no caching headers, no `/index.html` redirect. The Svelte side is the real built server.

@@ -25,7 +25,7 @@ if (import.meta.main) {
     const server = Bun.spawn(["bun", "--bun", "vite", "dev", "--port", String(port), "--strictPort", "--host", "127.0.0.1"], {
         cwd: WEB,
         env: {
-            PATH: process.env.PATH ?? "", HOME: root, ORIGIN: base, LEGACY_DIR: REPO, PRICES_DIR: dataDir, DATA_DIR: dataDir, PRICES_SEED_FILE: join(REPO, "server/data/prices.seed.json"),
+            PATH: process.env.PATH ?? "", HOME: root, ORIGIN: base, LEGACY_DIR: REPO /* the runtime assets (images, manifest, calculator scripts, llms template) stay in the repository root; this script needs no legacy pages */, PRICES_DIR: dataDir, DATA_DIR: dataDir, PRICES_SEED_FILE: join(REPO, "server/data/prices.seed.json"),
             LEAD_FILE: join(dataDir, "leads.jsonl"), PRICING_WEBHOOK_SECRET: "hydration-throwaway-secret-0123456789abcdef", SITE_ORIGIN: "https://www.netquor.com", ALLOWED_ORIGINS: `https://www.netquor.com,${base}`,
         },
         stdout: "pipe", stderr: "pipe",

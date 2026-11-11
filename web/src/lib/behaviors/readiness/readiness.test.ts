@@ -1,15 +1,13 @@
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import { runInNewContext } from "node:vm";
+import { baselineText } from "../../baselineFiles";
 import { renderSvelte } from "../../server/svelteHarness";
 import raw from "../../../../../readiness-data.json";
 import { SCORING } from "./data";
 import { attachReadiness, type RDoc, type RRoot } from "./readiness";
 import { band, mailtoHref, viewFor, type Answer } from "./score";
 
-const REPO = join(import.meta.dir, "../../../../..");
-const legacySrc = readFileSync(join(REPO, "readiness.js"), "utf8");
+const legacySrc = baselineText("readiness.js");
 
 describe("data", () => {
     test("is a verbatim copy of the DATA object in readiness.js", () => {

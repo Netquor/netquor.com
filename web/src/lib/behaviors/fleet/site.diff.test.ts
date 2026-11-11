@@ -1,14 +1,12 @@
 // Differential test of the page behavior: the legacy fleet/site.js (with the legacy fleet/pricing.js) runs in a sandbox against a hand-written fake DOM, and the port's model is driven with the same events. After every step the cards, tags, verdict, breakdown, error, inputs and form fields must match, and the form submit must produce the same status lines, button states and mailto: URL.
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import vm from "node:vm";
 import { get } from "svelte/store";
+import { baselineText } from "../../baselineFiles";
 import { createFleetModel, type Timers } from "./model";
 import { fleetPricesFrom } from "./prices";
 import { statusClass } from "./form";
 
-const ROOT = join(import.meta.dir, "../../../../../fleet");
 
 class El {
     private v = "";
@@ -40,8 +38,8 @@ class El {
 }
 
 const loadSource = (): string => {
-    const pricing = readFileSync(join(ROOT, "pricing.js"), "utf8").replace(/export\s*\{[\s\S]*?\}\s*;?\s*$/, "");
-    const site = readFileSync(join(ROOT, "site.js"), "utf8").replace(/^import .*$/m, "");
+    const pricing = baselineText("fleet/pricing.js").replace(/export\s*\{[\s\S]*?\}\s*;?\s*$/, "");
+    const site = baselineText("fleet/site.js").replace(/^import .*$/m, "");
     return `${pricing}\n${site}`;
 };
 const SOURCE = loadSource();

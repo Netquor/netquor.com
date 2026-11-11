@@ -239,10 +239,9 @@ describe("HeroBackground.svelte", () => {
 
 describe("matches the legacy script", () => {
     test("same svg markup and same painted squares, frame by frame, as bg.js run on the same fake DOM", async () => {
-        const { readFileSync } = await import("node:fs");
-        const { join } = await import("node:path");
         const { runInNewContext } = await import("node:vm");
-        const legacy = readFileSync(join(import.meta.dir, "../../../../../bg.js"), "utf8");
+        const { baselineText } = await import("../../baselineFiles");
+        const legacy = baselineText("bg.js");
         for (const [w, h] of [[1280, 800], [390, 700], [1920, 1000]]) {
             // legacy
             const lp: string[] = [];

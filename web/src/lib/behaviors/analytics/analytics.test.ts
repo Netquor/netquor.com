@@ -63,10 +63,9 @@ describe("Analytics.svelte", () => {
 
 describe("matches the legacy script", () => {
     test("same dataLayer entries and same script element for every signal combination", async () => {
-        const { readFileSync } = await import("node:fs");
-        const { join } = await import("node:path");
         const { runInNewContext } = await import("node:vm");
-        const legacy = readFileSync(join(import.meta.dir, "../../../../../analytics.js"), "utf8");
+        const { baselineText } = await import("../../baselineFiles");
+        const legacy = baselineText("analytics.js");
         const cases: Record<string, unknown>[] = [{ navigator: {} }, { navigator: { globalPrivacyControl: true } }, { navigator: { doNotTrack: "1" } }, { navigator: {}, doNotTrack: "1" }, { navigator: {}, "ga-disable-G-DDM7J28WFG": true }, { navigator: { doNotTrack: "0" } }];
         for (const c of cases) {
             const L: { appended: { async: boolean; src: string }[]; win: Record<string, unknown> } = { appended: [], win: { ...c } };

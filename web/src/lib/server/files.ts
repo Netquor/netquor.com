@@ -16,7 +16,7 @@ export const normalizeOrigin = (value: string | undefined, fallback: string): st
 
 export interface SitemapInput {
     origin: string;
-    /** Page paths that are SvelteKit routes (they take precedence over the legacy file). */
+    /** Page paths that are SvelteKit routes (they take precedence over any static file). */
     migratedPaths: ReadonlySet<string>;
     /** Not used for lastmod any more; kept so callers need no change. */
     buildDate: string;

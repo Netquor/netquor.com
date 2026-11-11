@@ -1,5 +1,5 @@
 <script lang="ts">
-    // One page template for startups.html, referrals.html and partners.html (the pages tools/make-program-pages.py writes today). The copy comes from the page's data.ts as a ProgramPageData; this draws the hero, the sections and the blocks inside them, with the same markup as the generated pages. The Fx component adds the reveal animations after hydration.
+    // One page template for startups.html, referrals.html and partners.html (the pages that tools/make-program-pages.py generated before the port). The copy comes from the page's data.ts as a ProgramPageData; this draws the hero, the sections and the blocks inside them, with the same markup as the generated pages. The Fx component adds the reveal animations after hydration.
     import Fx from "#lib/behaviors/fx/Fx.svelte";
     import CmpTable from "#lib/components/CmpTable.svelte";
     import Faq from "#lib/components/Faq.svelte";

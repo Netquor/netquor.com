@@ -1,5 +1,5 @@
 <script lang="ts">
-    // The site navigation, ported from tools/nav.html. It is deliberately static markup: styles/nav.css styles it (src/lib/styles/nav.css, bundled by the layouts' entry stylesheets so that its place in the cascade is fixed) and the navMenu action (use:navMenu, the port of nav.js) opens the menu and the Products dropdown by toggling classes, exactly as on the legacy pages. `static` adds nq-static (the nav scrolls with the page; fleet.html uses it). `current` is the path of the page being shown ("/subnet-calculator.html"), which marks its link.
+    // The site navigation, ported from the original hand-written nav (tools/nav.html in tag legacy-baseline-2026-11). It is deliberately static markup: styles/nav.css styles it (src/lib/styles/nav.css, bundled by the layouts' entry stylesheets so that its place in the cascade is fixed) and the navMenu action (use:navMenu, the port of nav.js) opens the menu and the Products dropdown by toggling classes, exactly as on the legacy pages. `static` adds nq-static (the nav scrolls with the page; fleet.html uses it). `current` is the path of the page being shown ("/subnet-calculator.html"), which marks its link.
     import { navMenu } from "#lib/behaviors/nav/nav.ts";
     import Price from "./Price.svelte";
 

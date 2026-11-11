@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { baselineText } from "../../baselineFiles";
 import { clamp, initialState, makeCatalog, money, view, LEGACY_PRICES, type AddonId, type BuilderState, type Catalog, type PlanId } from "./builder";
 
 const REPO = join(import.meta.dir, "../../../../..");
@@ -78,7 +79,7 @@ describe("view", () => {
 interface FakeEl { id?: string; className: string; _html: string; textContent: string; hidden: boolean; href: string; children: FakeEl[]; attrs: Record<string, string>; onclick: (() => void) | null; _buttons?: FakeEl[]; innerHTML: string; appendChild(c: FakeEl): void; getAttribute(n: string): string | null; setAttribute(n: string, v: string): void; querySelectorAll(sel: string): FakeEl[]; focus(): void; disabled: boolean }
 
 const legacyScript = (): string => {
-    const html = readFileSync(join(REPO, "network.html"), "utf8");
+    const html = baselineText("network.html");
     const m = /<script>\s*(\(function \(\) \{[\s\S]*?\}\)\(\));\s*<\/script>/.exec(html);
     if (!m) throw new Error("the inline script of network.html was not found");
     return m[1];

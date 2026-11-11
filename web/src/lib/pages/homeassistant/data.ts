@@ -89,7 +89,7 @@ export interface Extra { before: string; priceKey?: string; after: string }
 export const EXTRAS: readonly Extra[] = [
     { before: "Extra bridge for a second home: about ", priceKey: "homeassistant.extra_bridge.month", after: " / month" },
     { before: "Zigbee or Z-Wave USB radio: ", priceKey: "homeassistant.zigbee_radio.once", after: " one-time each" },
-    // "about $4 / month off" is a discount, not a published price (see migration/price-inventory.md)
+    // "about $4 / month off" is a discount, not a published price
     { before: "Bring your own Raspberry Pi: about $4 / month off", after: "" },
     { before: "Setup session or migration from your current setup: ", priceKey: "homeassistant.setup_session.once", after: " one-time (about an hour with an engineer), free on yearly plans and included with Home Pro" },
     { before: "Rent to own: the bridge is yours after 24 months", after: "" },

@@ -1,34 +1,31 @@
 import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { baselineText } from "../baselineFiles";
 import { join } from "node:path";
 import { cssBlocks, cssImports } from "./cssBlocks";
 
 const STYLES = import.meta.dir;
 const WEB = join(STYLES, "../../..");
-const REPO = join(WEB, "..");
 const read = (p: string) => readFileSync(p, "utf8");
 const style = (name: string) => read(join(STYLES, name));
 const SITE_ORDER = ["tokens", "base", "utilities", "hero", "sections", "cards", "components", "buttons", "footer", "bundles", "calculators", "motion", "home"];
 const FLEET_ORDER = ["tokens", "base", "nav", "buttons", "hero", "sections", "pricing", "closing", "responsive", "offers", "phones", "policies", "system"];
-// The legacy files are the baseline until a later step deletes them; the comparisons below then have nothing to compare with and are skipped.
-const legacy = (f: string) => (existsSync(join(REPO, f)) ? read(join(REPO, f)) : null);
+// The legacy stylesheets come from the legacy-baseline-2026-11 tag (baselineFiles.ts), not from the working tree; a missing tag fails the test with the fix.
+const legacy = baselineText;
 
 describe("the site system is nq.css, split without a change", () => {
     const parts = SITE_ORDER.map((n) => ({ n, blocks: cssBlocks(style(`${n}.css`)) }));
     const all = parts.flatMap((p) => p.blocks);
-    const nq = legacy("nq.css");
     test("site.css imports exactly the parts, in the cascade order", () => {
         expect(cssImports(style("site.css"))).toEqual(SITE_ORDER.map((n) => `./${n}.css`));
     });
     test("every block of nq.css is in exactly one part and the parts hold nothing else", () => {
-        if (!nq) return;
-        const want = cssBlocks(nq);
+        const want = cssBlocks(legacy("nq.css"));
         expect([...all].sort()).toEqual([...want].sort());
         expect(all.length).toBe(want.length);
     });
     test("inside each part the blocks keep the order they had in nq.css", () => {
-        if (!nq) return;
-        const want = cssBlocks(nq);
+        const want = cssBlocks(legacy("nq.css"));
         for (const p of parts) {
             const idx = p.blocks.map((b) => want.indexOf(b));
             for (const i of idx) expect(i).toBeGreaterThanOrEqual(0);
@@ -69,15 +66,11 @@ describe("the site system is nq.css, split without a change", () => {
 
 describe("nav.css and Fleet's stylesheet are the legacy files, moved", () => {
     test("nav.css has the same blocks in the same order as the legacy nav.css", () => {
-        const l = legacy("nav.css");
-        if (!l) return;
-        expect(cssBlocks(style("nav.css"))).toEqual(cssBlocks(l));
+        expect(cssBlocks(style("nav.css"))).toEqual(cssBlocks(legacy("nav.css")));
     });
     test("fleet/index.css imports the parts in order, and together they are fleet/site.css, block for block", () => {
         expect(cssImports(style("fleet/index.css"))).toEqual(FLEET_ORDER.map((n) => `./${n}.css`));
-        const l = legacy("fleet/site.css");
-        if (!l) return;
-        expect(FLEET_ORDER.flatMap((n) => cssBlocks(style(`fleet/${n}.css`)))).toEqual(cssBlocks(l));
+        expect(FLEET_ORDER.flatMap((n) => cssBlocks(style(`fleet/${n}.css`)))).toEqual(cssBlocks(legacy("fleet/site.css")));
     });
 });
 

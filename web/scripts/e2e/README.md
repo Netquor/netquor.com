@@ -15,9 +15,16 @@ bun test scripts/e2e             # the harness's own tests; no browser needed
 
 Exit code 1 when any scenario fails. Nothing outside temp folders is written, no remote host is contacted except the CDNs the pages themselves load (jsdelivr, Google Fonts); Google Analytics requests are never sent (see below).
 
+
+## The baseline
+
+"Legacy" in this harness means the baseline: the old hand-written site as it was at the annotated tag `legacy-baseline-2026-11`, extracted by `scripts/baseline/dir.ts` into `<repo>/.baseline/<short-sha>` (git-ignored). It does not need the old files in the working tree. `bun run baseline` prints the folder; every run of `bun run e2e` prints `baseline: <dir>`. `NQ_BASELINE_DIR` points the harness at another folder instead.
+
+`bun run parity --all`, `bun run visual` and `bun run e2e --all` compare the current app with this baseline (HTML facts, pixels and behavior). To refresh it, create a new tag and change `TAG` in `scripts/baseline/dir.ts`; see `migration/README.md`, "The baseline".
+
 ## How a scenario runs
 
-1. `servers.ts` starts two servers: the **legacy** site (the repository root behind a tiny static server on a loopback port: no price stamping, nothing outside the public files, never `server/`, `web/`, `tools/` or dotfiles) and the **built SvelteKit server** started exactly as `scripts/parity/run.ts` does (seed prices, temp data folder, throwaway secret).
+1. `servers.ts` starts two servers: the **legacy** site (the baseline: the repository at the `legacy-baseline-2026-11` tag, extracted under `.baseline/` by `scripts/baseline/dir.ts`, behind `serveBaseline` on a loopback port: no price stamping, nothing outside the public files, never `server/`, `web/`, `tools/` or dotfiles) and the **built SvelteKit server** started exactly as `scripts/parity/run.ts` does (seed prices, temp data folder, throwaway secret).
 2. `browser.ts` launches one headless Chrome (free `--remote-debugging-port`, a `mkdtemp` profile) and gives each side a fresh page in its own browser context (own storage and cache).
 3. Each side loads its page, runs `ready`, waits for the layout to stop changing, then takes a snapshot ("load"), runs step 1, snapshots, runs step 2, snapshots, and so on.
 4. `diff.ts` compares the two traces step by step, applies the scenario's allowlist and prints a readable diff (`- legacy`, `+ svelte`). `expect` functions on steps assert the absolute behavior on each side separately (so a scenario also documents the behavior, and still means something after the legacy file is gone).
@@ -146,7 +153,7 @@ Differences found by the harness in the current Svelte pages, and allowed with a
 | `observe.ts` | The snapshot: in-page collector and pure normalisers. |
 | `diff.ts` | Trace diff, allowlist, report formatting. Pure. |
 | `scenario.ts` | Scenario types, `runSide`, `compareScenario`, `openWorld`. |
-| `servers.ts` | The static legacy server and the built-server starter. |
+| `servers.ts` | The static baseline server (`../baseline/server.ts`) and the built-server starter. |
 | `trace.ts` | `--trace` formatting. |
 | `run.ts` | The CLI behind `bun run e2e`. |
 | `scenarios/` | `nav`, `fx`, `bg`, `nudge`, `analytics`, `readiness`, `collapse`, `subnet`, `fleet`; `index.ts` is the registry. |

@@ -1,11 +1,9 @@
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { baselineText } from "../../baselineFiles";
 import { assetVersions } from "../../assets";
 import { renderSvelte } from "../../server/svelteHarness";
 import { CHECKLISTS, ORDER } from "./data";
 
-const REPO = join(import.meta.dir, "../../../../..");
 const data = { assets: assetVersions((f) => `h-${f.replace(/\W/g, "")}`), origin: "https://www.netquor.com", prices: {}, priceVersion: 1 };
 
 describe("readiness data", () => {
@@ -14,7 +12,7 @@ describe("readiness data", () => {
         for (const c of CHECKLISTS) { expect(c.qs.length).toBe(7); expect(c.icon).toMatch(/^bi-/); }
     });
     test("the titles, calls to action and question count of readiness-data.json match what readiness.js carries", () => {
-        const js = readFileSync(join(REPO, "readiness.js"), "utf8");
+        const js = baselineText("readiness.js");
         const embedded = JSON.parse(/var DATA = (\{.*\});/.exec(js)![1]) as Record<string, { title: string; qs: string[][]; cta: string[]; calc: string[] }>;
         for (const c of CHECKLISTS) {
             expect(embedded[c.key].title).toBe(c.title);

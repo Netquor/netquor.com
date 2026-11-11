@@ -6,6 +6,7 @@ import { serverRoot } from "./env";
 import { StampError, decodeUtf8Strict, escapeHtml, formatPrice, hasPriceMarkers, locateJsonValue, renderLlms, stampHtml, stampHtmlBytes } from "./stamp";
 import { validateSnapshot } from "./snapshot";
 import { snap } from "./testkit";
+import { baselineDirSync } from "../../../web/scripts/baseline/dir";
 
 const S = snap(1, { "fleet.mac.month": 595, "vpn.from.month": 500, "big.amount": 123456789 % 10_000_000, "zero.free": 0, "x.html": 100 });
 const issuesOf = (fn: () => unknown) => { try { fn(); return []; } catch (e) { if (e instanceof StampError) return e.issues; throw e; } };
@@ -166,7 +167,9 @@ describe("byte safety", () => {
 });
 
 describe("the real site with the real seed", () => {
+    // The pages and llms.txt come from the legacy-baseline tag (the stale root files are gone from the tree); the template is still in the tree.
     const siteRoot = join(serverRoot, "..");
+    const baseRoot = baselineDirSync();
     const seed = (() => { const v = validateSnapshot(JSON.parse(readFileSync(join(serverRoot, "data", "prices.seed.json"), "utf8"))); if (!v.ok) throw new Error(v.errors.join()); return v.snapshot; })();
 
     test("the seed is a valid seed snapshot", () => {
@@ -176,10 +179,10 @@ describe("the real site with the real seed", () => {
     });
 
     test("every top-level page with markers stamps to itself, byte for byte (zero diff, no missing keys)", () => {
-        const pages = readdirSync(siteRoot).filter((n) => n.endsWith(".html"));
+        const pages = readdirSync(baseRoot).filter((n) => n.endsWith(".html"));
         let withMarkers = 0;
         for (const name of pages) {
-            const bytes = readFileSync(join(siteRoot, name));
+            const bytes = readFileSync(join(baseRoot, name));
             const text = decodeUtf8Strict(bytes, name);
             if (!hasPriceMarkers(text)) continue;
             withMarkers++;
@@ -191,19 +194,19 @@ describe("the real site with the real seed", () => {
     test("the template renders with no tokens left, and matches a checked-in llms.txt when there is one", () => {
         const out = renderLlms(readFileSync(join(siteRoot, "llms.template.txt"), "utf8"), seed);
         expect(out).not.toContain("{{");
-        if (existsSync(join(siteRoot, "llms.txt"))) expect(readFileSync(join(siteRoot, "llms.txt"), "utf8") === out).toBe(true);
+        if (existsSync(join(baseRoot, "llms.txt"))) expect(readFileSync(join(baseRoot, "llms.txt"), "utf8") === out).toBe(true);
     });
 
     test("a price change reaches the visible text, the JSON-LD and llms.txt together", () => {
         const next = { ...seed, version: seed.version + 1, prices: { ...seed.prices, "fleet.mac.month": { amountCents: 625, currency: "USD" as const } } };
-        const html = stampHtml(readFileSync(join(siteRoot, "index.html"), "utf8"), next);
+        const html = stampHtml(readFileSync(join(baseRoot, "index.html"), "utf8"), next);
         expect(html).toContain('<span data-price="fleet.mac.month">$6.25</span>/Mac');
         expect(html).toContain('"price": "6.25"');
         expect(renderLlms(readFileSync(join(siteRoot, "llms.template.txt"), "utf8"), next)).toContain("$6.25 per Mac per month");
     });
 
     test("Phone stays a planned price, not a billed one", () => {
-        const html = readFileSync(join(siteRoot, "index.html"), "utf8");
+        const html = readFileSync(join(baseRoot, "index.html"), "utf8");
         expect(html).toContain("Early access, not billed yet");
         expect(renderLlms(readFileSync(join(siteRoot, "llms.template.txt"), "utf8"), seed)).toContain("nobody is charged during early access");
     });

@@ -1,4 +1,4 @@
-// The copy of /partners.html, moved from tools/make-program-pages.py. The commission examples are arithmetic on the published Fleet monthly prices (fleet.mac.month, fleet.mobile.month), computed in whole cents from the price snapshot; the 20% rate, the 12 months and the 10 months of annual billing are the program's terms. The $25 referral credit and the $25 payout threshold are program amounts, not prices, and stay plain text (migration/price-inventory.md: derived).
+// The copy of /partners.html, moved from the original generated page (tools/make-program-pages.py in tag legacy-baseline-2026-11). The commission examples are arithmetic on the published Fleet monthly prices (fleet.mac.month, fleet.mobile.month), computed in whole cents from the price snapshot; the 20% rate, the 12 months and the 10 months of annual billing are the program's terms. The $25 referral credit and the $25 payout threshold are program amounts, not prices, and stay plain text.
 import { cents, usd, type Prices } from "../programs/money";
 import type { ProgramPageData, Role } from "../programs/types";
 

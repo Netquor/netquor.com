@@ -1,4 +1,4 @@
-// http.ts: caching headers and conditional requests shared by the legacy server and the pages.
+// http.ts: caching headers and conditional requests shared by the static-file server and the pages.
 
 // HTML is revalidated on every request, so a price change shows on the very next one; the ETag makes that a cheap 304.
 export const HTML_CACHE_CONTROL = "no-cache";

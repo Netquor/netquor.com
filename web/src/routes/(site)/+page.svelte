@@ -4,6 +4,7 @@
     import Seo from "#lib/components/Seo.svelte";
     import { assetUrl } from "#lib/assets.ts";
     import Fx from "#lib/behaviors/fx/Fx.svelte";
+    import { xHandle } from "#lib/social.ts";
     import Apps from "#lib/pages/index/Apps.svelte";
     import Bundles from "#lib/pages/index/Bundles.svelte";
     import Calculators from "#lib/pages/index/Calculators.svelte";
@@ -36,7 +37,7 @@
     geo={{ region: "US-ND", placename: "Fargo, North Dakota" }}
     siteName="Netquor Technologies"
     locale="en_US"
-    twitter={{ site: "@netquor" }}
+    twitter={{ site: xHandle() }}
     jsonLd={JSON_LD}
     priceMap={PRICE_MAP}
 />
