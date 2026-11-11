@@ -11,7 +11,7 @@
             <div class={`card ${page.cardClass} shadow-lg`}>
                 <div class="card-header border-0 bg-transparent pt-5 px-4 px-md-5">
                     <div class="d-flex align-items-center mb-4">
-                        <i class={`bi ${page.icon} fs-2 text-primary me-3`}></i>
+                        {#if page.logo}<img src={page.logo} alt="" width="48" height="48" class="me-3">{:else}<i class={`bi ${page.icon} fs-2 text-primary me-3`}></i>{/if}
                         <div>
                             <h1 class="h3 fw-black mb-0 brand-accent">Netquor Technologies</h1>
                             <p class="small text-muted  mb-0">{page.subtitle}</p>

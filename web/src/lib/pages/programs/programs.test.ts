@@ -85,9 +85,9 @@ describe("ProgramPage", () => {
 });
 
 describe("legal pages", () => {
-    test("terms has its twelve numbered clauses and privacy its ten plus the changes clause", () => {
-        expect(termsPage.blocks.filter((b) => b.k === "h3")).toHaveLength(12);
-        expect(privacyPage.blocks.filter((b) => b.k === "h3")).toHaveLength(11);
+    test("terms has its thirteen numbered clauses and privacy its eleven plus the changes clause", () => {
+        expect(termsPage.blocks.filter((b) => b.k === "h3")).toHaveLength(13);
+        expect(privacyPage.blocks.filter((b) => b.k === "h3")).toHaveLength(12);
         expect(termsPage.meta.title).toBe("Terms of Use");
         expect(privacyPage.meta.title).toBe("Privacy Policy");
     });

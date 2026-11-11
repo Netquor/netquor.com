@@ -28,6 +28,7 @@ export const PAGES: readonly PageEntry[] = [
     { path: "/story.html", priority: 0.5, changefreq: "monthly" },
     { path: "/compare.html", priority: 0.8, changefreq: "monthly" },
     { path: "/partners.html", priority: 0.6, changefreq: "monthly" },
+    { path: "/sms.html", priority: 0.2, changefreq: "yearly" },
     { path: "/terms.html", priority: 0.2, changefreq: "yearly" },
     { path: "/privacy.html", priority: 0.2, changefreq: "yearly" },
 ];

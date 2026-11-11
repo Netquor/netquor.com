@@ -4,6 +4,8 @@
 // Rules: a patch is idempotent, touches only what the decision changed, and mirrors the markup the Svelte page now renders. When changes pile
 // up, cut a new baseline tag instead of adding patches forever.
 
+import { blocksHtml, SMS_HEADING_PRIVACY, SMS_HEADING_TERMS, smsPrivacy, smsProgram } from "../../src/lib/pages/legal/sms";
+
 export interface IntentionalChange { id: string; since: string; reason: string; apply(html: string): string }
 
 const TOLL = "+1 (888) 717-1701";
@@ -60,8 +62,24 @@ export const footerLinksBelow: IntentionalChange = {
     apply: (html) => html.replaceAll(`Netquor Technologies LLC. <a href="index.html"`, `Netquor Technologies LLC.<br><a href="index.html"`),
 };
 
+/** 2026-11-11: Terms of Use and Privacy Policy carry the netquor emblem instead of an icon, and the text-messaging program language (Terms section 13, Privacy section 11) for the toll-free number's carrier registration, with new "Last Updated" dates. */
+export const legalPages: IntentionalChange = {
+    id: "legal-sms-and-logo",
+    since: "2026-11-11",
+    reason: "the legal pages show the logo, and carry the text messaging program terms the toll-free registration needs",
+    apply(html) {
+        if (html.includes(SMS_HEADING_TERMS) || html.includes(SMS_HEADING_PRIVACY)) return html;
+        const logo = `<img src="/brand/nq-emblem.svg" alt="" width="48" height="48" class="me-3">`;
+        let h = html.replace(`<i class="bi bi-shield-check fs-2 text-primary me-3"></i>`, logo).replace(`<i class="bi bi-shield-lock fs-2 text-primary me-3"></i>`, logo);
+        h = h.replace("Last Updated: January 27, 2026", "Last Updated: November 11, 2026").replace("Last Updated: March 24, 2026", "Last Updated: November 11, 2026");
+        h = h.replace(/(located\s+in\s+Fargo,\s+North\s+Dakota\.\s*<\/p>)/, (m) => `${m}\n${blocksHtml(SMS_HEADING_TERMS, smsProgram)}`);
+        h = h.replace(`<h3>Changes to This Policy</h3>`, () => `${blocksHtml(SMS_HEADING_PRIVACY, smsPrivacy)}\n<h3>Changes to This Policy</h3>`);
+        return h;
+    },
+};
+
 /** Every recorded change, oldest first. */
-export const INTENTIONAL_CHANGES: readonly IntentionalChange[] = [contactNumbers, localPageLinks, lookingGlassLinks, footerLinksBelow];
+export const INTENTIONAL_CHANGES: readonly IntentionalChange[] = [contactNumbers, localPageLinks, lookingGlassLinks, footerLinksBelow, legalPages];
 
 /** The baseline page with every recorded decision applied. */
 export const applyIntentionalChanges = (html: string): string => INTENTIONAL_CHANGES.reduce((h, c) => c.apply(h), html);

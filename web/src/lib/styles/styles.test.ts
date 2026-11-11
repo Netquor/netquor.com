@@ -172,7 +172,7 @@ describe("no runtime dependency on a CDN or a font service", () => {
     test("every page.css is imported by exactly its route, and every such route import has a file", () => {
         const pagesDir = join(WEB, "src/lib/pages");
         const withCss = readdirSync(pagesDir, { withFileTypes: true }).filter((e) => e.isDirectory() && existsSync(join(pagesDir, e.name, "page.css"))).map((e) => e.name);
-        expect(withCss.sort()).toEqual(["central", "digitalaccess", "homeassistant", "index", "network", "privacy", "sdn", "terms", "vpn"]);
+        expect(withCss.sort()).toEqual(["central", "digitalaccess", "homeassistant", "index", "network", "privacy", "sdn", "sms", "terms", "vpn"]);
         const routes = files.filter((f) => f.includes("/src/routes/") && f.endsWith("+page.svelte"));
         for (const n of withCss) {
             const importers = routes.filter((f) => read(f).includes(`import "#lib/pages/${n}/page.css";`));

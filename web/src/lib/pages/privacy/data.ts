@@ -1,12 +1,14 @@
 // The copy of /privacy.html, moved from the legacy page. Text is unchanged apart from line wrapping. `html` blocks hold the few inline tags the copy uses (trusted static strings).
 import type { LegalPageData } from "../legal/types";
+import { SMS_HEADING_PRIVACY, smsPrivacy } from "../legal/sms";
 
 export const privacyPage: LegalPageData = {
     meta: { title: "Privacy Policy" },
     cardClass: "policy-card",
     icon: "bi-shield-lock",
+    logo: "/brand/nq-emblem.svg",
     subtitle: "Privacy Policy",
-    updated: "Last Updated: March 24, 2026",
+    updated: "Last Updated: November 11, 2026",
     intro: "This Privacy Policy explains how Netquor Technologies collects, uses, stores, discloses, and protects information when you visit netquor.com or use our related products and services. It is structured around ten core privacy and disclosure clauses, including contact and request-handling provisions.",
     blocks: [
         {"k": "h3", "t": "1. Scope of This Policy"},
@@ -34,6 +36,8 @@ export const privacyPage: LegalPageData = {
         {"k": "p", "t": "If you have questions about this Privacy Policy, want to submit a privacy request, or need to update your contact information, you may contact Netquor Technologies using the contact details made available through netquor.com."},
         {"k": "p", "t": "Business Contact: Netquor Technologies, Fargo, North Dakota."},
         {"k": "p", "t": "Privacy requests should include enough detail for us to identify your relationship with Netquor and evaluate your request. We may ask for additional information to verify identity before fulfilling sensitive requests."},
+        {"k": "h3", "t": SMS_HEADING_PRIVACY},
+        ...smsPrivacy,
         {"k": "h3", "t": "Changes to This Policy"},
         {"k": "p", "t": "We may update this Privacy Policy from time to time to reflect operational, legal, or regulatory changes. Updates will be posted on this page with a revised “Last Updated” date."},
     ],

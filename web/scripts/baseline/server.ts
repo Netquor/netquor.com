@@ -1,5 +1,10 @@
 // server.ts: a small self-contained static server for the baseline directory (the legacy site). No dependency on the app code in web/src. "/" is index.html; content types come from the file extension. Only the legacy site's public files are served: top-level files and the fleet/ and brand/ folders; server/, web/, tools/, deploy/, dotfiles and anything outside the directory never are.
+import { readFileSync as readText } from "node:fs";
+import { join as joinPath } from "node:path";
 import { applyIntentionalChanges } from "./intentional";
+
+/** The rules added after the baseline (src/lib/styles/after-baseline.css) are part of the baseline site the tools compare with, appended to nq.css. */
+const AFTER_BASELINE = () => readText(joinPath(import.meta.dir, "../../src/lib/styles/after-baseline.css"), "utf8");
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { resolve, sep } from "node:path";
 import { baselineDirSync } from "./dir";
@@ -48,6 +53,7 @@ export const serveBaseline = (o: ServeBaselineOptions = {}): BaselineServer => {
                 const base = applyIntentionalChanges(readFileSync(file, "utf8"));
                 return new Response(o.transformHtml ? o.transformHtml(base, rel) : base, { headers: { "content-type": "text/html;charset=utf-8" } });
             }
+            if (file.endsWith(`${sep}nq.css`) && resolve(file) === resolve(dir, "nq.css")) return new Response(`${readText(file, "utf8")}\n${AFTER_BASELINE()}`, { headers: { "content-type": "text/css;charset=utf-8" } });
             return new Response(Bun.file(file));
         },
     });

@@ -1,12 +1,14 @@
 // The copy of /terms.html, moved from the legacy page. Text is unchanged apart from line wrapping. `html` blocks hold the few inline tags the copy uses (trusted static strings).
 import type { LegalPageData } from "../legal/types";
+import { SMS_HEADING_TERMS, smsProgram } from "../legal/sms";
 
 export const termsPage: LegalPageData = {
     meta: { title: "Terms of Use" },
     cardClass: "terms-card",
     icon: "bi-shield-check",
+    logo: "/brand/nq-emblem.svg",
     subtitle: "Terms of Use",
-    updated: "Last Updated: January 27, 2026",
+    updated: "Last Updated: November 11, 2026",
     intro: null,
     blocks: [
         {"k": "h3", "t": "1. Acceptance of Terms"},
@@ -51,5 +53,7 @@ export const termsPage: LegalPageData = {
         {"k": "h3", "t": "12. Governing Law & Venue"},
         {"k": "p", "t": "These Terms are governed by the laws of the State of North Dakota, without regard to conflict-of-law principles."},
         {"k": "p", "t": "Any legal action shall be brought exclusively in the state or federal courts located in Fargo, North Dakota."},
+        {"k": "h3", "t": SMS_HEADING_TERMS},
+        ...smsProgram,
     ],
 };

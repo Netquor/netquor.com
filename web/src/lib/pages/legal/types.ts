@@ -11,6 +11,8 @@ export interface LegalPageData {
     cardClass: string;
     /** Bootstrap Icons class of the heading icon. */
     icon: string;
+    /** A logo image shown in place of the icon (a path under /brand). */
+    logo?: string;
     subtitle: string;
     updated: string;
     /** Text of the highlight box above the first heading, or null. */
