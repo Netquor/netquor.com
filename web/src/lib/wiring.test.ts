@@ -52,7 +52,7 @@ describe("every (site) page", () => {
         expect(b).toContain('class="nq-map"');
     });
     test("the fx pages draw the progress bar", async () => {
-        for (const p of ["compare.html", "readiness.html", "startups.html", "referrals.html", "partners.html"]) {
+        for (const p of ["compare.html", "readiness.html", "fargo-moorhead.html", "startups.html", "referrals.html", "partners.html"]) {
             const { body } = await renderSvelte(`routes/(site)/${p}/+page.svelte`, { data: data() }, data(), `http://localhost/${p}`);
             expect(strip(body)).toContain('class="nq-progress"');
         }

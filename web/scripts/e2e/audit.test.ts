@@ -35,5 +35,5 @@ describe("auditRow", () => {
         expect(auditRow("/story.html", null, [gtag], "http://l", "http://s").ok).toBe(true);
         expect(auditRow("/story.html", null, [], "http://l", "http://s").ok).toBe(false);
     });
-    test("every migrated page is audited", () => { expect(PAGES).toContain("/fleet.html"); expect(PAGES.length).toBe(17); });
+    test("every migrated page is audited", () => { expect(PAGES).toContain("/fleet.html"); expect(PAGES.length).toBe(18); });
 });

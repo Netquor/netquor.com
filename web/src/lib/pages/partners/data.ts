@@ -108,7 +108,7 @@ export const partnersPage = (prices: Prices): ProgramPageData => ({
         {
             kind: "section", style: "padding-top: 0;", width: 900,
             blocks: [
-                { kind: "cta", cta: { title: "Tell us about you", text: "Write with what you do, who you work with and what you have in mind. We reply in writing.", action: { href: "mailto:hello@netquor.com?subject=Work%20with%20Netquor", label: "Email us" }, phone: { href: "tel:+18887171701", label: "+1 (888) 717-1701" } } },
+                { kind: "cta", cta: { title: "Tell us about you", text: "Write with what you do, who you work with and what you have in mind. We reply in writing.", action: { href: "mailto:hello@netquor.com?subject=Work%20with%20Netquor", label: "Email us" } } },
                 { kind: "p", cls: "text-muted small mt-4", html: "Channel partner commissions are payments for sales work and are not an investment. Nothing on this page is an offer to sell, or a solicitation of an offer to buy, any security. Examples are arithmetic at list price, not promises. Netquor Phone is in early access and is not billed yet. Terms may change." },
             ],
         },

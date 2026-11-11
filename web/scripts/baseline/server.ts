@@ -1,4 +1,5 @@
 // server.ts: a small self-contained static server for the baseline directory (the legacy site). No dependency on the app code in web/src. "/" is index.html; content types come from the file extension. Only the legacy site's public files are served: top-level files and the fleet/ and brand/ folders; server/, web/, tools/, deploy/, dotfiles and anything outside the directory never are.
+import { applyIntentionalChanges } from "./intentional";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { resolve, sep } from "node:path";
 import { baselineDirSync } from "./dir";
@@ -41,9 +42,11 @@ export const serveBaseline = (o: ServeBaselineOptions = {}): BaselineServer => {
             if (req.method !== "GET" && req.method !== "HEAD") return new Response("method not allowed", { status: 405 });
             const file = resolveLegacyFile(dir, new URL(req.url).pathname);
             if (!file) return new Response("not found", { status: 404 });
-            if (o.transformHtml && file.endsWith(".html")) {
+            if (file.endsWith(".html")) {
                 const rel = file.slice(resolve(dir).length + 1).split(sep).join("/");
-                return new Response(o.transformHtml(readFileSync(file, "utf8"), rel), { headers: { "content-type": "text/html;charset=utf-8" } });
+                // the baseline served to the comparison tools always includes the recorded content decisions since the tag (see intentional.ts)
+                const base = applyIntentionalChanges(readFileSync(file, "utf8"));
+                return new Response(o.transformHtml ? o.transformHtml(base, rel) : base, { headers: { "content-type": "text/html;charset=utf-8" } });
             }
             return new Response(Bun.file(file));
         },

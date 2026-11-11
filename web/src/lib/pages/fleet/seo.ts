@@ -1,4 +1,5 @@
 // seo.ts: the head of fleet.html: title, description, keywords and the JSON-LD graph, written once. Prices in the description and the FAQ answers come from the price snapshot; the Offer prices are filled by Seo from PRICE_MAP.
+import { TELEPHONES } from "../../contact";
 import type { PriceEntry } from "#server/prices/types";
 import { priceText } from "#lib/priceFallbacks.ts";
 import { faq } from "./data";
@@ -29,7 +30,7 @@ const STATIC_GRAPH = [
             "url": "https://www.netquor.com/",
             "logo": "https://www.netquor.com/brand/nq-logo-primary-plate-600w.png",
             "email": "hello@netquor.com",
-            "telephone": "+1-888-717-1701"
+            "telephone": [...TELEPHONES]
         },
         {
             "@type": [
@@ -42,7 +43,7 @@ const STATIC_GRAPH = [
             "image": "https://www.netquor.com/brand/nq-logo-primary-plate-600w.png",
             "logo": "https://www.netquor.com/brand/nq-logo-primary-plate-600w.png",
             "email": "hello@netquor.com",
-            "telephone": "+1-888-717-1701",
+            "telephone": [...TELEPHONES],
             "priceRange": "$$",
             "description": "Managed networking, Ubiquiti UniFi and VyOS software-defined networking, hosting and virtualization, Apple device management (MDM) and field IT services for small businesses in Fargo, North Dakota, Moorhead and the Midwest.",
             "address": {

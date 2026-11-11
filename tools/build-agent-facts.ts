@@ -6,6 +6,7 @@
 // (web/src/lib/pages/index/data.ts), prices from server/data/prices.seed.json (what the site shows when the live cache has no value),
 // accounts from web/src/lib/data/social.json. The legacy HTML is not read: it exists only in the legacy-baseline-2026-11 tag.
 // Output goes to .agents/agent/ only (git-ignored private notes).
+import { LOCAL, TOLL_FREE } from "../web/src/lib/contact";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { APP_GROUPS, PRICE_ROWS } from "../web/src/lib/pages/index/data.ts";
@@ -43,7 +44,7 @@ export function buildFacts() {
     const price_rows = PRICE_ROWS.map((r) => plain([r.name, r.small, r.what, r.price, r.terms].filter(Boolean).join(" ")));
     return {
         generated_from: "web/src/lib/pages/index/data.ts, server/data/prices.seed.json, web/src/lib/data/social.json",
-        company: { name: "Netquor Technologies LLC", location: "Fargo, North Dakota", email: "hello@netquor.com", phone: "+1 (888) 717-1701", helpdesk: "https://support.netquor.com", account: "https://account.netquor.com/" },
+        company: { name: "Netquor Technologies LLC", location: "Fargo, North Dakota", email: "hello@netquor.com", phone: TOLL_FREE.display, phone_toll_free: TOLL_FREE.display, phone_local: LOCAL.display, helpdesk: "https://support.netquor.com", account: "https://account.netquor.com/" },
         social: socialLinks().map((l) => ({ network: l.label, url: l.url })),
         products,
         price_table_text: price_rows,

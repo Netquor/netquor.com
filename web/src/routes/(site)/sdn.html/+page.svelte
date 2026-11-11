@@ -1,4 +1,5 @@
 <script lang="ts">
+    import CallButtons from "#lib/components/CallButtons.svelte";
     import "#lib/pages/sdn/page.css";
     import Nudge from "#lib/behaviors/nudge/Nudge.svelte";
     import { collapse } from "#lib/behaviors/accordion/action.ts";
@@ -65,7 +66,7 @@
                 <p class="text-muted mb-4 mx-auto" style="max-width: 560px;">Tell us about your sites, your Ubiquiti or VyOS gear and what you want to host. We reply within a business day.</p>
                 <div class="d-flex flex-wrap justify-content-center gap-3">
                     <a class="btn btn-primary-cyber btn-lg" href="mailto:hello@netquor.com?subject=Netquor%20SDN">hello@netquor.com</a>
-                    <a class="btn btn-outline-info btn-lg rounded-pill px-4" href="tel:+18887171701">+1 (888) 717-1701</a>
+                    <CallButtons />
                 </div>
             </div>
         </div>

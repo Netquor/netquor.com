@@ -1,4 +1,5 @@
 <script lang="ts">
+    import CallButtons from "#lib/components/CallButtons.svelte";
     import "#lib/pages/vpn/page.css";
     import Nudge from "#lib/behaviors/nudge/Nudge.svelte";
     import { collapse } from "#lib/behaviors/accordion/action.ts";
@@ -95,7 +96,7 @@
                 <p class="text-muted mb-4 mx-auto" style="max-width: 560px;">Tell us the plan and how many devices. We reply within a business day.</p>
                 <div class="d-flex flex-wrap justify-content-center gap-3">
                     <a class="btn btn-primary-cyber btn-lg" href="mailto:hello@netquor.com?subject=Netquor%20VPN">hello@netquor.com</a>
-                    <a class="btn btn-outline-info btn-lg rounded-pill px-4" href="tel:+18887171701">+1 (888) 717-1701</a>
+                    <CallButtons />
                 </div>
             </div>
         </div>

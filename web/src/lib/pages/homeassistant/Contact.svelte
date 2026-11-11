@@ -1,4 +1,5 @@
 <script lang="ts">
+    import CallButtons from "../../components/CallButtons.svelte";
     import { MAILTO } from "./data";
 </script>
 
@@ -9,7 +10,7 @@
             <p class="text-muted mb-4 mx-auto" style="max-width: 560px;">What devices you have, and whether you already run Home Assistant. We reply within a business day.</p>
             <div class="d-flex flex-wrap justify-content-center gap-3">
                 <a class="btn btn-primary-cyber btn-lg" href={MAILTO}>hello@netquor.com</a>
-                <a class="btn btn-outline-info btn-lg rounded-pill px-4" href="tel:+18887171701">+1 (888) 717-1701</a>
+                <CallButtons />
             </div>
         </div>
     </div>

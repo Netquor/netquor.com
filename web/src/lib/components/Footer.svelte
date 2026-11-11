@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { EMAIL, PHONES, labeled } from "../contact";
     // The site footer. "full" is the homepage footer; "simple" is the one line footer the tool pages use.
     import { COPYRIGHT_YEAR } from "#lib/site.ts";
     import { socialLinks } from "#lib/social.ts";
@@ -18,7 +19,7 @@
                 <div>
                     <img src="/brand/nq-logo-primary-color-dark.svg" alt="Netquor Technologies" width="200" height="120">
                     <p>Technical services that connect hardware and software, from Fargo, North Dakota.</p>
-                    <p class="nq-footer-contact"><a href="mailto:hello@netquor.com">hello@netquor.com</a><br><a href="tel:+18887171701">+1 (888) 717-1701</a></p>
+                    <p class="nq-footer-contact"><a href={`mailto:${EMAIL}`}>{EMAIL}</a>{#each PHONES as p}<br><a href={p.href}>{labeled(p)}</a>{/each}</p>
                     <p class="nq-social">{#each socialLinks() as s (s.network)}<a href={s.url} rel="me noopener" target="_blank" aria-label={s.ariaLabel}><i class="bi {s.icon}" aria-hidden="true"></i></a>{/each}</p>
                 </div>
                 <nav aria-label="Business products">
@@ -43,6 +44,7 @@
                     <h2>Company</h2>
                     <a href="/#pricing">Pricing</a>
                     <a href="/compare.html">How we compare</a>
+                    <a href="/fargo-moorhead.html">Fargo-Moorhead</a>
                     <a href="/startups.html">For startups</a>
                     <a href="/referrals.html">Referrals</a>
                     <a href="/partners.html">Partners and jobs</a>

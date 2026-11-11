@@ -1,4 +1,5 @@
 // Data for the home page (/), moved out of the markup. Text here is plain unless a field is documented as HTML. Prices inside strings are written as {{price.key}} tokens and drawn by Rich.svelte from the live price cache. The legacy page lives only in the legacy-baseline-2026-11 tag (see scripts/baseline).
+import { EMAIL, LOCAL, TELEPHONES, TOLL_FREE } from "../../contact";
 import type { PriceMap } from "#lib/jsonld.ts";
 import { sameAs } from "#lib/social.ts";
 
@@ -20,7 +21,7 @@ export const JSON_LD = {
             "url": "https://www.netquor.com/",
             "logo": "https://www.netquor.com/brand/nq-logo-primary-plate-600w.png",
             "email": "hello@netquor.com",
-            "telephone": "+1-888-717-1701",
+            "telephone": [...TELEPHONES],
             "sameAs": sameAs()
         },
         {
@@ -34,7 +35,7 @@ export const JSON_LD = {
             "image": "https://www.netquor.com/brand/nq-logo-primary-plate-600w.png",
             "logo": "https://www.netquor.com/brand/nq-logo-primary-plate-600w.png",
             "email": "hello@netquor.com",
-            "telephone": "+1-888-717-1701",
+            "telephone": [...TELEPHONES],
             "priceRange": "$$",
             "description": "Managed networking, Ubiquiti UniFi and VyOS software-defined networking, hosting and virtualization, Apple device management (MDM) and field IT services for small businesses in Fargo, North Dakota, Moorhead and the Midwest.",
             "address": {
@@ -851,6 +852,6 @@ export const FAQ: { q: string; a: string }[] = [
     },
     {
         "q": "How do I get a quote for managed networking?",
-        "a": "Email <a href=\"mailto:hello@netquor.com\">hello@netquor.com</a> or call <a href=\"tel:+18887171701\">+1 (888) 717-1701</a>. Netquor SDN is quoted per site, so tell us what you run today."
+        "a": `Email <a href="mailto:${EMAIL}">${EMAIL}</a> or call <a href="${TOLL_FREE.href}">toll-free ${TOLL_FREE.display}</a> or <a href="${LOCAL.href}">locally at ${LOCAL.display}</a>. Netquor SDN is quoted per site, so tell us what you run today.`
     }
 ];

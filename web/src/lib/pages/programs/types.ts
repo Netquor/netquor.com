@@ -5,7 +5,7 @@ export interface FaqItem { q: string; a: string; id?: string; open?: boolean }
 export interface Action { href: string; label: string }
 export interface Hero { eyebrow: string; title: string; lead: string; leadStyle?: string; primary: Action; secondary: Action; width: number }
 export interface Role { title: string; have: readonly string[]; do: readonly string[] }
-export interface Cta { title: string; text: string; action: Action; phone: Action }
+export interface Cta { title: string; text: string; action: Action }
 
 export type Block =
     | { kind: "table"; head: readonly string[]; rows: readonly (readonly string[])[] }

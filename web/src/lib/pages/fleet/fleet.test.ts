@@ -1,3 +1,4 @@
+import { applyIntentionalChanges } from "../../../../scripts/baseline/intentional";
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -12,7 +13,8 @@ import { centsOf, discounted, plainText, richHtml, splitTokens, usd, usd0 } from
 
 const ROUTE = "routes/(fleet)/fleet.html/+page.svelte";
 const seedPrices = Object.fromEntries(Object.entries(PRICE_FALLBACKS)) as Record<string, { amountCents: number; currency: "USD"; unit: string }>;
-const legacy = baselineText("fleet.html");
+// the baseline plus the content decisions recorded since the tag (scripts/baseline/intentional.ts): here, both phone numbers in the structured data
+const legacy = applyIntentionalChanges(baselineText("fleet.html"));
 const data = (prices: Record<string, number> = {}) => ({ prices: { ...seedPrices, ...snap(3, prices).prices }, priceVersion: 3, origin: "https://www.netquor.com", assets: {} });
 
 describe("tokens", () => {

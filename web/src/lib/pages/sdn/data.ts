@@ -1,3 +1,4 @@
+import { TELEPHONES } from "../../contact";
 // Copy and structured data of /sdn.html, moved out of the markup. The FAQ list feeds both the visible accordion and the FAQPage JSON-LD, so the two cannot drift.
 
 export interface Feature { icon: string; title: string; text: string }
@@ -37,9 +38,9 @@ const LOGO = `${SITE}/brand/nq-logo-primary-plate-600w.png`;
 export const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-        { "@type": "Organization", "@id": `${SITE}/#org`, name: "Netquor Technologies LLC", url: `${SITE}/`, logo: LOGO, email: "hello@netquor.com", telephone: "+1-888-717-1701" },
+        { "@type": "Organization", "@id": `${SITE}/#org`, name: "Netquor Technologies LLC", url: `${SITE}/`, logo: LOGO, email: "hello@netquor.com", telephone: [...TELEPHONES] },
         {
-            "@type": ["ProfessionalService", "LocalBusiness"], "@id": `${SITE}/#local`, name: "Netquor Technologies", url: `${SITE}/`, image: LOGO, logo: LOGO, email: "hello@netquor.com", telephone: "+1-888-717-1701", priceRange: "$$",
+            "@type": ["ProfessionalService", "LocalBusiness"], "@id": `${SITE}/#local`, name: "Netquor Technologies", url: `${SITE}/`, image: LOGO, logo: LOGO, email: "hello@netquor.com", telephone: [...TELEPHONES], priceRange: "$$",
             description: "Managed networking, Ubiquiti UniFi and VyOS software-defined networking, hosting and virtualization, Apple device management (MDM) and field IT services for small businesses in Fargo, North Dakota, Moorhead and the Midwest.",
             address: { "@type": "PostalAddress", addressLocality: "Fargo", addressRegion: "ND", addressCountry: "US" },
             areaServed: [

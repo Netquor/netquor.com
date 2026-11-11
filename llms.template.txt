@@ -2,7 +2,7 @@
 
 > Fargo, North Dakota technology company serving the Midwest. Managed networking (Ubiquiti UniFi, VyOS, WireGuard), Apple device management, routable IP space on our own network (AS403008), VPN, hosted Home Assistant, building access control, and a virtual receptionist and business phone system in early access.
 
-Netquor Technologies LLC is based in Fargo, North Dakota and serves small businesses across Fargo-Moorhead, North Dakota, Minnesota and the Midwest. Contact: hello@netquor.com, +1 (888) 717-1701. Service status: https://status.netquor.com/. Our story: https://www.netquor.com/story.html.
+Netquor Technologies LLC is based in Fargo, North Dakota and serves small businesses across Fargo-Moorhead, North Dakota, Minnesota and the Midwest. Contact: hello@netquor.com, toll-free +1 (888) 717-1701, local +1 (701) 960-1701. Service status: https://status.netquor.com/. Our story: https://www.netquor.com/story.html.
 
 ## Products
 - [Netquor Phone](https://phone.netquor.com/): A virtual receptionist and business phone system, in early access. Planned launch price from {{price:phone.planned_launch.month}} a month; billing is not built yet, so nobody is charged during early access. The first 100 founding partners keep the launch price for 24 months. A self-hosted option exists, with terms at launch. Sample calls on that site are scripted and there are no customer case studies yet.
@@ -20,6 +20,9 @@ Use two Netquor products together and take 10% off their monthly plan fees; use 
 
 ## Calculators and comparisons
 On the homepage: a device setup and sign-in time calculator (https://www.netquor.com/#calculators), a missed-call cost calculator, a bundle price calculator (https://www.netquor.com/#bundles), and side-by-side price comparisons with each vendor's own pricing page as the source, checked November 10, 2026 (https://www.netquor.com/compare.html). Calculators use only the visitor's own numbers; no savings are claimed.
+
+## Local
+- [Business networking and IT in Fargo-Moorhead](https://www.netquor.com/fargo-moorhead.html): What Netquor does for businesses in Fargo, West Fargo, Moorhead and the Midwest (network design on Ubiquiti UniFi and VyOS, Apple device management, VPN), what it does not do (Netquor does not sell a last-mile internet connection), and a dated, sourced list of the business internet providers that publish Fargo-Moorhead service, read from each provider's own page on November 11, 2026.
 
 ## Programs
 - [Netquor for startups](https://www.netquor.com/startups.html): Half price Netquor Fleet for 12 months for new businesses under two years old with fewer than ten people, up to 25 devices, no funding requirement. Netquor Phone has its own startup program when billing starts.

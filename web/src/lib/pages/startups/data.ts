@@ -8,7 +8,6 @@ export const startupsMeta = {
     description: "Half price Netquor Fleet for 12 months for new businesses under two years old with fewer than ten people. Up to 25 devices, no funding requirement.",
 } as const;
 
-const PHONE = { href: "tel:+18887171701", label: "+1 (888) 717-1701" } as const;
 
 /** "$2.98" from 595 cents: half, rounded to the cent, half up. */
 export const halfPrice = (priceCents: number): string => usd(priceCents / 2);
@@ -88,7 +87,7 @@ export const startupsPage = (prices: Prices): ProgramPageData => ({
             kind: "section", style: "padding-top: 0;", width: 900,
             blocks: [{
                 kind: "cta",
-                cta: { title: "Starting something?", text: "Tell us what you are building and what you need to run it. We will reply with a plan and a price in writing.", action: { href: "mailto:hello@netquor.com?subject=Netquor%20for%20Startups", label: "Apply by email" }, phone: PHONE },
+                cta: { title: "Starting something?", text: "Tell us what you are building and what you need to run it. We will reply with a plan and a price in writing.", action: { href: "mailto:hello@netquor.com?subject=Netquor%20for%20Startups", label: "Apply by email" } },
             }],
         },
     ],
