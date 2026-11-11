@@ -70,7 +70,7 @@
                     <div class="col-6 col-md-3"><div class="pop"><strong>{l.city}</strong><span class="text-muted small">{l.code}</span></div></div>
                 {/each}
             </div>
-            <p class="text-muted small text-center mt-3 mb-0">Need a location that is not listed? Ask. We add capacity where customers need it.</p>
+            <p class="text-muted small text-center mt-3 mb-0">Need a location that is not listed? Ask. We add capacity where customers need it. See how the network looks from the inside in our <a href="/looking-glass.html">public looking glass</a>.</p>
         </div>
     </section>
 

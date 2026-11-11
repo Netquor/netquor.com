@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
-import { EMAIL, LOCAL, PHONES, TELEPHONES, TOLL_FREE, labeled } from "./contact";
+import { EMAIL, LOCAL, MAIN, PHONES, TELEPHONES, TOLL_FREE, labeled } from "./contact";
 
 const SRC = join(import.meta.dir, "..");
 const files = (dir: string): string[] => readdirSync(dir).flatMap((f) => { const p = join(dir, f); return statSync(p).isDirectory() ? files(p) : /\.(svelte|ts)$/.test(f) && !/\.test\.ts$/.test(f) ? [p] : []; });
@@ -31,9 +31,11 @@ describe("contact.ts is the single source of Netquor's numbers", () => {
             expect(p.schema).toBe(`+${digits[0]}-${digits.slice(1, 4)}-${digits.slice(4, 7)}-${digits.slice(7)}`);
         }
     });
-    test("the footer, home contact block, program pages and call buttons are driven by it", () => {
+    test("the footer lists both labeled numbers; contact blocks and call buttons show only the toll-free one, unlabeled", () => {
         const uses = (rel: string) => all.find((f) => f.p === rel)!.s;
-        for (const rel of ["src/lib/components/Footer.svelte", "src/lib/pages/index/Contact.svelte", "src/lib/pages/programs/ProgramPage.svelte"]) expect(uses(rel)).toContain("PHONES");
+        expect(MAIN).toBe(TOLL_FREE);
+        expect(uses("src/lib/components/Footer.svelte")).toContain("PHONES");
+        for (const rel of ["src/lib/pages/index/Contact.svelte", "src/lib/pages/programs/ProgramPage.svelte", "src/lib/components/CallButtons.svelte"]) { expect(uses(rel)).toContain("MAIN"); expect(uses(rel)).not.toContain("PHONES"); }
         for (const rel of ["src/lib/pages/homeassistant/Contact.svelte", "src/lib/pages/central/Contact.svelte", "src/routes/(site)/vpn.html/+page.svelte", "src/routes/(site)/sdn.html/+page.svelte", "src/routes/(site)/network.html/+page.svelte"]) expect(uses(rel)).toContain("<CallButtons");
         for (const rel of ["src/lib/pages/index/data.ts", "src/lib/pages/sdn/data.ts", "src/lib/pages/fleet/seo.ts"]) expect(uses(rel)).toContain("TELEPHONES");
     });

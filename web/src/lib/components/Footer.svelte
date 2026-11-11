@@ -9,7 +9,7 @@
 {#if variant === "simple"}
     <footer class="py-5">
         <div class="container text-center">
-            <p class="text-muted small mb-0">&copy; {COPYRIGHT_YEAR} Netquor Technologies LLC. <a href="/" class="text-muted">Home</a> &middot; <a href="/terms.html" class="text-muted">Terms</a> &middot; <a href="/privacy.html" class="text-muted">Privacy</a> &middot; <a href="https://status.netquor.com/" class="text-muted">Status</a></p>
+            <p class="text-muted small mb-0">&copy; {COPYRIGHT_YEAR} Netquor Technologies LLC.<br><a href="/" class="text-muted">Home</a> &middot; <a href="/terms.html" class="text-muted">Terms</a> &middot; <a href="/privacy.html" class="text-muted">Privacy</a> &middot; <a href="https://status.netquor.com/" class="text-muted">Status</a></p>
         </div>
     </footer>
 {:else}
@@ -51,6 +51,7 @@
                     <a href="/story.html">Our story</a>
                     <a href="/readiness.html">Readiness checklists</a>
                     <a href="/subnet-calculator.html">Subnet calculator</a>
+                    <a href="/looking-glass.html">Looking glass</a>
                     <a href="https://account.netquor.com/">Account</a>
                     <a href="https://status.netquor.com/">Status</a>
                     <a href="/terms.html">Terms</a>

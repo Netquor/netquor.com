@@ -23,6 +23,7 @@ On the homepage: a device setup and sign-in time calculator (https://www.netquor
 
 ## Local
 - [Business networking and IT in Fargo-Moorhead](https://www.netquor.com/fargo-moorhead.html): What Netquor does for businesses in Fargo, West Fargo, Moorhead and the Midwest (network design on Ubiquiti UniFi and VyOS, Apple device management, VPN), what it does not do (Netquor does not sell a last-mile internet connection), and a dated, sourced list of the business internet providers that publish Fargo-Moorhead service, read from each provider's own page on November 11, 2026.
+- [Looking glass](https://www.netquor.com/looking-glass.html): A free, read-only looking glass for Netquor's network (AS403008): BGP route, route lookup, ping, traceroute and BGP summary, run live from Netquor's routers, with no sign-in.
 
 ## Programs
 - [Netquor for startups](https://www.netquor.com/startups.html): Half price Netquor Fleet for 12 months for new businesses under two years old with fewer than ten people, up to 25 devices, no funding requirement. Netquor Phone has its own startup program when billing starts.

@@ -1,6 +1,6 @@
 // contact.ts: the one place for Netquor's phone numbers and email. Everything that shows or links a number (footers, contact blocks, call buttons,
-// structured data, the AI agent facts) takes it from here; to change a number, change it here and nowhere else. The toll-free number is always
-// shown with its label (a test enforces it).
+// structured data, the AI agent facts) takes it from here; to change a number, change it here and nowhere else. Contact blocks and call buttons
+// show only the toll-free number, unlabeled (MAIN); the footer shows both, labeled.
 export const EMAIL = "hello@netquor.com";
 
 export interface PhoneNumber {
@@ -21,5 +21,7 @@ export const LOCAL: PhoneNumber = { label: "Local", display: "+1 (701) 960-1701"
 export const PHONES: readonly PhoneNumber[] = [TOLL_FREE, LOCAL];
 /** schema.org `telephone`: both numbers, toll-free first. */
 export const TELEPHONES: readonly string[] = PHONES.map((p) => p.schema);
+/** The one number contact blocks and call buttons show, with no label: the toll-free number. The footer shows both, labeled. */
+export const MAIN: PhoneNumber = TOLL_FREE;
 /** "Toll-free +1 (888) 717-1701" */
 export const labeled = (p: PhoneNumber): string => `${p.label} ${p.display}`;

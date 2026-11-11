@@ -1,5 +1,5 @@
 // Data for the home page (/), moved out of the markup. Text here is plain unless a field is documented as HTML. Prices inside strings are written as {{price.key}} tokens and drawn by Rich.svelte from the live price cache. The legacy page lives only in the legacy-baseline-2026-11 tag (see scripts/baseline).
-import { EMAIL, LOCAL, TELEPHONES, TOLL_FREE } from "../../contact";
+import { EMAIL, MAIN, TELEPHONES } from "../../contact";
 import type { PriceMap } from "#lib/jsonld.ts";
 import { sameAs } from "#lib/social.ts";
 
@@ -852,6 +852,6 @@ export const FAQ: { q: string; a: string }[] = [
     },
     {
         "q": "How do I get a quote for managed networking?",
-        "a": `Email <a href="mailto:${EMAIL}">${EMAIL}</a> or call <a href="${TOLL_FREE.href}">toll-free ${TOLL_FREE.display}</a> or <a href="${LOCAL.href}">locally at ${LOCAL.display}</a>. Netquor SDN is quoted per site, so tell us what you run today.`
+        "a": `Email <a href="mailto:${EMAIL}">${EMAIL}</a> or call <a href="${MAIN.href}">${MAIN.display}</a>. Netquor SDN is quoted per site, so tell us what you run today.`
     }
 ];

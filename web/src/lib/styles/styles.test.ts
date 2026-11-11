@@ -75,8 +75,8 @@ describe("nav.css and Fleet's stylesheet are the legacy files, moved", () => {
 });
 
 describe("entry stylesheets", () => {
-    test("the (site) entry is Bootstrap, Bootstrap Icons, nav.css, then the site system, with fonts first", () => {
-        expect(cssImports(style("entry-site.css"))).toEqual(["./fonts.css", "bootstrap/dist/css/bootstrap.min.css", "bootstrap-icons/font/bootstrap-icons.min.css", "./nav.css", "./site.css"]);
+    test("the (site) entry is Bootstrap, Bootstrap Icons, nav.css, then the site system, then the rules added after the baseline, with fonts first", () => {
+        expect(cssImports(style("entry-site.css"))).toEqual(["./fonts.css", "bootstrap/dist/css/bootstrap.min.css", "bootstrap-icons/font/bootstrap-icons.min.css", "./nav.css", "./site.css", "./after-baseline.css"]);
     });
     test("the (fleet) entry is the Geist fonts, Fleet's stylesheet, nav.css, Bootstrap Icons, Plex; no Bootstrap and no site system", () => {
         const i = cssImports(style("entry-fleet.css"));

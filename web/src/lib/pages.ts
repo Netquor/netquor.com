@@ -21,6 +21,7 @@ export const PAGES: readonly PageEntry[] = [
     { path: "/central.html", priority: 0.7, changefreq: "monthly" },
     { path: "/subnet-calculator.html", priority: 0.8, changefreq: "monthly" },
     { path: "/readiness.html", priority: 0.7, changefreq: "monthly" },
+    { path: "/looking-glass.html", priority: 0.7, changefreq: "monthly" },
     { path: "/fargo-moorhead.html", priority: 0.8, changefreq: "monthly" },
     { path: "/startups.html", priority: 0.7, changefreq: "monthly" },
     { path: "/referrals.html", priority: 0.6, changefreq: "monthly" },

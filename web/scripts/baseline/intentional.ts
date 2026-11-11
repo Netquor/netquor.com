@@ -9,28 +9,17 @@ export interface IntentionalChange { id: string; since: string; reason: string; 
 const TOLL = "+1 (888) 717-1701";
 const LOCAL = "+1 (701) 960-1701";
 const TEL_TOLL = "tel:+18887171701";
-const esc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const TEL_LOCAL = "tel:+17019601701";
 
-/** 2026-11-11: the 888 number is shown as "Toll-free", and the new local number (701) 960-1701 is listed wherever contact numbers are offered (footer, home contact block, call buttons, structured data, the FAQ answer). */
+/** 2026-11-11: the footer shows both numbers, labeled "Toll-free" and "Local", and the structured data lists both. Everywhere else (contact blocks, call buttons, the FAQ) the one toll-free number stays as the baseline has it. */
 export const contactNumbers: IntentionalChange = {
     id: "contact-numbers",
     since: "2026-11-11",
-    reason: "the 888 number is labeled toll-free and the local number +1 (701) 960-1701 was added",
+    reason: "the footer lists the toll-free and the new local number, labeled, and the structured data lists both",
     apply(html) {
         let h = html;
-        // site footer (home page): two lines, separated by <br>
+        // site footer: two lines, separated by <br>
         h = h.replace(`<br><a href="${TEL_TOLL}">${TOLL}</a></p>`, `<br><a href="${TEL_TOLL}">Toll-free ${TOLL}</a><br><a href="${TEL_LOCAL}">Local ${LOCAL}</a></p>`);
-        // home page contact block: an icon link per number
-        h = h.replace(`<a href="${TEL_TOLL}" class="nq-contact-link"><i class="bi bi-telephone" aria-hidden="true"></i><span>${TOLL}</span></a>`, `<a href="${TEL_TOLL}" class="nq-contact-link"><i class="bi bi-telephone" aria-hidden="true"></i><span>Toll-free ${TOLL}</span></a>\n                    <a href="${TEL_LOCAL}" class="nq-contact-link"><i class="bi bi-telephone" aria-hidden="true"></i><span>Local ${LOCAL}</span></a>`);
-        // call buttons (vpn, sdn, network, home assistant): a second button for the local number
-        h = h.replace(`<a class="btn btn-outline-info btn-lg rounded-pill px-4" href="${TEL_TOLL}">${TOLL}</a>`, `<a class="btn btn-outline-info btn-lg rounded-pill px-4" href="${TEL_TOLL}">Toll-free ${TOLL}</a>\n                    <a class="btn btn-outline-info btn-lg rounded-pill px-4" href="${TEL_LOCAL}">Local ${LOCAL}</a>`);
-        // Netquor Central call button
-        h = h.replace(`<a href="${TEL_TOLL}" class="btn btn-outline-info btn-lg">Call ${TOLL}</a>`, `<a href="${TEL_TOLL}" class="btn btn-outline-info btn-lg">Call toll-free ${TOLL}</a>\n                    <a href="${TEL_LOCAL}" class="btn btn-outline-info btn-lg">Call local ${LOCAL}</a>`);
-        // the SDN FAQ sentence
-        h = h.replace(`or call <a href="${TEL_TOLL}">${TOLL}</a>.`, `or call <a href="${TEL_TOLL}">toll-free ${TOLL}</a> or <a href="${TEL_LOCAL}">locally at ${LOCAL}</a>.`);
-        // every other plain number link (program pages and similar) only gets the label
-        h = h.replace(new RegExp(`(href="${esc(TEL_TOLL)}"[^>]*>)${esc(TOLL)}</a>`, "g"), `$1Toll-free ${TOLL}</a>`);
         // structured data: both numbers, toll-free first
         h = h.replaceAll(`"telephone": "+1-888-717-1701"`, `"telephone": ["+1-888-717-1701", "+1-701-960-1701"]`);
         return h;
@@ -50,8 +39,29 @@ export const localPageLinks: IntentionalChange = {
     },
 };
 
+/** 2026-11-11: the new looking glass page is linked from the footer and from the Network Solutions locations section. */
+export const lookingGlassLinks: IntentionalChange = {
+    id: "looking-glass-links",
+    since: "2026-11-11",
+    reason: "the looking glass page was added and is linked from the footer and from network.html",
+    apply(html) {
+        if (html.includes("looking-glass.html")) return html;
+        let h = html.replaceAll(`<a href="subnet-calculator.html">Subnet calculator</a>`, `<a href="subnet-calculator.html">Subnet calculator</a>\n                    <a href="looking-glass.html">Looking glass</a>`);
+        h = h.replace(`We add capacity where customers need it.</p>`, `We add capacity where customers need it. See how the network looks from the inside in our <a href="/looking-glass.html">public looking glass</a>.</p>`);
+        return h;
+    },
+};
+
+/** 2026-11-11: in the simple footer the links sit on their own line under the copyright instead of running on after it. */
+export const footerLinksBelow: IntentionalChange = {
+    id: "footer-links-below-copyright",
+    since: "2026-11-11",
+    reason: "the simple footer's links were cramped on the copyright line; they now sit under it",
+    apply: (html) => html.replaceAll(`Netquor Technologies LLC. <a href="index.html"`, `Netquor Technologies LLC.<br><a href="index.html"`),
+};
+
 /** Every recorded change, oldest first. */
-export const INTENTIONAL_CHANGES: readonly IntentionalChange[] = [contactNumbers, localPageLinks];
+export const INTENTIONAL_CHANGES: readonly IntentionalChange[] = [contactNumbers, localPageLinks, lookingGlassLinks, footerLinksBelow];
 
 /** The baseline page with every recorded decision applied. */
 export const applyIntentionalChanges = (html: string): string => INTENTIONAL_CHANGES.reduce((h, c) => c.apply(h), html);
@@ -64,5 +74,6 @@ export const applyIntentionalLlms = (txt: string): string => {
 };
 const LLMS_LOCAL = `## Local
 - [Business networking and IT in Fargo-Moorhead](https://www.netquor.com/fargo-moorhead.html): What Netquor does for businesses in Fargo, West Fargo, Moorhead and the Midwest (network design on Ubiquiti UniFi and VyOS, Apple device management, VPN), what it does not do (Netquor does not sell a last-mile internet connection), and a dated, sourced list of the business internet providers that publish Fargo-Moorhead service, read from each provider's own page on November 11, 2026.
+- [Looking glass](https://www.netquor.com/looking-glass.html): A free, read-only looking glass for Netquor's network (AS403008): BGP route, route lookup, ping, traceroute and BGP summary, run live from Netquor's routers, with no sign-in.
 
 `;

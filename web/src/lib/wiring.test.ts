@@ -87,3 +87,12 @@ describe("html marker classes", () => {
         expect(owners.length).toBeGreaterThan(0); // the menu rules are there
     });
 });
+
+describe("footer", () => {
+    test("the Company list flows in two independent columns, so a wrapped link never stretches a row or spills into a third column", () => {
+        const css = readFileSync(join(SRC, "lib/styles/after-baseline.css"), "utf8");
+        const rule = css.match(/nav\.nq-2col \{([^}]*)\}/)?.[1] ?? "";
+        expect(rule).toContain("columns: 2");
+        expect(readFileSync(join(SRC, "lib/styles/entry-site.css"), "utf8")).toContain('@import "./after-baseline.css"');
+    });
+});

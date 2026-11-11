@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { PHONES, labeled } from "../../contact";
+    import { MAIN } from "../../contact";
     // One page template for startups.html, referrals.html and partners.html (the pages that tools/make-program-pages.py generated before the port). The copy comes from the page's data.ts as a ProgramPageData; this draws the hero, the sections and the blocks inside them, with the same markup as the generated pages. The Fx component adds the reveal animations after hydration.
     import Fx from "#lib/behaviors/fx/Fx.svelte";
     import CmpTable from "#lib/components/CmpTable.svelte";
@@ -56,7 +56,7 @@
                     {:else if b.kind === "roles"}
                         <div class="nq-who-grid">{#each b.roles as r (r.title)}<article class="nq-who"><h3>{r.title}</h3><p class="nq-who-label" style="margin-top:0">You have</p><ul class="nq-pain">{#each r.have as x (x)}<li>{x}</li>{/each}</ul><p class="nq-who-label" style="margin-top:0">You will</p><ul class="nq-pain">{#each r.do as x (x)}<li>{x}</li>{/each}</ul><a class="nq-who-cta" href={mailSubject(r.title)}>Tell us about yourself</a></article>{/each}</div>
                     {:else if b.kind === "cta"}
-                        <div class="nq-start"><div class="nq-start-main"><div><h2>{b.cta.title}</h2><p class="text-muted mb-0">{b.cta.text}</p></div><div class="nq-contact"><a href={b.cta.action.href} class="btn btn-primary-cyber">{b.cta.action.label} <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i></a>{#each PHONES as p, i}{#if i}{" "}{/if}<a href={p.href} class="nq-contact-link"><i class="bi bi-telephone" aria-hidden="true"></i><span>{labeled(p)}</span></a>{/each}</div></div></div>
+                        <div class="nq-start"><div class="nq-start-main"><div><h2>{b.cta.title}</h2><p class="text-muted mb-0">{b.cta.text}</p></div><div class="nq-contact"><a href={b.cta.action.href} class="btn btn-primary-cyber">{b.cta.action.label} <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i></a><a href={MAIN.href} class="nq-contact-link"><i class="bi bi-telephone" aria-hidden="true"></i><span>{MAIN.display}</span></a></div></div></div>
                     {/if}
                 {/each}
             </div>

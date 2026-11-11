@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { PHONES, labeled } from "../../contact";
+    import { MAIN } from "../../contact";
 </script>
 
 <section class="nq-section" id="contact">
@@ -13,9 +13,7 @@
                 </div>
                 <div class="nq-contact">
                     <a href="mailto:hello@netquor.com" class="nq-contact-link"><i class="bi bi-envelope" aria-hidden="true"></i><span>hello@netquor.com</span></a>
-                    {#each PHONES as p, i}
-                        {#if i}{" "}{/if}<a href={p.href} class="nq-contact-link"><i class="bi bi-telephone" aria-hidden="true"></i><span>{labeled(p)}</span></a>
-                    {/each}
+                    <a href={MAIN.href} class="nq-contact-link"><i class="bi bi-telephone" aria-hidden="true"></i><span>{MAIN.display}</span></a>
                     <a href="mailto:hello@netquor.com?subject=Question%20for%20Netquor" class="btn btn-primary-cyber">Send a message <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i></a>
                 </div>
             </div>

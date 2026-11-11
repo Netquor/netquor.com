@@ -3,7 +3,7 @@ import { launchBrowser } from "./browser";
 import { startServers } from "./servers";
 
 export const REPLACED = ["nav.js", "fx.js", "bg.js", "nudge.js", "analytics.js", "readiness.js", "fleet/site.js", "fleet/pricing.js"] as const;
-export const PAGES = ["/", "/central.html", "/compare.html", "/digitalaccess.html", "/fleet.html", "/homeassistant.html", "/network.html", "/partners.html", "/privacy.html", "/readiness.html", "/referrals.html", "/sdn.html", "/startups.html", "/subnet-calculator.html", "/terms.html", "/vpn.html", "/story.html", "/fargo-moorhead.html"] as const;
+export const PAGES = ["/", "/central.html", "/compare.html", "/digitalaccess.html", "/fleet.html", "/homeassistant.html", "/network.html", "/partners.html", "/privacy.html", "/readiness.html", "/referrals.html", "/sdn.html", "/startups.html", "/subnet-calculator.html", "/terms.html", "/vpn.html", "/story.html", "/fargo-moorhead.html", "/looking-glass.html"] as const;
 
 const GOOGLE = /googletagmanager|google-analytics|doubleclick|googleadservices/;
 
