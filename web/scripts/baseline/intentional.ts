@@ -55,3 +55,14 @@ export const INTENTIONAL_CHANGES: readonly IntentionalChange[] = [contactNumbers
 
 /** The baseline page with every recorded decision applied. */
 export const applyIntentionalChanges = (html: string): string => INTENTIONAL_CHANGES.reduce((h, c) => c.apply(h), html);
+
+/** The baseline's llms.txt with the decided changes applied: both contact numbers, and the Local section for /fargo-moorhead.html. The text comes from llms.template.txt, so it must be the same words (the server test compares the rendered template with this). */
+export const applyIntentionalLlms = (txt: string): string => {
+    let t = txt.replace(`Contact: hello@netquor.com, ${TOLL}.`, `Contact: hello@netquor.com, toll-free ${TOLL}, local ${LOCAL}.`);
+    if (!t.includes("fargo-moorhead.html")) t = t.replace("## Programs\n", LLMS_LOCAL + "## Programs\n");
+    return t;
+};
+const LLMS_LOCAL = `## Local
+- [Business networking and IT in Fargo-Moorhead](https://www.netquor.com/fargo-moorhead.html): What Netquor does for businesses in Fargo, West Fargo, Moorhead and the Midwest (network design on Ubiquiti UniFi and VyOS, Apple device management, VPN), what it does not do (Netquor does not sell a last-mile internet connection), and a dated, sourced list of the business internet providers that publish Fargo-Moorhead service, read from each provider's own page on November 11, 2026.
+
+`;
