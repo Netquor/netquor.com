@@ -35,7 +35,7 @@ const readSeed = (): Snapshot => JSON.parse(readFileSync(SEED, "utf8")) as Snaps
 /** The legacy page through the legacy server (stamped with the seed), and the text of its local scripts. */
 export const legacyPage = async (path: string, legacyDir = REPO): Promise<{ html: string; scripts: string[] }> => {
     const snap = readSeed();
-    const server = createLegacyServer({ legacyDir, prices: { get: () => snap, version: () => snap.version }, log: () => {} });
+    const server = createLegacyServer({ scope: "baseline", legacyDir, prices: { get: () => snap, version: () => snap.version }, log: () => {} });
     const url = new URL(`http://legacy.invalid${path}`);
     const res = server.serve(new Request(url), url);
     if (!res || res.status !== 200) throw new Error(`the legacy server does not serve ${path} (is the file in the page registry and on disk?)`);

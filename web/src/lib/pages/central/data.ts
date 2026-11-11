@@ -47,31 +47,3 @@ export const FAQ_ITEMS = [
     { q: "What does it need from Google?", a: "A service account with domain-wide delegation. The scopes depend on the features you turn on: directory and group access for sync, Gmail settings for filters and signatures, and broader mail access only for backfill and retention. Recovery details are never touched." },
 ] as const;
 
-/** The page's own rules, as the legacy page wrote them in its head. */
-export const PAGE_CSS = `
-        .nq-map-labels text { font: 500 15px var(--nq-body); fill: var(--nq-ink); }
-        .nq-map-labels text.sub { font: 400 12px var(--nq-mono); fill: var(--nq-ink-3); }
-        .nq-map-lines path { stroke: var(--nq-accent); opacity: .85; }
-        .nq-map-nodes circle { fill: var(--nq-accent); }
-        .nq-map { width: 100%; height: auto; display: block; }
-        .nq-diff { margin: 0; max-width: 520px; margin-inline: auto; background: var(--nq-s1); border: 1px solid var(--nq-line-2); border-radius: 20px; overflow: hidden; }
-        .nq-diff figcaption { display: flex; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid var(--nq-line); font: 400 .75rem var(--nq-mono); color: var(--nq-ink-3); }
-        .nq-diff figcaption span:first-child { color: var(--nq-ink-2); }
-        .nq-diff-row { display: grid; grid-template-columns: 4.5rem 1fr; gap: 12px; padding: 12px 20px; border-bottom: 1px solid var(--nq-line); font-size: .9375rem; color: var(--nq-ink-2); }
-        .nq-diff-row b { font: 500 .75rem var(--nq-mono); color: var(--nq-accent-t); padding-top: 3px; }
-        .nq-diff-row b.add { color: var(--nq-ok); }
-        .nq-diff-row b.rm { color: #f0907f; }
-        .nq-diff-row span { color: var(--nq-ink); }
-        .nq-diff-row small { display: block; color: var(--nq-ink-3); font-size: .8125rem; margin-top: 2px; }
-        .nq-diff-foot { margin: 0; padding: 14px 20px 18px; font-size: .8125rem; color: var(--nq-ink-3); line-height: 1.5; }
-        .nq-cap { width: 100%; border-collapse: collapse; }
-        .nq-cap th { text-align: left; font: 400 .75rem var(--nq-mono); color: var(--nq-ink-3); padding: 0 16px 12px 0; border-bottom: 1px solid var(--nq-line); }
-        .nq-cap td { padding: 18px 16px 18px 0; vertical-align: top; border-bottom: 1px solid var(--nq-line); color: var(--nq-ink-2); font-size: .9375rem; line-height: 1.55; }
-        .nq-cap td:first-child { color: var(--nq-ink); font: 500 1.0625rem var(--nq-display); white-space: nowrap; }
-        .nq-cap td:last-child { white-space: nowrap; padding-right: 0; }
-        @media (max-width: 767.98px) { .nq-cap, .nq-cap tbody, .nq-cap tr, .nq-cap td { display: block; } .nq-cap thead { display: none; } .nq-cap tr { padding: 16px 0; border-bottom: 1px solid var(--nq-line); } .nq-cap td { border: 0; padding: 2px 0; white-space: normal !important; } }
-        .nq-safe { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-        .nq-safe div { padding: 20px; background: var(--nq-s1); border: 1px solid var(--nq-line); border-radius: 14px; }
-        .nq-safe b { display: block; margin-bottom: 6px; font: 500 1rem var(--nq-display); color: var(--nq-ink); }
-        .nq-safe p { margin: 0; font-size: .9375rem; color: var(--nq-ink-2); line-height: 1.55; }
-    `;

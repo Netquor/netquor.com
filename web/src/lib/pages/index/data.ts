@@ -21,8 +21,10 @@ export const JSON_LD = {
             "email": "hello@netquor.com",
             "telephone": "+1-888-717-1701",
             "sameAs": [
+                "https://www.facebook.com/people/Netquor-Technologies/61596308317634/",
                 "https://x.com/netquor",
-                "https://www.linkedin.com/company/netquor"
+                "https://www.linkedin.com/company/netquor",
+                "https://github.com/Netquor"
             ]
         },
         {

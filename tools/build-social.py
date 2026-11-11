@@ -4,7 +4,7 @@ With no URLs filled in, nothing is added, so the site never links to an account 
 import json, pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 cfg = json.loads((ROOT / "tools/social.json").read_text())
-ICON = {"facebook": ("bi-facebook", "Facebook"), "x": ("bi-twitter-x", "X"), "instagram": ("bi-instagram", "Instagram"), "linkedin": ("bi-linkedin", "LinkedIn")}
+ICON = {"facebook": ("bi-facebook", "Facebook"), "x": ("bi-twitter-x", "X"), "instagram": ("bi-instagram", "Instagram"), "linkedin": ("bi-linkedin", "LinkedIn"), "github": ("bi-github", "GitHub")}
 urls = {k: v.strip() for k, v in cfg.items() if k in ICON and v.strip()}
 for k, v in urls.items():
     if not v.startswith("https://"):

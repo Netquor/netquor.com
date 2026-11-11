@@ -1,19 +1,8 @@
-// assets.ts: the legacy assets Svelte pages and layouts load by URL, and their ?v= cache-busting values. +layout.server.ts fingerprints each file (the same md5 scheme tools/build-nav.py writes into the legacy pages) and hands the result to every page as data.assets. To load another legacy file, add it here.
+// assets.ts: the legacy files Svelte pages load by URL: only the three pure calculation scripts. The stylesheets (nq.css, nav.css, fleet/site.css) are ported to src/lib/styles and bundled by Vite, the fonts and icons come from npm, and the behavior scripts (nav.js, fx.js, bg.js, nudge.js, analytics.js, readiness.js, the Fleet scripts) are ported to src/lib/behaviors; none of those is loaded from the legacy folder any more. This file holds the files that are, and their ?v= cache-busting values. +layout.server.ts fingerprints each file (the same md5 scheme tools/build-nav.py writes into the legacy pages) and hands the result to every page as data.assets. To load another legacy file, add it here.
 export const ASSET_FILES = {
-    nq: "nq.css",
-    nav: "nav.css",
-    navJs: "nav.js",
-    analytics: "analytics.js",
     subnet: "subnet-calc.js",
     costCalc: "cost-calc.js",
     bundleCalc: "bundle-calc.js",
-    fx: "fx.js",
-    nudge: "nudge.js",
-    bg: "bg.js",
-    readiness: "readiness.js",
-    fleetCss: "fleet/site.css",
-    fleetJs: "fleet/site.js",
-    fleetPricing: "fleet/pricing.js",
 } as const;
 
 export type AssetKey = keyof typeof ASSET_FILES;

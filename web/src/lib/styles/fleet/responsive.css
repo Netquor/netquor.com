@@ -1,0 +1,23 @@
+/* Fleet smaller screens (first pass; the phone rules in phones.css come later). */
+
+/* Smaller screens */
+@media (max-width: 960px) {
+  .hero-grid, .split, .demo { grid-template-columns: 1fr; gap: 44px; }
+  .hero { padding-top: 44px; }
+  .hero-visual { max-width: 640px; }
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .facts-in { grid-template-columns: repeat(2, 1fr); }
+  .calc-grid { grid-template-columns: 1fr 1fr; }
+  .showcase { grid-template-columns: 1fr; }
+  .result { grid-column: 1 / -1; }
+  .links { display: none; }
+  .nav-in .btn { margin-left: auto; }
+}
+@media (max-width: 640px) {
+  .section { padding: 64px 0; }
+  .grid, .steps, .plans { grid-template-columns: 1fr; }
+  .amount { font-size: 62px; }
+  .calc-grid, .form .two { grid-template-columns: 1fr; }
+  .hero-visual .shot-phone { width: 30%; right: 0; bottom: -6%; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }

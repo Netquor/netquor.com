@@ -20,6 +20,8 @@ export const parseAllow = (text: string, file = "parity-allow.json"): AllowFile 
             entries.forEach((e: unknown, i) => {
                 const m = (e as { match?: unknown })?.match, r = (e as { reason?: unknown })?.reason;
                 if (typeof m !== "string" || m === "") problems.push(`${page}.${cat}[${i}]: "match" must be a non-empty string`);
+                const op = (e as { op?: unknown })?.op;
+                if (op !== undefined && op !== "-" && op !== "+") problems.push(`${page}.${cat}[${i}]: "op" must be "-" or "+"`);
                 if (typeof r !== "string" || r.trim().length < 5) problems.push(`${page}.${cat}[${i}]: "reason" is required (say why the difference is intended)`);
             });
         }

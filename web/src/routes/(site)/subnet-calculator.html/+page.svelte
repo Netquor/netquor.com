@@ -28,7 +28,7 @@
         ["Usable hosts", num(ok4.usable)], ["Total addresses", num(ok4.total)], ["Type", ok4.kind],
     ] as [string, string][]) : []);
     const note = $derived(ok4 ? (ok4.host ? "A /32 is a single host address." : ok4.point2point ? "/31 networks have no network or broadcast address and are used for point-to-point links (RFC 3021)." : "") : "");
-    // The prefixes to split into: up to eight longer, never past /32. The choice sticks while the prefix stays the same.
+    // The prefixes to split into: up to eight longer, never past /32. Like the legacy script, every calculation (typing, Calculate, Enter) rebuilds the list and selects the first prefix, so the choice only lasts until the next calculation.
     const options = $derived(ok4 ? Array.from({ length: Math.max(0, Math.min(ok4.prefix + 8, 32) - ok4.prefix) }, (_, i) => ok4.prefix + 1 + i) : []);
     const splitTo = $derived(ok4 ? (picked && picked.base === ok4.prefix && options.includes(picked.to) ? picked.to : ok4.prefix + 1) : 0);
     const split = $derived(engine && ok4 && ok4.prefix < 32 ? engine.splitV4(ok4._net, ok4.prefix, splitTo) : null);
@@ -71,8 +71,8 @@
         <div class="calc-card mb-4">
             <label class="form-label" for="v4">IPv4 address and prefix</label>
             <div class="d-flex flex-wrap gap-2">
-                <input id="v4" class="form-control calc-input" style="flex: 1 1 260px;" bind:value={v4} inputmode="text" autocomplete="off" spellcheck="false" aria-describedby="v4err">
-                <button id="v4go" class="btn btn-primary-cyber" type="button" onclick={() => (v4 = v4.trim())}>Calculate</button>
+                <input id="v4" class="form-control calc-input" style="flex: 1 1 260px;" bind:value={v4} oninput={() => (picked = null)} onkeydown={(e) => { if (e.key === "Enter") picked = null; }} inputmode="text" autocomplete="off" spellcheck="false" aria-describedby="v4err">
+                <button id="v4go" class="btn btn-primary-cyber" type="button" onclick={() => { picked = null; v4 = v4.trim(); }}>Calculate</button>
             </div>
             <p id="v4err" class="calc-err mt-2 mb-3" aria-live="polite">{r4?.error ?? ""}</p>
             <dl id="v4out" class="calc-grid mb-0" hidden={!ok4}>

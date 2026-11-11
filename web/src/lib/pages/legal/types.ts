@@ -15,7 +15,5 @@ export interface LegalPageData {
     updated: string;
     /** Text of the highlight box above the first heading, or null. */
     intro: string | null;
-    /** The page's own <style> block, kept where the legacy page has it (in the body, before the card). */
-    css: string;
     blocks: readonly LegalBlock[];
 }

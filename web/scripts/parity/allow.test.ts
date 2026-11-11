@@ -13,6 +13,10 @@ describe("parity-allow.json", () => {
         const bad = JSON.stringify({ pages: { "x.html": { meta: [{ match: "a", reason: "" }, { match: "", reason: "long enough" }], nonsense: [] }, "y.html": [] } });
         expect(() => parseAllow(bad)).toThrow(/reason.*required[\s\S]*non-empty[\s\S]*unknown category "nonsense"[\s\S]*y\.html/);
     });
+    test("op must be - or +", () => {
+        expect(() => parseAllow(JSON.stringify({ pages: { "x.html": { assets: [{ match: "script:*", reason: "long enough", op: "x" }] } } }))).toThrow(/"op" must be/);
+        expect(parseAllow(JSON.stringify({ pages: { "x.html": { assets: [{ match: "script:*", reason: "long enough", op: "-" }] } } })).pages["x.html"].assets?.[0].op).toBe("-");
+    });
     test("invalid JSON and a missing pages object are errors", () => {
         expect(() => parseAllow("{")).toThrow(/not valid JSON/);
         expect(() => parseAllow("{}")).toThrow(/pages/);

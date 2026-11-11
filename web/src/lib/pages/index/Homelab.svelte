@@ -51,3 +51,27 @@
         </div>
     </div>
 </section>
+
+<style>
+    /* The section and its terminal: class names no other page uses, so the rules are scoped to this component. `typing` is on <html> and `play` is added to .term by initTerminal, so those two are :global. */
+    .homelab { position: relative; padding: 90px 0 70px; overflow: hidden; }
+    .homelab .container { position: relative; }
+    .hello { margin: 0; }
+    .price-pop { display: inline-flex; align-items: baseline; gap: .35rem; padding: 8px 16px; border-radius: 12px; background: var(--nq-s1); border: 1px solid var(--nq-line-2); font-variant-numeric: tabular-nums; }
+    .price-pop b { font-family: var(--nq-display); font-size: 1.75rem; font-weight: 600; color: var(--nq-ink); }
+    .term { background: #090c10; border: 1px solid var(--nq-line-2); border-radius: 14px; overflow: hidden; font-family: var(--nq-mono); }
+    .term-bar { display: flex; align-items: center; gap: 7px; padding: .65rem .9rem; background: rgba(255, 255, 255, .04); border-bottom: 1px solid rgba(255, 255, 255, .06); }
+    .term-bar span { width: 10px; height: 10px; border-radius: 50%; background: var(--nq-s3); }
+    .term-bar em { margin-left: .5rem; font-style: normal; font-size: .75rem; color: var(--nq-ink-3); }
+    .term-body { padding: 1.1rem 1.2rem 1.3rem; font-size: .82rem; line-height: 1.75; color: #cbd5e1; }
+    .term-body .l { display: block; white-space: pre-wrap; overflow-wrap: anywhere; }
+    :global(.typing) .term-body .l { clip-path: inset(0 100% 0 0); }
+    :global(.typing) .term:global(.play) .term-body .l { animation: reveal .9s steps(34) forwards; animation-delay: var(--d, 0s); }
+    .term-body .p { color: var(--nq-accent-t); } .term-body .ok { color: var(--nq-ok); } .term-body .dim { color: var(--nq-ink-3); } .term-body .ip { color: var(--nq-ink); }
+    .term-body .cur { display: inline-block; width: .55em; height: 1.05em; background: var(--nq-accent-t); vertical-align: -.18em; animation: blink 1s steps(1) infinite; }
+    @keyframes reveal { to { clip-path: inset(0 0 0 0); } }
+    @keyframes blink { 50% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+        :global(.typing) .term-body .l, :global(.typing) .term:global(.play) .term-body .l { clip-path: none; animation: none; }
+    }
+</style>

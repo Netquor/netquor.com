@@ -84,7 +84,10 @@ if [ -n "$(docker port "$RUN-web")" ]; then bad "web publishes ports: $(docker p
 uid=$(docker exec "$RUN-web" id -u)
 [ "$uid" != 0 ] && ok "web runs as uid $uid (not root)" || bad "web runs as root"
 docker exec "$RUN-web" sh -c "test -f /data/prices.json && grep -q '\"version\": $SEED_VERSION' /data/prices.json" && ok "first start seeded /data/prices.json from the image seed" || bad "no seeded /data/prices.json"
-docker exec "$RUN-web" sh -c 'ls /app/legacy | grep -q "^index.html$" && ! ls /app | grep -q "^\.env" && ! test -e /app/server/.env' && ok "legacy pages are in the image; no .env in it" || bad "image contents wrong"
+docker exec "$RUN-web" sh -c 'test -f /app/legacy/favicon.svg && test -f /app/legacy/brand/og.png && test -f /app/legacy/cost-calc.js && test -f /app/legacy/llms.template.txt && ! ls /app | grep -q "^\.env" && ! test -e /app/server/.env' && ok "images, calculator scripts and the llms template are in the image; no .env in it" || bad "image contents wrong"
+# no hand-written page, stylesheet or behavior script in the image: only the three calculator scripts are JavaScript at the top level
+leftover=$(docker exec "$RUN-web" sh -c 'cd /app/legacy && find . -type f \( -name "*.html" -o -name "*.css" -o -name "*.js" \) | sort | grep -v -x -e ./subnet-calc.js -e ./cost-calc.js -e ./bundle-calc.js || true')
+[ -z "$leftover" ] && ok "no legacy HTML, CSS or behavior script in the image (only the three calculator scripts)" || bad "unexpected files in /app/legacy: $leftover"
 
 say "worker delivers the API's snapshot to web (backup path)"
 docker run -d --platform "$PLATFORM" --name "$RUN-worker" --network "container:$RUN-fakeapi" \

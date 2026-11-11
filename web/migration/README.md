@@ -12,7 +12,7 @@ A page is migrated when all of these hold, run in `web/`:
 2. `bun run smoke` passes.
 3. `bun run check` passes: no new `tsc` or `svelte-check` errors.
 4. `bun test` passes, and you added tests for what you added: data modules, ported scripts, components. A page of static markup needs no test of its own; parity is its test.
-5. The legacy file is left alone (a later step deletes it; until then the route wins over it) and `src/lib/pages.ts` is unchanged (the page is already registered; the sitemap picks the route up by itself).
+5. The legacy file is left alone: it stays in git as the local comparison baseline, but it is neither served nor in the Docker image (the runtime allowlist in `src/lib/server/legacy.ts` has no HTML, CSS or behavior scripts) and `src/lib/pages.ts` is unchanged (the page is already registered; the sitemap picks the route up by itself).
 
 ## Where files go
 
@@ -30,7 +30,7 @@ Keep a page component thin: the route file imports `Seo`, composes sections from
 
 ## Route groups and the layout
 
-- `(site)` carries the shared head (icons, Bootstrap, Bootstrap Icons, `nav.css`, `nq.css`, `nav.js`, `analytics.js`, fonts), then `Nav`, then your page, then `Footer`. Do not render `Nav` or `Footer` in your page.
+- `(site)` imports `src/lib/styles/entry-site.css` (Bootstrap 5.3.3, Bootstrap Icons, `nav.css`, the site system, the Plex fonts: all bundled by Vite from npm and `src/lib/styles`, no CDN), carries the shared head (icons) and the `Analytics` component, then `Nav` (which wires itself with `use:navMenu`), then your page, then `Footer`. `src/app.html` adds `nq-js` to `<html>` before first paint. No page loads `nav.js`, `fx.js`, `bg.js`, `nudge.js`, `analytics.js`, `readiness.js` or the Bootstrap JavaScript: those are ported in `src/lib/behaviors/` (`Fx`, `heroMap`, `HeroBackground`, `Nudge page="<name>.html"`, `use:readiness`, `use:collapse`). Only the pure calculation scripts (`subnet-calc.js`, `cost-calc.js`, `bundle-calc.js`) are still `<script src>`: they are UMD files for the legacy pages and Node tests, and importing them as ES modules would mean editing them. Do not render `Nav` or `Footer` in your page.
 - The nav marks the page's own entry as current from the URL. A page changes the nav and footer by returning `chrome` from `+page.ts` (see `src/lib/chrome.ts`):
 
   ```ts
@@ -39,13 +39,36 @@ Keep a page component thin: the route file imports `Seo`, composes sections from
   ```
 
   Options: `footer` (`"simple"` default, `"full"`, `"none"`), `nav` (false for none), `navCurrent` (path to mark), `navStatic` (the `nq-static` nav).
-- `(fleet)` is for `fleet.html`, which has its own design. Its layout loads `fleet/site.css`, the Geist fonts, `nav.css`, `nav.js`, `analytics.js` and `nudge.js` and draws nothing else: no footer, no Bootstrap, no `nq.css`. The legacy Fleet page does contain the site nav bar (above its own header, as `nq-static`), so the page places `<Nav current="/fleet.html" static />` itself, then its own header, sections and footer. It also loads `fleet/site.js` (a module) and `fleet/pricing.js` itself, because they depend on the page's ids.
+- `(fleet)` is for `fleet.html`, which has its own design. Its layout imports `src/lib/styles/entry-fleet.css` (Fleet's stylesheet, the Geist fonts, `nav.css`, Bootstrap Icons, Plex for the nav), renders `Analytics` and `Nudge`, and draws nothing else: no footer, no Bootstrap, no site system. The legacy Fleet page does contain the site nav bar (above its own header, as `nq-static`), so the page places `<Nav current="/fleet.html" static />` itself, then its own header, sections and footer. It also loads `fleet/site.js` (a module) and `fleet/pricing.js` itself, because they depend on the page's ids.
 - The shell `src/app.html` is shared by both groups: `<html lang="en-US" data-bs-theme="dark">` and a `viewport` meta of `width=device-width, initial-scale=1.0`. Where the legacy head differs (Fleet's viewport adds `viewport-fit=cover`, no `data-bs-theme`), record it in the allowlist with the reason rather than changing the shell.
-- Hooks: a path that matches a SvelteKit route (any group) is served by Kit; a path that does not goes to the legacy file. Nothing to do per page.
+- Hooks: a path that matches a SvelteKit route (any group) is served by Kit; a path that does not goes to the runtime allowlist (images, `site.webmanifest`, the three calculation scripts), otherwise to Kit's 404. Nothing to do per page. A new legacy file a page needs by URL must be added to `RUNTIME_FILES` or be an image, and to the `Dockerfile` and `.dockerignore` (a test in `src/lib/server/legacy.test.ts` ties the script names to `src/lib/assets.ts`).
 
-## Assets: stylesheets and scripts
+## Styles
 
-Legacy files stay where they are (repository root, `fleet/`, `brand/`) and are served by the legacy asset path. Load them with the fingerprint the layout data carries:
+All CSS is bundled by Vite and served from our own origin (hashed files under `/_app/immutable/assets/`, immutable); no page links a stylesheet, a font or an icon font from a CDN, and the app does not load `nq.css`, `nav.css` or `fleet/site.css` (the legacy pages still do, until they are deleted). Where things are:
+
+| What | Where |
+| --- | --- |
+| Design tokens (`--nq-*`), documented | `src/lib/styles/tokens.css` |
+| The site system, what `nq.css` was, split by concern | `src/lib/styles/{base,utilities,hero,sections,cards,components,buttons,footer,bundles,calculators,motion,home}.css`, imported in that order by `site.css` |
+| The navigation | `src/lib/styles/nav.css` |
+| Fleet's stylesheet (`fleet/site.css`), split by section | `src/lib/styles/fleet/*.css`, imported in order by `fleet/index.css` |
+| Fonts (Plex Sans 400/500/600, Plex Mono 400/500; Geist for Fleet), latin subset, `font-display: swap` | `src/lib/styles/fonts.css`, `fonts-fleet.css` (`@fontsource` packages) |
+| The cascade order of each layout (Bootstrap, Bootstrap Icons, nav, site system) | `entry-site.css`, `entry-fleet.css`: one entry file with `@import`, so the order survives bundling |
+| A page's own rules (the legacy inline `<style>` block) | `src/lib/pages/<page>/page.css`, imported by the route (`import "#lib/pages/<page>/page.css";`), so they come after the layout's styles |
+| Rules for exactly one component | a Svelte `<style>` block in that component (see the caveat below) |
+
+Rules of thumb:
+
+- Order is the cascade. nq.css was one file and later rules override earlier ones, so the parts are imported in the original order; do not reorder them or move a rule between files without `bun run visual`. `src/lib/styles/styles.test.ts` proves the parts hold exactly the blocks of `nq.css` (while the legacy file exists), that `nav.css` and Fleet's parts are the legacy files moved, and that no source names a CDN.
+- Scoped `<style>` adds a class to every selector, which raises its specificity by one class. A page rule such as `.feature-card { padding: 2rem }` is out-ranked by the site system's `body .feature-card` on purpose (that is how the legacy pages look); scoped, it would tie with it and, coming later, win. So rules that share a name with Bootstrap or the site system stay plain CSS in `page.css`; rules with names only that component uses may be scoped (the subnet calculator and the story page do).
+- A page whose legacy head had its own rules before `nq.css` has the `body { background-color; color; font-family }` rule left out of `page.css`: `nq.css` overrode all three there, and here the page sheet comes after.
+- Do not add a `<link rel="stylesheet">`, a `@import url(https://...)` or an `{@html "<style>..."}` string. Add the package (exact version) and import it.
+- `bun run payload [/path ...]` reports the CSS and font bytes (raw and gzip) a page loads and its third-party requests; the target is no third party but analytics. `bun run visual` is the pixel check against the legacy pages (it never rewrites a baseline).
+
+## Assets: scripts
+
+The three pure calculation scripts stay where they are (repository root) and are served by the runtime legacy asset path (the only JavaScript the image serves from the repository root). Load them with the fingerprint the layout data carries:
 
 ```svelte
 <script lang="ts">
@@ -55,7 +78,7 @@ Legacy files stay where they are (repository root, `fleet/`, `brand/`) and are s
 <svelte:head><script src={assetUrl(data.assets, "costCalc")}></script></svelte:head>
 ```
 
-`src/lib/assets.ts` lists the known files (`nq`, `nav`, `navJs`, `analytics`, `subnet`, `costCalc`, `bundleCalc`, `fx`, `nudge`, `bg`, `readiness`, `fleetCss`, `fleetJs`, `fleetPricing`). Add a line there to load another one. Never write a `?v=` by hand.
+`src/lib/assets.ts` lists the known files (`subnet`, `costCalc`, `bundleCalc`; no stylesheet). Add a line there to load another one. Never write a `?v=` by hand.
 
 Which way to load a vanilla script:
 
@@ -138,7 +161,7 @@ It fetches the Svelte page from the built server and the legacy file through the
 1. text: the visible text as a sequence of blocks (script, style, noscript, template and the head removed, whitespace and entities normalised), with a diff. `-` is legacy only, `+` is Svelte only. A line marked "only in whitespace" differs by a space between inline tags (Svelte trims at block edges; add `{" "}` where the legacy page has the space).
 2. links: every `<a href>` and `<img src>` in order. Relative URLs are resolved against the page, and `/index.html` equals `/`.
 3. meta: `<title>`, canonical, every `<meta name|property>` (order ignored), and JSON-LD blocks (parsed, deep-equal, the first differing JSON pointer is shown).
-4. assets: external `<script src>` and `<link rel=stylesheet>` in order, `?v=` ignored, SvelteKit's own `/_app/` files ignored.
+4. assets: external `<script src>` and `<link rel=stylesheet>` in order, `?v=` ignored, SvelteKit's own `/_app/` files ignored (the bundled CSS is one of them; `parity-allow.json` lists the legacy stylesheets and fonts that are gone, per page, with the reason).
 5. ids: every id that the legacy page's own scripts (inline and local external) look up and that the legacy page has must exist in the Svelte page.
 
 Exit code 1 when anything differs, with a concise report. An intended difference goes in `migration/parity-allow.json`:

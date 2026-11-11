@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { startServer, WEB } from "../../../../scripts/parity/run";
 import { renderSvelte } from "../../server/svelteHarness";
@@ -23,7 +23,9 @@ describe("central", () => {
         expect(body).toContain("mailto:hello@netquor.com?subject=Netquor Central%20and%20Google%20Workspace");
         expect(body).not.toContain("data-price");
         expect(head).toContain('rel="canonical" href="https://www.netquor.com/central.html"');
-        expect(head).toContain(".nq-diff-row b.rm");
+        expect(head).not.toContain("<style>");
+        expect(readFileSync(join(import.meta.dir, "Hero.svelte"), "utf8")).toContain(".nq-diff-row b.rm");
+        expect(readFileSync(join(import.meta.dir, "page.css"), "utf8")).toContain(".nq-map-labels text");
     });
     test("the built server answers 200 (when a build exists)", async () => {
         if (!existsSync(join(WEB, "build/index.js"))) return;

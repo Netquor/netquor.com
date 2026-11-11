@@ -10,4 +10,4 @@
 </script>
 
 <Seo origin={data.origin} canonical="/referrals.html" title={page.meta.title} description={page.meta.description} />
-<ProgramPage {page} assets={data.assets} />
+<ProgramPage {page} />

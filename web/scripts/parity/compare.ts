@@ -5,13 +5,31 @@ import { referencedIds, type PageFacts } from "./extract";
 export const CATEGORIES = ["text", "links", "meta", "jsonld", "assets", "ids"] as const;
 export type Category = (typeof CATEGORIES)[number];
 
-export interface AllowEntry { match: string; reason: string }
-/** One page's allowlist: per category, the items (as the report prints them, without the +/- sign) that may differ, each with a reason. match "*" allows the whole category. */
+/** `op` limits an entry to differences only in the legacy page ("-") or only in the Svelte page ("+"); without it both are allowed. */
+export interface AllowEntry { match: string; reason: string; op?: "-" | "+" }
+/** One page's allowlist: per category, the items (as the report prints them, without the +/- sign) that may differ, each with a reason. match "*" allows the whole category. A match may also be a glob: `*` is any run of characters and `{a,b}` is one of the alternatives, so `script:{/nav.js,/fx.js}` allows exactly those two items and nothing new. */
 export type PageAllow = Partial<Record<Category, AllowEntry[]>>;
 
 export interface Diff { op: "-" | "+"; item: string }
 export interface CategoryResult { category: Category; diffs: Diff[]; allowed: Diff[]; note?: string }
 export interface Report { results: CategoryResult[]; staleAllow: { category: Category; match: string }[]; ok: boolean }
+
+const globRegex = (g: string): RegExp => {
+    let out = "", depth = 0;
+    for (const ch of g) {
+        if (ch === "{") { out += "(?:"; depth++; } else if (ch === "}" && depth > 0) { out += ")"; depth--; } else if (ch === "," && depth > 0) out += "|";
+        else if (ch === "*") out += ".*";
+        else out += ch.replace(/[.+?^$()|[\]\\]/g, "\\$&");
+    }
+    return new RegExp(`^${out}${")".repeat(depth)}$`, "s");
+};
+
+/** Does an allowlist entry cover this difference? Exact text, "*", or a glob (see PageAllow); an entry with `op` covers only that side. */
+export const entryMatches = (e: AllowEntry, d: Diff): boolean => {
+    if (e.op && e.op !== d.op) return false;
+    if (e.match === "*" || e.match === d.item) return true;
+    return /[*{]/.test(e.match) && globRegex(e.match).test(d.item);
+};
 
 /** Longest-common-subsequence diff of two lists of strings: "-" only in a, "+" only in b, in order. Equal runs at both ends are trimmed first. */
 export const diffSeq = (a: string[], b: string[]): Diff[] => {
@@ -104,7 +122,7 @@ export const compareFacts = (i: CompareInput): Report => {
         const used = new Set<number>();
         const diffs: Diff[] = [], allowed: Diff[] = [];
         for (const d of raw[category].diffs) {
-            const hit = entries.findIndex((e) => e.match === "*" || e.match === d.item);
+            const hit = entries.findIndex((e) => entryMatches(e, d));
             if (hit >= 0) { used.add(hit); allowed.push(d); } else diffs.push(d);
         }
         entries.forEach((e, idx) => { if (!used.has(idx)) staleAllow.push({ category, match: e.match }); });

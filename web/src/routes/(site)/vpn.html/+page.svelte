@@ -1,9 +1,12 @@
 <script lang="ts">
+    import "#lib/pages/vpn/page.css";
+    import Nudge from "#lib/behaviors/nudge/Nudge.svelte";
+    import { collapse } from "#lib/behaviors/accordion/action.ts";
     // /vpn.html: same URL, head and visible text as the legacy page. Copy is in $lib/pages/vpn/data.ts; every price (plan cards, the starting price in the title, description, badge, and the JSON-LD offers) comes from the price cache.
     import Price from "#lib/components/Price.svelte";
     import Seo from "#lib/components/Seo.svelte";
     import { priceText } from "#lib/priceFallbacks.ts";
-    import { faq, features, head, jsonLd, KEYWORDS, PAGE_CSS, priceMap, tiers } from "#lib/pages/vpn/data.ts";
+    import { faq, features, head, jsonLd, KEYWORDS, priceMap, tiers } from "#lib/pages/vpn/data.ts";
     import type { PageData } from "./$types";
 
     let { data }: { data: PageData } = $props();
@@ -12,11 +15,8 @@
 </script>
 
 <Seo origin={data.origin} canonical="/vpn.html" title={meta.title} description={meta.description} ogTitle={meta.ogTitle} ogDescription={meta.ogDescription} keywords={KEYWORDS} author="Netquor Technologies LLC" siteName="Netquor Technologies" locale="en_US" twitter {jsonLd} {priceMap} />
-<svelte:head>
-    {@html `<style>${PAGE_CSS}</style>`}
-    <script src="/nudge.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
-</svelte:head>
+
+<Nudge page="vpn.html" />
 
 <header class="hero-section text-center">
     <div class="container">
@@ -80,7 +80,7 @@
     <section class="py-5">
         <div class="container" style="max-width: 820px;">
             <h2 class="display-6 fw-black text-center mb-4">Questions</h2>
-            <div class="accordion" id="faq">
+            <div class="accordion" id="faq" use:collapse>
                 {#each faq as f, i (f.q)}
                     <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#v${i}`}>{f.q}</button></h3><div id={`v${i}`} class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body text-muted small">{f.a}</div></div></div>
                 {/each}

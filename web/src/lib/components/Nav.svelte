@@ -1,5 +1,6 @@
 <script lang="ts">
-    // The site navigation, ported from tools/nav.html. It is deliberately static markup: nav.css styles it and nav.js (loaded by the layout) opens the menu and the Products dropdown by toggling classes, exactly as on the legacy pages. `static` adds nq-static (the nav scrolls with the page; fleet.html uses it). `current` is the path of the page being shown ("/subnet-calculator.html"), which marks its link.
+    // The site navigation, ported from tools/nav.html. It is deliberately static markup: styles/nav.css styles it (src/lib/styles/nav.css, bundled by the layouts' entry stylesheets so that its place in the cascade is fixed) and the navMenu action (use:navMenu, the port of nav.js) opens the menu and the Products dropdown by toggling classes, exactly as on the legacy pages. `static` adds nq-static (the nav scrolls with the page; fleet.html uses it). `current` is the path of the page being shown ("/subnet-calculator.html"), which marks its link.
+    import { navMenu } from "#lib/behaviors/nav/nav.ts";
     import Price from "./Price.svelte";
 
     let { current = "", static: isStatic = false }: { current?: string; static?: boolean } = $props();
@@ -38,7 +39,7 @@
     const here = (href: string) => (href === current ? "page" : undefined);
 </script>
 
-<nav class={["nq-nav", isStatic && "nq-static"]} aria-label="Main">
+<nav class={["nq-nav", isStatic && "nq-static"]} aria-label="Main" use:navMenu>
     <div class="nq-in">
         <a class="nq-brand" href="/"><img src="/brand/nq-emblem.svg" alt="" width="36" height="36"><span class="nq-sr">Netquor Technologies, home</span></a>
         <button class="nq-burger" type="button" aria-expanded="false" aria-controls="nq-menu" aria-label="Menu"><span></span><span></span><span></span></button>

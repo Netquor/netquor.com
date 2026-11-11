@@ -5,6 +5,9 @@
     import Icon from "./Icon.svelte";
     import Ticks from "./Ticks.svelte";
     import { centsOf, usd0 } from "./tokens";
+    import { useFleetModel } from "#lib/behaviors/fleet/context.ts";
+
+    const model = useFleetModel();
 
     // $360 (twelve months) and $60 (the yearly saving) are derived from the monthly and yearly hosting prices.
     const monthly = $derived(centsOf(page.data.prices, "fleet.dedicated.month"));
@@ -29,7 +32,7 @@
         <div><span class="ded-price"><Price key="fleet.dedicated.month" /></span><span class="per">per month</span><small>billed monthly ({usd0(monthly * 12)} a year)</small></div>
       </div>
       <p class="fine">Paying yearly saves {usd0(monthly * 12 - yearly)} a year. Added on top of your device licenses.</p>
-      <a class="btn" href="#calc" data-add-dedicated>Add it to my estimate <Icon name="arrow" /></a>
+      <a class="btn" href="#calc" data-add-dedicated onclick={() => model.addDedicated()}>Add it to my estimate <Icon name="arrow" /></a>
     </div>
   </div>
 </section>

@@ -12,7 +12,7 @@ const world = (o: { routeIds?: Record<string, string>; cachePages?: boolean; add
     const seen: { api: Request[]; resolved: string[] } = { api: [], resolved: [] };
     const rt: HandleRuntime = {
         prices,
-        legacy: createLegacyServer({ legacyDir: t.dir, prices }),
+        legacy: createLegacyServer({ legacyDir: t.dir, prices, scope: "baseline" }),
         api: async (r) => { seen.api.push(r); return new Response(JSON.stringify({ ok: true }), { headers: { "content-type": "application/json" } }); },
         cachePages: o.cachePages ?? true,
     };

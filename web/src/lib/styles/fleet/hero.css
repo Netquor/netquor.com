@@ -1,0 +1,55 @@
+/* Fleet hero and the dashboard drawn in CSS (every size is in em and the em follows the width, so it stays sharp at any width). */
+
+/* Hero */
+.hero { position: relative; overflow: hidden; padding: 96px 0 72px; }
+.hero-grid { position: relative; display: grid; grid-template-columns: 1.02fr 1fr; gap: 40px; align-items: center; }
+.eyebrow { margin: 0 0 12px; font: 500 13px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent-2); }
+h1, h2, h3 { font-family: var(--display); margin: 0; letter-spacing: .01em; }
+h1 { font-size: clamp(44px, 6.4vw, 78px); line-height: .98; font-weight: 800; text-transform: uppercase; }
+.lede { margin: 22px 0 28px; font-size: 19px; line-height: 1.55; color: color-mix(in srgb, var(--ink) 82%, var(--muted)); max-width: 56ch; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.price-pills { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 0; padding: 0; }
+.price-pills li { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--hair); border-radius: 999px; background: color-mix(in srgb, var(--surface) 70%, transparent); font-size: 14px; color: var(--muted); }
+.price-pills strong { color: var(--ink); font-family: var(--mono); font-weight: 500; }
+.hero-visual { position: relative; container-type: inline-size; }
+
+/* The dashboard, drawn: it stays sharp at any width because every size is in em and the em follows the width. */
+.mock { --u: calc(100cqw / 47); font-size: var(--u); display: grid; grid-template-columns: 10.5em 1fr; background: var(--base); color: var(--ink); text-align: left; line-height: 1.35; overflow: hidden; font-family: var(--body); }
+.mock * { box-sizing: border-box; }
+.mock .ico { width: 1.25em; height: 1.25em; }
+.mk-side { background: var(--surface); border-right: 1px solid var(--hair); padding: 1.1em .7em; }
+.mk-brand { display: flex; align-items: center; gap: .5em; font: 700 1.02em/1 var(--display); letter-spacing: .05em; padding: 0 .3em 1em; white-space: nowrap; }
+.mk-mark { width: 1.6em; height: 1.6em; border-radius: .4em; background: var(--accent); flex: none; }
+.mk-side ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .15em; }
+.mk-side li { display: flex; align-items: center; gap: .6em; padding: .5em .6em; border-radius: .4em; color: var(--muted); font-size: .92em; }
+.mk-side li.on { background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--ink); box-shadow: inset .18em 0 0 var(--accent); }
+.mk-main { padding: 1.2em 1.3em 1.4em; display: grid; gap: .9em; align-content: start; min-width: 0; }
+.mk-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1em; }
+.mk-head b { display: block; font: 700 1.7em/1.05 var(--display); letter-spacing: .02em; }
+.mk-head span { color: var(--muted); font-size: .85em; }
+.mk-btn { font-style: normal; font-weight: 600; font-size: .85em; padding: .5em .9em; border-radius: .4em; background: var(--accent); color: #fff; white-space: nowrap; }
+.mk-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: .7em; }
+.mk-stats > div, .mk-card { background: var(--surface); border: 1px solid var(--hair); border-radius: .6em; padding: .75em .85em; min-width: 0; }
+.mk-stats span, .mk-h { display: block; color: var(--muted); font-size: .78em; letter-spacing: .02em; }
+.mk-stats b { display: block; font: 600 1.75em/1.15 var(--mono); }
+.mk-stats b small { font-size: .55em; color: var(--muted); font-weight: 400; }
+.mk-stats b.warn { color: #f0b429; }
+.mk-stats em { font-style: normal; font-size: .75em; color: var(--muted); }
+.mk-stats em.up { color: var(--good); }
+.mk-row { display: grid; grid-template-columns: 1.5fr 1fr; gap: .7em; }
+.mk-chart svg { display: block; width: 100%; height: 5.2em; margin-top: .5em; }
+.mk-os { display: grid; gap: .45em; align-content: start; }
+.mk-os > div { display: grid; grid-template-columns: 2.6em 1fr; align-items: center; gap: .5em; font-size: .78em; color: var(--muted); }
+.mk-os i { display: block; height: .55em; border-radius: 1em; background: var(--accent); width: var(--w); }
+.mk-os i.old { background: #f0b429; }
+.mk-table table { width: 100%; border-collapse: collapse; margin-top: .4em; font-size: .8em; }
+.mk-table td { padding: .42em .3em; border-top: 1px solid var(--hair); color: var(--muted); white-space: nowrap; }
+.mk-table td:first-child { color: var(--ink); width: 36%; }
+.mk-table td:last-child { text-align: right; }
+.mk-table b { font-weight: 600; }
+.mock .pill { font-style: normal; font-size: .9em; padding: .12em .6em; border-radius: 1em; border: 1px solid; }
+.mock .pill.ok { color: var(--good); border-color: color-mix(in srgb, var(--good) 45%, transparent); }
+.mock .pill.warn { color: #f0b429; border-color: color-mix(in srgb, #f0b429 45%, transparent); }
+.shot-console { width: 100%; border-radius: 12px; border: 1px solid var(--hair); box-shadow: 0 40px 90px -30px rgba(0, 0, 0, .65), 0 0 0 1px rgba(255, 255, 255, .02); }
+.shot-phone { border-radius: 38px; border: 6px solid #0a0d11; box-shadow: 0 30px 70px -20px rgba(0, 0, 0, .7); background: #000; }
+.hero-visual .shot-phone { position: absolute; width: 24%; right: -2%; bottom: -17%; }

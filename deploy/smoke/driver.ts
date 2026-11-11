@@ -36,6 +36,10 @@ if (phase === "boot") {
     await check("a private path is not served (/server/.env, /Dockerfile, /web/package.json)", async () => {
         for (const p of ["/server/.env", "/Dockerfile", "/web/package.json", "/llms.template.txt"]) { const r = await fetch(WEB + p); assert(r.status === 404, `${p} answered ${r.status}`); }
     });
+    await check("every asset the pages need is served from the image (images, manifest, calculator scripts) and the legacy CSS and scripts are not", async () => {
+        for (const p of ["/favicon.svg", "/brand/og.png", "/fleet/favicon.svg", "/fleet/img/console.png", "/site.webmanifest", "/subnet-calc.js", "/cost-calc.js", "/bundle-calc.js"]) { const r = await fetch(WEB + p); assert(r.status === 200, `${p} answered ${r.status}`); }
+        for (const p of ["/nq.css", "/nav.css", "/nav.js", "/fx.js", "/analytics.js", "/fleet/site.css", "/fleet/site.js", "/readiness-data.json"]) { const r = await fetch(WEB + p); assert(r.status === 404, `${p} answered ${r.status}`); }
+    });
 } else if (phase === "worker") {
     await check("worker delivery: the API's version 3 reaches web without any webhook", async () => until("version 3", async () => (await detail()).prices.version === 3, 40));
     await check("web: the next page request shows the API price ($6.40), source poll", async () => {

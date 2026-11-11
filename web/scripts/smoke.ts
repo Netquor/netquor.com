@@ -98,16 +98,32 @@ try {
         assert(/^W\//.test(r.headers.get("etag") ?? ""), "weak etag"); eq(r.headers.get("cache-control"), "no-cache", "cache-control");
     });
     await check("assets: a matching ?v= (md5, 8 hex) is immutable, a wrong one and a plain URL are one hour, 304 on a matching etag", async () => {
-        const v = new Bun.CryptoHasher("md5").update(readFileSync(join(legacy, "nq.css"))).digest("hex").slice(0, 8);
-        const a = await get(`/nq.css?v=${v}`); eq(a.headers.get("cache-control"), "public, max-age=31536000, immutable", "versioned");
-        eq((await get("/nq.css?v=abc")).headers.get("cache-control"), "public, max-age=3600", "wrong v");
-        const b = await get("/nq.css"); eq(b.headers.get("cache-control"), "public, max-age=3600", "plain");
-        eq((await get("/nq.css", { "if-none-match": b.headers.get("etag")! })).status, 304, "304");
+        const v = new Bun.CryptoHasher("md5").update(readFileSync(join(legacy, "cost-calc.js"))).digest("hex").slice(0, 8);
+        const a = await get(`/cost-calc.js?v=${v}`); eq(a.headers.get("cache-control"), "public, max-age=31536000, immutable", "versioned");
+        eq((await get("/cost-calc.js?v=abc")).headers.get("cache-control"), "public, max-age=3600", "wrong v");
+        const b = await get("/cost-calc.js"); eq(b.headers.get("cache-control"), "public, max-age=3600", "plain");
+        eq((await get("/cost-calc.js", { "if-none-match": b.headers.get("etag")! })).status, 304, "304");
     });
     await check("the ?v= the pages carry is the one the server treats as immutable", async () => {
-        const { body } = await text("/"); const m = /href="\/?nq\.css\?v=([0-9a-f]{8})"/.exec(body); assert(m, "nq.css link with v");
-        eq((await get(`/nq.css?v=${m![1]}`)).headers.get("cache-control"), "public, max-age=31536000, immutable", "page's own v");
+        const { body } = await text("/subnet-calculator.html"); const m = /src="\/?subnet-calc\.js\?v=([0-9a-f]{8})"/.exec(body); assert(m, "subnet-calc.js script with v");
+        eq((await get(`/subnet-calc.js?v=${m![1]}`)).headers.get("cache-control"), "public, max-age=31536000, immutable", "page's own v");
     });
+    for (const path of ["/", "/fleet.html"]) {
+        await check(`${path}: the stylesheets are bundled (hashed files from our own origin, immutable) with their fonts; no CDN, no legacy css, no font service`, async () => {
+            const { body } = await text(path);
+            const links = [...body.matchAll(/<link\b[^>]*>/g)].map((m) => m[0]).filter((t) => /rel="stylesheet"/.test(t)).map((t) => /href="([^"]+)"/.exec(t)![1]);
+            assert(links.length > 0, "at least one stylesheet link");
+            for (const href of links) {
+                assert(href.startsWith("/_app/immutable/assets/") && href.endsWith(".css"), `own hashed stylesheet, got ${href}`);
+                const r = await get(href); eq(r.status, 200, `${href} status`); eq(r.headers.get("cache-control"), "public,max-age=31536000,immutable", `${href} cache-control`);
+                const css = await r.text();
+                const fonts = [...css.matchAll(/url\(([^)]+\.woff2)\)/g)].map((m) => m[1].replace(/["']/g, ""));
+                assert(fonts.length > 0 || !/@font-face/.test(css), "font-face rules point at woff2 files");
+                for (const f of fonts) { const fr = await get(new URL(f, `${base}${href}`).pathname); eq(fr.status, 200, `${f} status`); }
+            }
+            assert(!/(fonts\.googleapis|fonts\.gstatic|cdn\.jsdelivr|\/nq\.css|\/nav\.css|\/fleet\/site\.css)/.test(body), "no CDN, font service or legacy stylesheet URL in the page");
+        });
+    }
     await check("one URL per page: /index.html is a 301 to / (query kept), /fleet.html/ a 308 to /fleet.html", async () => {
         const a = await get("/index.html?x=1"); eq(a.status, 301, "index status"); eq(a.headers.get("location"), "/?x=1", "index location");
         const b = await get("/fleet.html/?y=2"); eq(b.status, 308, "slash status"); assert(new URL(b.headers.get("location")!, "http://x/fleet.html/").pathname + new URL(b.headers.get("location")!, "http://x/fleet.html/").search === "/fleet.html?y=2", `slash location ${b.headers.get("location")}`);
@@ -237,7 +253,11 @@ try {
         "/../server/.env", "/%2e%2e/server/.env", "/%2E%2E/%2e%2e/.env", "/..%2fserver/.env", "/..%2Fserver%2F.env", "/brand/../server/.env", "/brand/%2e%2e/server/.env", "/brand/..%2f..%2fserver/.env", "/%252e%252e/server/.env", "/fleet/%2e%2e/%2e%2e/.env", "/nq.css%00.png", "/brand//../.env", "/package.json", "/Dockerfile",
     ];
     for (const p of denied) await check(`denied: ${p}`, async () => { const r = await raw(p); assert(r.status !== 200, `status ${r.status}`); assert(!r.body.includes(CANARY), "canary content was served"); });
-    await check("the allowlist still serves what it should", async () => { for (const p of ["/brand/og.png", "/favicon.svg", "/readiness-data.json", "/site.webmanifest", "/fleet/site.css"]) eq((await get(p)).status, 200, p); });
+    await check("the allowlist still serves what it should", async () => { for (const p of ["/brand/og.png", "/favicon.svg", "/fleet/favicon.svg", "/fleet/img/console.png", "/site.webmanifest", "/subnet-calc.js", "/cost-calc.js", "/bundle-calc.js"]) eq((await get(p)).status, 200, p); });
+    // The temp legacy folder still holds every file of the repository root, as a development checkout does. The runtime allowlist must refuse the hand-written site's own stylesheets, scripts, pages and data even so.
+    await check("the legacy stylesheets, scripts and pages are not served, though the folder holds them", async () => {
+        for (const p of ["/nq.css", "/nav.css", "/nav.js", "/fx.js", "/bg.js", "/nudge.js", "/analytics.js", "/readiness.js", "/fleet/site.css", "/fleet/site.js", "/fleet/pricing.js", "/brand/colors.css", "/readiness-data.json"]) eq((await get(p)).status, 404, p);
+    });
 } finally {
     stop();
 }

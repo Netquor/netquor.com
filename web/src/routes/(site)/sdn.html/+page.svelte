@@ -1,7 +1,10 @@
 <script lang="ts">
+    import "#lib/pages/sdn/page.css";
+    import Nudge from "#lib/behaviors/nudge/Nudge.svelte";
+    import { collapse } from "#lib/behaviors/accordion/action.ts";
     // /sdn.html: same URL, head and visible text as the legacy page. Copy and JSON-LD live in $lib/pages/sdn/data.ts. The accordion is Bootstrap's own collapse (bootstrap.bundle.js, loaded as on the legacy page).
     import Seo from "#lib/components/Seo.svelte";
-    import { DESCRIPTION, features, faq, jsonLd, KEYWORDS, PAGE_CSS, TITLE } from "#lib/pages/sdn/data.ts";
+    import { DESCRIPTION, features, faq, jsonLd, KEYWORDS, TITLE } from "#lib/pages/sdn/data.ts";
     import type { PageData } from "./$types";
 
     let { data }: { data: PageData } = $props();
@@ -10,10 +13,9 @@
 <Seo origin={data.origin} canonical="/sdn.html" title={TITLE} description={DESCRIPTION} keywords={KEYWORDS} author="Netquor Technologies LLC" geo={{ region: "US-ND", placename: "Fargo, North Dakota" }} siteName="Netquor Technologies" locale="en_US" twitter {jsonLd} />
 <svelte:head>
     <link rel="icon" href="/sdn-logo.svg" type="image/svg+xml">
-    {@html `<style>${PAGE_CSS}</style>`}
-    <script src="/nudge.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 </svelte:head>
+
+<Nudge page="sdn.html" />
 
 <header class="hero-section text-center">
     <div class="container">
@@ -48,7 +50,7 @@
     <section class="py-5">
         <div class="container" style="max-width: 820px;">
             <h2 class="display-6 fw-black text-center mb-4">Questions</h2>
-            <div class="accordion" id="faq">
+            <div class="accordion" id="faq" use:collapse>
                 {#each faq as f, i (f.q)}
                     <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#f${i}`}>{f.q}</button></h3><div id={`f${i}`} class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body text-muted small">{f.a}</div></div></div>
                 {/each}

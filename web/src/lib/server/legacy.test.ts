@@ -2,13 +2,15 @@ import { afterEach, describe, expect, test } from "bun:test";
 import { mkdirSync, symlinkSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { legacyPageFiles } from "../pages";
-import { classifyLegacyPath, statLegacy } from "./legacy";
+import { ASSET_FILES } from "../assets";
+import { classifyLegacyPath, RUNTIME_FILES, statLegacy } from "./legacy";
 import { tempLegacy } from "./testkit";
 
 const pages = legacyPageFiles();
-const ok = (p: string) => classifyLegacyPath(p, pages);
+const ok = (p: string) => classifyLegacyPath(p, pages, "baseline");
+const rt = (p: string) => classifyLegacyPath(p, pages);
 
-describe("classifyLegacyPath: what is served", () => {
+describe("classifyLegacyPath (baseline scope): what is served", () => {
     test("registered pages", () => {
         expect(ok("/")).toEqual({ rel: "index.html", kind: "page" });
         expect(ok("/fleet.html")).toEqual({ rel: "fleet.html", kind: "page" });
@@ -25,7 +27,7 @@ describe("classifyLegacyPath: what is served", () => {
     });
 });
 
-describe("classifyLegacyPath: what is never served", () => {
+describe("classifyLegacyPath (baseline scope): what is never served", () => {
     const denied = [
         "/server/src/app.ts", "/server/.env", "/server/data/prices.json", "/web/package.json", "/tools/build-nav.py", "/deploy/docker-compose.yml", "/mockups/a.html", "/.agents/ai-agent-plan.md",
         "/.git/config", "/.gitignore", "/.env", "/Dockerfile", "/llms.template.txt", "/llms.template.js", "/brand/x.template.css", "/robots.txt", "/llms.txt", "/sitemap.xml",
@@ -37,6 +39,21 @@ describe("classifyLegacyPath: what is never served", () => {
     ];
     for (const p of denied) test(`denies ${p}`, () => expect(ok(p)).toBeNull());
     test("depth is bounded", () => expect(ok("/brand/a/b/c/d/e/f/g.png")).toBeNull());
+});
+
+describe("classifyLegacyPath (runtime scope, the default)", () => {
+    test("images, the manifest and the three calculator scripts are served", () => {
+        for (const p of ["/favicon.ico", "/favicon.svg", "/apple-touch-icon.png", "/da-screen.jpeg", "/site.webmanifest", "/subnet-calc.js", "/cost-calc.js", "/bundle-calc.js", "/brand/og.png", "/brand/story/home-rack.webp", "/brand/social/nq-avatar-400.png", "/fleet/favicon.svg", "/fleet/img/console.png"]) expect(rt(p)?.kind).toBe("asset");
+    });
+    test("no HTML page, stylesheet, other script, font or data file is served", () => {
+        for (const p of ["/", "/index.html", "/fleet.html", "/subnet-calculator.html", "/nq.css", "/nav.css", "/nav.js", "/fx.js", "/bg.js", "/nudge.js", "/analytics.js", "/readiness.js", "/fleet/site.css", "/fleet/site.js", "/fleet/pricing.js", "/brand/colors.css", "/readiness-data.json", "/x.woff2", "/brand/x.js", "/fleet/img/x.html", "/fleet/img/x.css"]) expect(rt(p)).toBeNull();
+    });
+    test("the allowed script names are exactly the asset keys of assets.ts", () => {
+        expect([...RUNTIME_FILES].filter((n) => n.endsWith(".js")).sort()).toEqual(Object.values(ASSET_FILES).sort());
+    });
+    test("every denied baseline path stays denied, and traversal still fails", () => {
+        for (const p of ["/server/.env", "/.env", "/Dockerfile", "/llms.template.txt", "/robots.txt", "/package.json", "/../server/.env", "/%2e%2e/server/.env", "/brand/../server/.env", "/cost-calc.js%00", "/./cost-calc.js", "/brand//og.png"]) expect(rt(p)).toBeNull();
+    });
 });
 
 describe("statLegacy", () => {

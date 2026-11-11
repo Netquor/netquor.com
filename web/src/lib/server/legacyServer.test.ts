@@ -10,7 +10,7 @@ const setup = (files: Record<string, string> = {}, version = 1, cents = 595) => 
     t = tempLegacy({ "fleet.html": PAGE(), "index.html": "<p>home</p>", ...files });
     const prices = mutablePrices(snap(version, { "fleet.mac.month": cents }));
     const logs: string[] = [];
-    const server = createLegacyServer({ legacyDir: t.dir, prices, log: (l) => logs.push(l) });
+    const server = createLegacyServer({ legacyDir: t.dir, prices, scope: "baseline", log: (l) => logs.push(l) });
     const get = (path: string, headers: Record<string, string> = {}, method = "GET") => server.serve(new Request(`http://x${path}`, { method, headers }), new URL(`http://x${path}`));
     return { server, prices, logs, get };
 };
@@ -203,5 +203,32 @@ describe("one URL per page", () => {
         expect(get("/nq.css/")).toBeNull();
         expect(get("/brand/")).toBeNull();
         expect(get("/llms.template.txt/")).toBeNull();
+    });
+});
+
+describe("runtime scope (the default): what the deployed process serves", () => {
+    const runtime = (files: Record<string, string> = {}) => {
+        t = tempLegacy({ "fleet.html": PAGE(), "index.html": "<p>home</p>", "nq.css": "a{}", "nav.js": "x", "cost-calc.js": "calc", "favicon.svg": "<svg/>", "readiness-data.json": "{}", ...files });
+        const server = createLegacyServer({ legacyDir: t.dir, prices: mutablePrices(snap(1)), log: () => {} });
+        return (path: string) => server.serve(new Request(`http://x${path}`), new URL(`http://x${path}`));
+    };
+    test("serves an image and a calculator script", async () => {
+        const get = runtime();
+        expect(await get("/cost-calc.js")!.text()).toBe("calc");
+        expect(get("/favicon.svg")?.status).toBe(200);
+    });
+    test("does not serve the pages, stylesheets, other scripts or data files, even when the folder holds them", () => {
+        const get = runtime();
+        for (const p of ["/", "/fleet.html", "/nq.css", "/nav.js", "/readiness-data.json"]) expect(get(p)).toBeNull();
+    });
+    test("the canonical redirects still work with no HTML file in the folder: /index.html to /, a trailing slash to the .html URL, the query kept", () => {
+        const get = runtime();
+        expect(get("/index.html?a=1")?.status).toBe(301);
+        expect(get("/index.html?a=1")?.headers.get("location")).toBe("/?a=1");
+        const r = get("/fleet.html/?x=2");
+        expect([r?.status, r?.headers.get("location")]).toEqual([308, "/fleet.html?x=2"]);
+        expect(get("/unregistered.html/")).toBeNull();
+        expect(get("/brand/")).toBeNull();
+        expect(get("//")).toBeNull();
     });
 });

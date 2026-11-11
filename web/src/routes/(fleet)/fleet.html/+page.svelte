@@ -1,10 +1,12 @@
 <script lang="ts">
-    // /fleet.html: Netquor Fleet, which has its own design (fleet/site.css) and no site footer. The page keeps the site nav bar above its own header, as the legacy page does. The sections live in src/lib/pages/fleet; every price comes from the price snapshot.
-    // fleet/site.js (a module: the cost calculator and the free-trial form) finds the page by id and fills in what the server leaves empty, so it is loaded after hydration. It imports fleet/pricing.js itself.
-    import { onMount } from "svelte";
+    // /fleet.html: Netquor Fleet, which has its own design (src/lib/styles/fleet) and no site footer. The page keeps the site nav bar above its own header, as the legacy page does. The sections live in src/lib/pages/fleet; every price comes from the price snapshot.
+    // The cost calculator and the free-trial form are the shared model in src/lib/behaviors/fleet (a port of fleet/site.js and fleet/pricing.js, which this page no longer loads). It starts after hydration and takes its prices from the live price snapshot.
+    import { onMount, untrack } from "svelte";
+    import { provideFleetModel } from "#lib/behaviors/fleet/context.ts";
+    import { createFleetModel } from "#lib/behaviors/fleet/model.ts";
+    import { fleetPricesFrom } from "#lib/behaviors/fleet/prices.ts";
     import Nav from "#lib/components/Nav.svelte";
     import Seo from "#lib/components/Seo.svelte";
-    import { assetUrl } from "#lib/assets.ts";
     import Api from "#lib/pages/fleet/Api.svelte";
     import Buffet from "#lib/pages/fleet/Buffet.svelte";
     import Dedicated from "#lib/pages/fleet/Dedicated.svelte";
@@ -31,7 +33,9 @@
     const desc = $derived(description(data.prices, data.priceVersion));
     const ld = $derived(jsonLd(data.prices, data.priceVersion));
 
-    onMount(() => { void import(/* @vite-ignore */ assetUrl(data.assets, "fleetJs")); });
+    const model = provideFleetModel(createFleetModel({ prices: fleetPricesFrom(untrack(() => data.prices)) }));
+    $effect(() => model.setPrices(fleetPricesFrom(data.prices)));
+    onMount(() => model.mount());
 </script>
 
 <Seo
@@ -49,10 +53,6 @@
     jsonLd={ld}
     priceMap={PRICE_MAP}
 />
-
-<svelte:head>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
-</svelte:head>
 
 <Sprite />
 <Nav current="/fleet.html" static />

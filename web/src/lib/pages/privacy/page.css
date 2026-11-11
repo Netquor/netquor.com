@@ -1,0 +1,59 @@
+/* privacy.html's own rules (the legacy inline style block, which sits in the body before the card, after the site styles). */
+
+:root {
+    --cyber-blue: #5eaaf0;
+    --slate-950: #12161c;
+    --slate-900: #0f172a;
+    --slate-800: #1e293b;
+    --slate-700: #334155;
+}
+
+body {
+    background-color: var(--slate-950);
+    color: #e2e8f0;
+    min-height: 100vh;
+}
+
+.policy-card {
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 28px;
+}
+
+.legal-content h3 {
+    color: var(--cyber-blue);
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.legal-content p,
+.legal-content li {
+    color: #94a3b8;
+    line-height: 1.8;
+    font-size: 0.95rem;
+}
+
+.highlight-box {
+    background: rgba(47, 143, 224, 0.05);
+    border-left: 4px solid var(--cyber-blue);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin: 2rem 0;
+}
+
+.brand-accent {
+    font-weight: 900;
+    letter-spacing: -1px;
+    background: var(--cyber-blue);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}

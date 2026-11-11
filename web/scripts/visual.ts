@@ -115,7 +115,7 @@ const outDir = process.env.VISUAL_OUT ?? join(tmpdir(), "nq-visual");
 mkdirSync(outDir, { recursive: true });
 
 const seed = JSON.parse(await Bun.file(join(REPO, "server/data/prices.seed.json")).text()) as Snapshot;
-const legacy = createLegacyServer({ legacyDir: REPO, prices: { get: () => seed, version: () => seed.version }, log: () => {} });
+const legacy = createLegacyServer({ scope: "baseline", legacyDir: REPO, prices: { get: () => seed, version: () => seed.version }, log: () => {} });
 const legacyHttp = Bun.serve({ port: 0, hostname: "127.0.0.1", fetch: (req) => legacy.serve(req, new URL(req.url)) ?? new Response("not found", { status: 404 }) });
 const legacyBase = `http://127.0.0.1:${legacyHttp.port}`;
 const svelte = await startServer({ build, log: (s) => console.log(s) });

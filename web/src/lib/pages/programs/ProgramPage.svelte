@@ -1,21 +1,20 @@
 <script lang="ts">
-    // One page template for startups.html, referrals.html and partners.html (the pages tools/make-program-pages.py writes today). The copy comes from the page's data.ts as a ProgramPageData; this draws the hero, the sections and the blocks inside them, with the same markup as the generated pages. fx.js (reveal animations) is loaded after hydration.
-    import { onMount } from "svelte";
-    import { assetUrl, type AssetVersions } from "#lib/assets.ts";
+    // One page template for startups.html, referrals.html and partners.html (the pages tools/make-program-pages.py writes today). The copy comes from the page's data.ts as a ProgramPageData; this draws the hero, the sections and the blocks inside them, with the same markup as the generated pages. The Fx component adds the reveal animations after hydration.
+    import Fx from "#lib/behaviors/fx/Fx.svelte";
     import CmpTable from "#lib/components/CmpTable.svelte";
     import Faq from "#lib/components/Faq.svelte";
     import SectionHead from "#lib/components/SectionHead.svelte";
-    import { loadScript } from "#lib/loadScript.ts";
     import type { ProgramPageData } from "./types";
 
-    let { page, assets }: { page: ProgramPageData; assets: AssetVersions } = $props();
+    let { page }: { page: ProgramPageData } = $props();
 
     const hero = $derived(page.hero);
     const wide = (w?: number) => (w ? `max-width: ${w}px;` : undefined);
     const mailSubject = (t: string) => `mailto:hello@netquor.com?subject=Work%20with%20Netquor%3A%20${t.replaceAll(" ", "%20").replaceAll(":", "%3A")}`;
 
-    onMount(() => { void loadScript(assetUrl(assets, "fx")); });
 </script>
+
+<Fx />
 
 <header class="hero-section" style="padding-bottom: 32px;">
     <div class="container" style={wide(hero.width)}>

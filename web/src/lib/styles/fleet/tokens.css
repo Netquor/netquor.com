@@ -1,0 +1,15 @@
+/* Fleet tokens: dark by default, light when the visitor's system asks for it. Night-shift ink neutrals and one patch-cable orange accent, the same system as the portal; Geist throughout (fonts-fleet.css). Fleet does not use the site tokens (tokens.css). */
+
+/* Netquor Fleet public page. Dark by default, light when the visitor's system asks for it. */
+:root {
+  /* Night-shift ink neutrals and one patch-cable orange accent, the same system as the portal. Geist throughout. */
+  --base: #0b0d14; --surface: #11141c; --surface-2: #1a1e28; --hair: rgba(238, 240, 245, .09); --ink: #eef0f5; --muted: #a3a9b8;
+  --accent: #ff6a2b; --accent-2: #ff8350; --on-accent: #17100b; --good: #4cc38a; --warn: #d9b13b; --glow: transparent;
+  --violet: var(--accent); /* older rules and the chart still say "violet"; it is the accent now */
+  --display: "Geist", system-ui, -apple-system, "Segoe UI", sans-serif; --body: "Geist", system-ui, -apple-system, "Segoe UI", sans-serif; --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root { --base: #f5f7fa; --surface: #ffffff; --surface-2: #eceff4; --hair: rgba(17, 24, 39, .1); --ink: #111827; --muted: #4b5565; --accent: #d4440b; --accent-2: #b93a08; --on-accent: #ffffff; --good: #16a34a; --warn: #a16207; color-scheme: light; }
+}

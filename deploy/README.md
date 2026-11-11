@@ -17,7 +17,7 @@ One image, `ghcr.io/netquor/netquor-com-web:main` (built from the `Dockerfile` a
 
 Prices: the Netquor API's signed webhook to `/hooks/pricing` is the primary path, the worker's poll is the backup, and an API `prices.changed` nudge makes web pull once. Details, guards and the operator tool are in `server/src/prices/README.md`.
 
-Pages that are not migrated to Svelte yet are served from `/app/legacy` (a copy of the hand-written pages, made at build time) with the `data-price` markers stamped per request. Only an explicit allowlist of page names, asset types and the `brand/` and `fleet/` folders is served; everything else (server, web, tools, deploy, `.env`, templates) is not in the image or is refused.
+Every page is a Svelte route. `/app/legacy` holds only what the pages load by URL, copied at build time: images (top level, `brand/`, `fleet/img`, `fleet/favicon.svg`), `site.webmanifest`, the three pure calculation scripts (`subnet-calc.js`, `cost-calc.js`, `bundle-calc.js`) and `llms.template.txt` (read by the server, never served). The hand-written HTML pages, `nq.css`, `nav.css`, `nav.js`, `fx.js`, `bg.js`, `nudge.js`, `analytics.js`, `readiness.js`, `fleet/site.css`, `fleet/site.js` and `fleet/pricing.js` are not in the image (`.dockerignore` and the `legacy` build stage) and the web process refuses those names even if a folder holds them. They stay in the repository as the local comparison baseline. `deploy/smoke.sh` checks both: no `*.html`, `*.css` or other `*.js` under `/app/legacy`, and 200 for every asset a page needs.
 
 There is no static container, no `site_live` volume and no init or stamp step.
 
@@ -183,6 +183,6 @@ Built and tested here, **not yet live**: the web image, the worker, the compose 
 
 Verified only locally (smoke test above): routing through a Caddy that mimics the edge. The real Cloudflare to Caddy to web chain, including the Cloudflare ranges in the Caddyfile, is checked only by `caddy validate`, not end to end.
 
-Not part of this repository and not verified: the Netquor API actually sending the signed `prices.changed` or snapshot webhook and serving `PRICING_API_URL`; until it does, prices stay at the seed (or the last accepted snapshot) and the worker idles or polls nothing. Only `index.html` has `data-price` markers today, so other pages show their written prices until they are marked up or migrated. Phone is early access and is not billed; the planned price shown on the site is not a charge.
+Not part of this repository and not verified: the Netquor API actually sending the signed `prices.changed` or snapshot webhook and serving `PRICING_API_URL`; until it does, prices stay at the seed (or the last accepted snapshot) and the worker idles or polls nothing. Prices on every page come from the Svelte `<Price>` component and the in-memory cache. Phone is early access and is not billed; the planned price shown on the site is not a charge.
 
 Known limits: responses are compressed by the edge Caddy, not by the web process; a form-encoded POST to `/api/lead` without a matching `Origin` is refused by SvelteKit's CSRF guard (JSON posts are fine); the operator tool works only inside the web container because it publishes no port.

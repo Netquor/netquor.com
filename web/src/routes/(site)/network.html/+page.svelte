@@ -1,9 +1,12 @@
 <script lang="ts">
+    import "#lib/pages/network/page.css";
+    import Nudge from "#lib/behaviors/nudge/Nudge.svelte";
+    import { collapse } from "#lib/behaviors/accordion/action.ts";
     // /network.html: same URL, head and visible text as the legacy page. Copy is in $lib/pages/network/data.ts, the stack builder is a Svelte island (Builder.svelte, logic in builder.ts). Prices come from the price cache; the Business plan price is the page's literal $129.49 (the FAQ says "starts at $99": an open question, not decided here).
     import Price from "#lib/components/Price.svelte";
     import Seo from "#lib/components/Seo.svelte";
     import Builder from "#lib/pages/network/Builder.svelte";
-    import { DESCRIPTION, faq, features, fits, jsonLd, KEYWORDS, locations, OG_DESCRIPTION, PAGE_CSS, plans, steps, TITLE, TWITTER_DESCRIPTION } from "#lib/pages/network/data.ts";
+    import { DESCRIPTION, faq, features, fits, jsonLd, KEYWORDS, locations, OG_DESCRIPTION, plans, steps, TITLE, TWITTER_DESCRIPTION } from "#lib/pages/network/data.ts";
     import type { PageData } from "./$types";
 
     let { data }: { data: PageData } = $props();
@@ -15,11 +18,9 @@
     <meta name="twitter:title" content={TITLE}>
     <meta name="twitter:description" content={TWITTER_DESCRIPTION}>
     <meta name="twitter:image" content={`${data.origin}/brand/og.png`}>
-    {@html `<style>
-    :global(.nq-badge-wrap) { max-width: 100%; white-space: normal; text-align: center; }${PAGE_CSS}</style>`}
-    <script src="/nudge.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 </svelte:head>
+
+<Nudge page="network.html" />
 
 <header class="hero-section text-center">
     <div class="container">
@@ -122,7 +123,7 @@
     <section class="py-5">
         <div class="container" style="max-width: 820px;">
             <h2 class="display-6 fw-black text-center mb-4">Questions</h2>
-            <div class="accordion" id="faq">
+            <div class="accordion" id="faq" use:collapse>
                 {#each faq as f, i (f.q)}
                     <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#q${i}`}>{f.q}</button></h3><div id={`q${i}`} class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body text-muted small">{#each f.a as part, k (k)}{#if typeof part === "string"}{part}{:else}<Price key={part.priceKey} />{/if}{/each}</div></div></div>
                 {/each}

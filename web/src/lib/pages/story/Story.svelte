@@ -67,7 +67,7 @@
     .story-fig { margin: 0; max-width: 520px; }
     .story-fig.portrait { max-width: 300px; }
     .multi .story-fig { max-width: 440px; }
-    .multi .story-fig.portrait { max-width: 250px; }
+    .multi .story-fig.portrait { max-width: 300px; }
     .story-fig img { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--nq-line, rgba(234, 241, 248, 0.08)); background: var(--nq-s1, #1b212b); }
     .story-fig figcaption { margin-top: 8px; font-size: 0.8125rem; color: var(--nq-ink-3, #8794a7); }
     .story-play { position: relative; display: block; border-radius: 12px; }

@@ -1,5 +1,11 @@
-<!-- The hero: headline, calls to action and the animated product map (fx.js animates the map after hydration; bg.js adds the background grid behind it). -->
+<!-- The hero: headline, calls to action and the animated product map (use:heroMap animates the map after hydration; HeroBackground adds the background grid behind it). -->
+<script lang="ts">
+    import HeroBackground from "#lib/behaviors/bg/HeroBackground.svelte";
+    import { heroMap } from "#lib/behaviors/fx/heroMap.ts";
+</script>
+
 <header class="hero-section">
+    <HeroBackground />
     <div class="container">
         <div class="row align-items-center g-5">
             <div class="col-lg-6 nq-rise">
@@ -19,7 +25,7 @@
                 </ul>
             </div>
             <div class="col-lg-6 nq-rise d2">
-                <svg class="nq-map" viewBox="-40 0 700 610" role="group" aria-label="The Netquor platform: nine products connected to one network">
+                <svg class="nq-map" use:heroMap viewBox="-40 0 700 610" role="group" aria-label="The Netquor platform: nine products connected to one network">
                     <g class="nq-map-lines" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M262 206V150L222 110H130V60"/><path d="M241 225H130"/><path d="M241 335H130"/><path d="M262 354V410L222 450H130V500"/><path d="M338 206V150L378 110H470V60"/><path d="M359 225H470"/><path d="M359 335H470"/><path d="M338 354V410L378 450H470V500"/><path d="M300 358V540"/></g>
                     <g class="nq-map-nodes"><circle cx="130" cy="60" r="6"/><circle cx="130" cy="225" r="6"/><circle cx="130" cy="335" r="6"/><circle cx="130" cy="500" r="6"/><circle cx="470" cy="60" r="6"/><circle cx="470" cy="225" r="6"/><circle cx="470" cy="335" r="6"/><circle cx="470" cy="500" r="6"/><circle cx="300" cy="540" r="6"/></g>
                     <image href="/brand/nq-mark.svg" x="229" y="209" width="160" height="160"/>

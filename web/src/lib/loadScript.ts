@@ -1,5 +1,5 @@
 // loadScript.ts: loads a legacy vanilla script after hydration, from a page's onMount. For scripts that change the DOM they find (fx.js adds classes to sections, bg.js inserts into .hero-section, readiness.js fills result boxes): run before hydration they would break it, so they must wait. Pure scripts that only define window globals (subnet-calc.js, cost-calc.js, bundle-calc.js) can stay a <script src> in <svelte:head> as the pilot does.
-//   onMount(() => { void loadScript(assetUrl(data.assets, "fx")); });
+//   onMount(() => { void loadScript(assetUrl(data.assets, "subnet")); });
 // One load per URL (ignoring ?v=) however many times it is called; the promise resolves when the script has run and rejects when it fails to load.
 export interface ScriptDoc {
     createElement(tag: "script"): { src: string; async: boolean; onload: (() => void) | null; onerror: (() => void) | null };

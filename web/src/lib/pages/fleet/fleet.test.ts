@@ -13,7 +13,7 @@ const ROUTE = "routes/(fleet)/fleet.html/+page.svelte";
 const REPO = join(WEB, "..");
 const seedPrices = Object.fromEntries(Object.entries(PRICE_FALLBACKS)) as Record<string, { amountCents: number; currency: "USD"; unit: string }>;
 const legacy = readFileSync(join(REPO, "fleet.html"), "utf8");
-const data = (prices: Record<string, number> = {}) => ({ prices: { ...seedPrices, ...snap(3, prices).prices }, priceVersion: 3, origin: "https://www.netquor.com", assets: { fleetJs: "abc", fleetCss: "abc", nav: "abc", navJs: "abc", analytics: "abc", nudge: "abc" } });
+const data = (prices: Record<string, number> = {}) => ({ prices: { ...seedPrices, ...snap(3, prices).prices }, priceVersion: 3, origin: "https://www.netquor.com", assets: {} });
 
 describe("tokens", () => {
     test("splitTokens finds keys and formats in order and leaves the rest as html", () => {

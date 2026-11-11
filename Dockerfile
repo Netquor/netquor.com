@@ -21,7 +21,7 @@ COPY server/src server/src
 COPY server/data/prices.seed.json server/data/catalog-map.json server/data/
 COPY web/tsconfig.json web/vite.config.ts web/
 COPY web/src web/src
-# readiness.html imports the checklist data from the repository root at build time
+# the readiness page imports the checklist data from the repository root at build time (the build stage only; it is not in the runtime image)
 COPY readiness-data.json ./
 RUN cd web && bun run build
 
@@ -32,13 +32,16 @@ COPY server/package.json server/bun.lock server/
 COPY web/package.json web/bun.lock web/
 RUN cd server && bun install --frozen-lockfile --production && cd ../web && bun install --frozen-lockfile --production
 
-# ---- legacy: the hand-written pages and assets (the .dockerignore already limits the context to them) ----
+# ---- legacy: the files the runtime serves from /app/legacy (the .dockerignore already limits the context to them) ----
+# Images, the web manifest, the llms.txt template (read, never served) and the three pure calculation scripts the pages load by URL.
+# The hand-written HTML pages, nq.css, nav.css, nav.js, fx.js and the other legacy scripts are not in the image: the web process
+# bundles the pages' own styles and behavior, and its allowlist (web/src/lib/server/legacy.ts) refuses those names in any case.
 FROM --platform=$BUILDPLATFORM alpine:3.22 AS legacy
 WORKDIR /ctx
 COPY . /ctx
 RUN mkdir /legacy \
- && find . -maxdepth 1 -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' -o -name '*.svg' -o -name '*.png' -o -name '*.jpg' -o -name '*.jpeg' -o -name '*.gif' -o -name '*.webp' -o -name '*.avif' -o -name '*.ico' -o -name '*.webmanifest' -o -name 'readiness-data.json' -o -name 'llms.template.txt' \) -exec cp {} /legacy/ \; \
- && cp -r brand fleet /legacy/
+ && find . -maxdepth 1 -type f \( -name '*.svg' -o -name '*.png' -o -name '*.jpg' -o -name '*.jpeg' -o -name '*.gif' -o -name '*.webp' -o -name '*.avif' -o -name '*.ico' -o -name '*.webmanifest' -o -name 'llms.template.txt' -o -name 'subnet-calc.js' -o -name 'cost-calc.js' -o -name 'bundle-calc.js' \) -exec cp {} /legacy/ \; \
+ && find brand fleet -type f \( -name '*.svg' -o -name '*.png' -o -name '*.jpg' -o -name '*.jpeg' -o -name '*.gif' -o -name '*.webp' -o -name '*.avif' -o -name '*.ico' \) | while read -r f; do mkdir -p "/legacy/$(dirname "$f")" && cp "$f" "/legacy/$f"; done
 
 # ---- runtime ----
 FROM oven/bun:${BUN_TAG} AS runtime

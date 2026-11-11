@@ -91,3 +91,29 @@ describe("netquor-site-update", () => {
     expect(r.calls).not.toContain("--env-file");
   });
 });
+
+describe("image contents: no legacy pages, styles or behavior scripts", () => {
+  const ignore = read(".dockerignore").split("\n").map((l) => l.trim()).filter((l) => l && !l.startsWith("#"));
+  const dockerfile = read("Dockerfile");
+  const legacyStage = dockerfile.slice(dockerfile.indexOf("AS legacy"), dockerfile.indexOf("AS runtime"));
+  test(".dockerignore does not admit root HTML, CSS or a blanket *.js", () => {
+    for (const bad of ["!*.html", "!*.css", "!*.js", "!fleet", "!nav.js", "!nq.css", "!nav.css", "!fx.js"]) expect(ignore).not.toContain(bad);
+  });
+  test(".dockerignore admits exactly the three calculator scripts, the images and the manifest at the top level", () => {
+    const top = ignore.filter((l) => l.startsWith("!") && !l.includes("/") && l !== "!brand");
+    expect(top.filter((l) => l.endsWith(".js")).sort()).toEqual(["!bundle-calc.js", "!cost-calc.js", "!subnet-calc.js"]);
+    expect(ignore).toContain("!*.webmanifest");
+    expect(ignore).toContain("!fleet/img");
+    expect(ignore).toContain("!fleet/favicon.svg");
+  });
+  test("the legacy stage copies no html, css or behavior script and names the three calculator scripts", () => {
+    expect(legacyStage).not.toMatch(/-name '\*\.(html|css)'/);
+    expect(legacyStage).not.toMatch(/-name '\*\.js'/);
+    for (const f of ["subnet-calc.js", "cost-calc.js", "bundle-calc.js"]) expect(legacyStage).toContain(`-name '${f}'`);
+    expect(legacyStage).not.toMatch(/cp -r brand fleet/);
+  });
+  test("the build stage still gets readiness-data.json (build time only)", () => {
+    expect(dockerfile).toContain("COPY readiness-data.json ./");
+    expect(legacyStage).not.toContain("readiness-data");
+  });
+});

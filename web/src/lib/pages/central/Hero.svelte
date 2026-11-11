@@ -27,3 +27,17 @@
         </div>
     </div>
 </header>
+
+<style>
+    /* The change-preview figure belongs to this component only (class names no other page uses), so its rules are scoped here. */
+    .nq-diff { margin: 0; max-width: 520px; margin-inline: auto; background: var(--nq-s1); border: 1px solid var(--nq-line-2); border-radius: 20px; overflow: hidden; }
+    .nq-diff figcaption { display: flex; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid var(--nq-line); font: 400 .75rem var(--nq-mono); color: var(--nq-ink-3); }
+    .nq-diff figcaption span:first-child { color: var(--nq-ink-2); }
+    .nq-diff-row { display: grid; grid-template-columns: 4.5rem 1fr; gap: 12px; padding: 12px 20px; border-bottom: 1px solid var(--nq-line); font-size: .9375rem; color: var(--nq-ink-2); }
+    .nq-diff-row b { font: 500 .75rem var(--nq-mono); color: var(--nq-accent-t); padding-top: 3px; }
+    .nq-diff-row b.add { color: var(--nq-ok); }
+    .nq-diff-row b.rm { color: #f0907f; }
+    .nq-diff-row span { color: var(--nq-ink); }
+    .nq-diff-row small { display: block; color: var(--nq-ink-3); font-size: .8125rem; margin-top: 2px; }
+    .nq-diff-foot { margin: 0; padding: 14px 20px 18px; font-size: .8125rem; color: var(--nq-ink-3); line-height: 1.5; }
+</style>

@@ -1,5 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import { compareFacts, diffBag, diffSeq, formatReport } from "./compare";
+import { compareFacts, diffBag, diffSeq, entryMatches, formatReport } from "./compare";
+import { loadAllow } from "./allow";
+import { join } from "node:path";
 import { extractFacts } from "./extract";
 
 const page = (o: { body?: string; head?: string } = {}) => `<!doctype html><html><head><title>T</title>${o.head ?? ""}</head><body>${o.body ?? ""}</body></html>`;
@@ -89,5 +91,58 @@ describe("allowlist", () => {
     });
     test("match * allows the whole category", () => {
         expect(cmp(a, b, { allow: { text: [{ match: "*", reason: "page rewritten" }] } }).ok).toBe(true);
+    });
+});
+
+describe("allowlist globs", () => {
+    const e = { match: "script:{/nav.js,/fx.js,https://cdn.example.com/b.min.js}", reason: "replaced by a bundled component", op: "-" as const };
+    test("a brace set matches exactly its members, on the legacy side only", () => {
+        expect(entryMatches(e, { op: "-", item: "script:/nav.js" })).toBe(true);
+        expect(entryMatches(e, { op: "-", item: "script:https://cdn.example.com/b.min.js" })).toBe(true);
+        expect(entryMatches(e, { op: "-", item: "script:/new.js" })).toBe(false);
+        expect(entryMatches(e, { op: "-", item: "script:/nav.jsx" })).toBe(false);
+        expect(entryMatches(e, { op: "+", item: "script:/nav.js" })).toBe(false);
+    });
+    test("* inside a pattern matches a run; no glob characters means exact text", () => {
+        expect(entryMatches({ match: "stylesheet:/fleet/*.css", reason: "r" }, { op: "+", item: "stylesheet:/fleet/site.css" })).toBe(true);
+        expect(entryMatches({ match: "script:/a.js", reason: "r" }, { op: "-", item: "script:/aXjs" })).toBe(false);
+    });
+    test("the assets check still fails on a new unexplained script and passes when only the replaced ones are gone", () => {
+        const head = (scripts: string[]) => scripts.map((x) => `<script src="${x}"></script>`).join("");
+        const legacy = facts({ head: head(["/nav.js", "/fx.js", "/other.js"]) });
+        const allow = { assets: [e] };
+        const ok = cmp(legacy, facts({ head: head(["/other.js"]) }), { allow });
+        expect(cat(ok, "assets").diffs).toEqual([]);
+        expect(cat(ok, "assets").allowed).toHaveLength(2);
+        const bad = cmp(legacy, facts({ head: head(["/other.js", "/surprise.js"]) }), { allow });
+        expect(cat(bad, "assets").diffs).toEqual([{ op: "+", item: "script:/surprise.js" }]);
+        const lost = cmp(legacy, facts({ head: head([]) }), { allow });
+        expect(cat(lost, "assets").diffs).toEqual([{ op: "-", item: "script:/other.js" }]);
+    });
+    test("parity-allow.json gives every migrated legacy page the replaced-script entry, with the reason", () => {
+        const allow = loadAllow(join(import.meta.dir, "../../migration/parity-allow.json"));
+        const pages = ["index", "compare", "central", "digitalaccess", "fleet", "homeassistant", "network", "partners", "privacy", "readiness", "referrals", "sdn", "startups", "subnet-calculator", "terms", "vpn"].map((n) => `${n}.html`);
+        for (const pg of pages) {
+            const entry = allow.pages[pg]?.assets?.find((x) => x.match.startsWith("script:{"));
+            expect(entry?.reason).toBe("the legacy page loads a script that the Svelte page replaces with a bundled component");
+            expect(entry?.op).toBe("-");
+            for (const gone of ["nav.js", "fx.js", "bg.js", "nudge.js", "analytics.js", "readiness.js", "bootstrap.bundle.min.js"]) expect(entry?.match).toContain(gone);
+            expect(entryMatches(entry!, { op: "-", item: "script:/nav.js" })).toBe(true);
+            expect(entryMatches(entry!, { op: "-", item: "script:/cost-calc.js" })).toBe(false);
+        }
+    });
+    test("parity-allow.json gives every migrated legacy page the bundled-stylesheet entry, which allows the legacy CSS and fonts to be gone but nothing new", () => {
+        const allow = loadAllow(join(import.meta.dir, "../../migration/parity-allow.json"));
+        const pages = ["index", "compare", "central", "digitalaccess", "fleet", "homeassistant", "network", "partners", "privacy", "readiness", "referrals", "sdn", "startups", "subnet-calculator", "terms", "vpn"].map((n) => `${n}.html`);
+        for (const pg of pages) {
+            const entry = allow.pages[pg]?.assets?.find((x) => x.match.startsWith("stylesheet:{"));
+            expect(entry?.reason).toContain("bundles with Vite");
+            expect(entry?.op).toBe("-");
+            for (const gone of ["bootstrap.min.css", "bootstrap-icons.min.css", "devices.min.css", "/nav.css", "/nq.css", "/fleet/site.css", "family=IBM+Plex+Sans", "family=Geist"]) expect(entry?.match).toContain(gone);
+            expect(entryMatches(entry!, { op: "-", item: "stylesheet:/nq.css" })).toBe(true);
+            // a stylesheet the Svelte page adds, or a legacy one nobody listed, is still a difference
+            expect(entryMatches(entry!, { op: "+", item: "stylesheet:/nq.css" })).toBe(false);
+            expect(entryMatches(entry!, { op: "-", item: "stylesheet:https://cdn.example.com/other.css" })).toBe(false);
+        }
     });
 });

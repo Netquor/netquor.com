@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { createRequire } from "node:module";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { startServer, WEB } from "../../../../scripts/parity/run";
 import { withPrices } from "../../jsonld";
@@ -9,7 +9,6 @@ import { snap } from "../../server/testkit";
 import { bundleView, type BundleApi } from "./bundleTool";
 import { devView, EXAMPLES, missView, type CostApi } from "./calculators";
 import { APP_GROUPS, COMPARE, FAQ, JSON_LD, PRICE_MAP, PRICE_ROWS, READY, SERVICES, WHO } from "./data";
-import { PAGE_CSS } from "./pageCss";
 import { halfPriceText, splitRich } from "./rich";
 import { initTerminal } from "./terminal";
 
@@ -48,10 +47,13 @@ describe("index data", () => {
         const offers = (ld["@graph"][4] as { itemListElement: { priceSpecification: { price: string } }[] }).itemListElement.map((o) => o.priceSpecification.price);
         expect(offers).toEqual(["25", "5.95", "7.99", "7", "12", "9.99"]);
     });
-    test("the inline CSS drops the two rules that never applied in the legacy head", () => {
+    test("page.css drops the two rules that never applied in the legacy head", () => {
+        const PAGE_CSS = readFileSync(join(import.meta.dir, "page.css"), "utf8");
         expect(PAGE_CSS).not.toMatch(/\n\s*body \{/);
         expect(PAGE_CSS).not.toContain("focus-visible");
-        expect(PAGE_CSS).toContain(".homelab {");
+        expect(readFileSync(join(import.meta.dir, "Homelab.svelte"), "utf8")).toContain("<style>");
+        expect(readFileSync(join(import.meta.dir, "Homelab.svelte"), "utf8")).toContain(".homelab {");
+        expect(PAGE_CSS).toContain(".chip {");
     });
 });
 
@@ -150,7 +152,8 @@ describe("the page", () => {
         expect(body).toMatch(/<i>paid from <span data-price="digitalaccess\.plus\.month" data-fmt="usd0">[^<]*<\/span>\/mo<\/i>/);
         expect(head).toContain('rel="canonical" href="https://www.netquor.com/"');
         expect(head).toContain('"price":"7.99"');
-        expect(head).toContain("devices.css@0.2.0");
+        expect(head).not.toContain("devices.css@0.2.0");
+        expect(head).not.toContain("<style>");
     });
     test("the built server answers 200 for / and redirects /index.html (when a build exists)", async () => {
         if (!existsSync(join(WEB, "build/index.js"))) return;

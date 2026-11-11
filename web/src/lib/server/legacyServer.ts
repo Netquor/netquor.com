@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import { stampHtml, hasPriceMarkers } from "#server/prices/stamp";
 import { legacyPageFiles } from "../pages";
 import { assetEtag, ASSET_CACHE_CONTROL, conditional, contentTypeFor, HTML_CACHE_CONTROL, IMMUTABLE_CACHE_CONTROL, pageEtag } from "./http";
-import { classifyLegacyPath, statLegacy } from "./legacy";
+import { classifyLegacyPath, statLegacy, type LegacyScope } from "./legacy";
 import type { PriceSource } from "./types";
 
 export interface LegacyServerOptions {
@@ -13,6 +13,8 @@ export interface LegacyServerOptions {
     /** Page files the server may serve; default from the registry. */
     pages?: ReadonlySet<string>;
     log?: (line: string) => void;
+    /** What may be served. Default "runtime" (images, the web manifest, the three calculator scripts). "baseline" serves the whole hand-written site and is for the local comparison tools only. */
+    scope?: LegacyScope;
 }
 
 /** The ?v= value tools/build-nav.py writes into the pages: the first 8 hex characters of the file's md5. */
@@ -22,19 +24,24 @@ interface Memo { mtimeMs: number; version: number; body: string }
 
 const redirectTo = (status: number, location: string): Response => new Response(null, { status, headers: { location } });
 
-/** One URL per page: /index.html is a 301 to /, and a trailing slash on a legacy page (/fleet.html/) is a 308 to the .html URL. The query string is kept. Only for pages that exist. */
-const canonicalRedirect = (url: URL, pages: ReadonlySet<string>, legacyDir: string): Response | null => {
+/** One URL per page: /index.html is a 301 to /, and a trailing slash on a page (/fleet.html/) is a 308 to the .html URL. The query string is kept. Only for registered pages. In the baseline scope the page file must also exist; in the runtime scope the registry alone decides, since the image holds no HTML. */
+const canonicalRedirect = (url: URL, pages: ReadonlySet<string>, legacyDir: string, scope: LegacyScope): Response | null => {
     const trimmed = url.pathname.replace(/\/+$/, "");
     const slashed = trimmed !== url.pathname && trimmed !== "";
     if (trimmed !== "/index.html" && !slashed) return null;
-    const match = classifyLegacyPath(trimmed, pages);
-    if (!match || match.kind !== "page" || !statLegacy(legacyDir, match)) return null;
+    if (scope === "runtime") {
+        if (!/^\/[A-Za-z0-9_][A-Za-z0-9_.-]*\.html$/.test(trimmed) || !pages.has(trimmed.slice(1))) return null;
+    } else {
+        const match = classifyLegacyPath(trimmed, pages, scope);
+        if (!match || match.kind !== "page" || !statLegacy(legacyDir, match)) return null;
+    }
     if (trimmed === "/index.html") return redirectTo(301, `/${url.search}`);
     return redirectTo(308, `${trimmed}${url.search}`);
 };
 
 export const createLegacyServer = (o: LegacyServerOptions) => {
     const pages = o.pages ?? legacyPageFiles();
+    const scope: LegacyScope = o.scope ?? "runtime";
     const log = o.log ?? ((l: string) => console.error(l));
     const memo = new Map<string, Memo>();
     const warned = new Set<string>();
@@ -72,9 +79,9 @@ export const createLegacyServer = (o: LegacyServerOptions) => {
         /** The response for a GET or HEAD of this path, or null when the path is not a legacy file. */
         serve(request: Request, url: URL): Response | null {
             if (request.method !== "GET" && request.method !== "HEAD") return null;
-            const redirect = canonicalRedirect(url, pages, o.legacyDir);
+            const redirect = canonicalRedirect(url, pages, o.legacyDir, scope);
             if (redirect) return redirect;
-            const match = classifyLegacyPath(url.pathname, pages);
+            const match = classifyLegacyPath(url.pathname, pages, scope);
             if (!match) return null;
             const file = statLegacy(o.legacyDir, match);
             if (!file) return null;

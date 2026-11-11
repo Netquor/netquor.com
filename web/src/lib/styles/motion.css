@@ -1,0 +1,35 @@
+/* Motion: the hero entrance, the scroll progress line, signal pulses, reveals, the card spotlight and the nudge card, with their reduced-motion and print rules. */
+
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
+
+/* Hero entrance: one short fade and rise on load. */
+@keyframes nq-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.nq-rise { animation: nq-rise .5s var(--nq-ease) both; }
+.nq-rise.d2 { animation-delay: .08s; }
+
+/* ---- Motion: scroll progress, signal pulses, reveals, spotlight, nudge ---- */
+.nq-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 1100; background: var(--nq-accent); transform-origin: 0 50%; transform: scaleX(0); pointer-events: none; }
+.nq-pulse { fill: none; stroke: #8cc4f7; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 5 95; stroke-dashoffset: 5; opacity: 0; animation: nq-flow 4.2s linear infinite; }
+@keyframes nq-flow { 0% { stroke-dashoffset: 5; opacity: 0; } 8% { opacity: .95; } 55% { opacity: .95; } 70%, 100% { stroke-dashoffset: -100; opacity: 0; } }
+.nq-map-lines path.hot { stroke: #8cc4f7; opacity: 1; }
+.nq-pulse.hot { animation-duration: 1.6s; }
+.nq-map-labels a { outline: none; }
+.nq-map-labels a:hover text:not(.sub), .nq-map-labels a:focus-visible text:not(.sub) { fill: #8cc4f7; }
+.nq-reveal-on .nq-r { opacity: 0; transform: translateY(14px); transition: opacity .6s var(--nq-ease), transform .6s var(--nq-ease); }
+.nq-reveal-on .nq-r.nq-shown { opacity: 1; transform: none; }
+.nq-app, .nq-who, .nq-calc, .nq-check, .nq-prices-row { position: relative; --mx: 50%; --my: 0; }
+.nq-app::before, .nq-who::before, .nq-calc::before, .nq-check::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .25s; background: radial-gradient(320px circle at var(--mx) var(--my), rgba(47,143,224,.10), transparent 60%); }
+.nq-app:hover::before, .nq-who:hover::before, .nq-calc:hover::before, .nq-check:hover::before { opacity: 1; }
+.nq-nudge { position: fixed; left: 24px; bottom: 24px; z-index: 1040; width: min(340px, calc(100vw - 48px)); padding: 18px 18px 16px; background: var(--nq-s1); border: 1px solid var(--nq-line-2); border-radius: 14px; box-shadow: 0 16px 40px rgba(0,0,0,.45); opacity: 0; transform: translateY(12px); transition: opacity .25s var(--nq-ease), transform .25s var(--nq-ease); }
+.nq-nudge.in { opacity: 1; transform: none; }
+.nq-nudge b { display: block; padding-right: 24px; font: 500 1rem var(--nq-display); color: var(--nq-ink); }
+.nq-nudge p { margin: 6px 0 14px; font-size: .875rem; line-height: 1.5; color: var(--nq-ink-2); }
+.nq-nudge-row { display: flex; align-items: center; gap: 14px; }
+.nq-nudge-go { font-size: .875rem; font-weight: 500; padding: 7px 12px; border-radius: 8px; background: var(--nq-accent-s); border: 1px solid rgba(47,143,224,.45); color: #8cc4f7; text-decoration: none; }
+.nq-nudge-go:hover { background: var(--nq-accent); color: #06101a; }
+.nq-nudge-no { background: none; border: 0; padding: 0; font-size: .875rem; color: var(--nq-ink-3); cursor: pointer; }
+.nq-nudge-no:hover { color: var(--nq-ink); }
+.nq-nudge-x { position: absolute; top: 8px; right: 10px; width: 28px; height: 28px; background: none; border: 0; font-size: 1.25rem; line-height: 1; color: var(--nq-ink-3); cursor: pointer; border-radius: 6px; }
+.nq-nudge-x:hover { color: var(--nq-ink); background: var(--nq-s2); }
+@media (prefers-reduced-motion: reduce) { .nq-pulse, .nq-progress { display: none; } .nq-reveal-on .nq-r { opacity: 1; transform: none; transition: none; } }
+@media print { .nq-nudge, .nq-progress { display: none !important; } }

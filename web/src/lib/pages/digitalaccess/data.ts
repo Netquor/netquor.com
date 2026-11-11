@@ -103,22 +103,3 @@ export const FOOTER_LINKS: readonly { href: string; label: string }[] = [
     { href: "fleet.html", label: "Netquor Fleet" }, { href: "terms.html", label: "Terms" }, { href: "privacy.html", label: "Privacy" }, { href: "https://status.netquor.com/", label: "Status" },
 ];
 
-/** The page's own rules, as the legacy page wrote them in its head. */
-export const PAGE_CSS = `
-        :root { --cyber-blue: #5eaaf0; --obsidian: #12161c; }
-        body { background-color: var(--obsidian); color: #f8fafc; font-family: 'IBM Plex Sans', -apple-system, sans-serif; }
-        .hero-section { padding: 90px 0 60px; background: none; }
-        .fw-black { font-weight: 900; }
-        .feature-card { background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 2rem; height: 100%; transition: border-color .3s, background .3s; }
-        .feature-card:hover { border-color: var(--cyber-blue); background: rgba(30, 41, 59, 0.5); }
-        .icon-accent { font-size: 1.8rem; color: var(--cyber-blue); margin-bottom: 1rem; display: inline-block; }
-        .btn-primary-cyber { background: var(--cyber-blue); color: var(--obsidian); border: none; border-radius: 50px; padding: 12px 32px; font-weight: 700; transition: .3s; }
-        .btn-primary-cyber:hover { background: #8cc4f7; color: var(--obsidian); box-shadow: none; }
-        .phone { max-width: 300px; margin: 0 auto; border-radius: 38px; padding: 10px; background: #0b1220; border: 1px solid rgba(47, 143, 224, .3); box-shadow: 0 30px 80px rgba(2, 6, 23, .7), 0 0 60px rgba(47, 143, 224, .1); }
-        .phone img { display: block; width: 100%; height: auto; border-radius: 30px; }
-        .step-num { width: 38px; height: 38px; border-radius: 50%; background: rgba(47, 143, 224, 0.12); color: var(--cyber-blue); font-weight: 800; display: inline-flex; align-items: center; justify-content: center; margin-bottom: .75rem; }
-        .tier { display: flex; flex-direction: column; }
-        .tier.pop { border-color: rgba(47, 143, 224, .5); }
-        .vs-yes li, .vs-no li { list-style: none; margin-bottom: .5rem; }
-        footer { border-top: 1px solid rgba(255, 255, 255, 0.05); padding: 50px 0; }
-    `;

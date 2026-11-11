@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // nq-js hides the mobile menu behind the burger. If the app's JavaScript has not woken the burger within 5 seconds (slow, blocked or failed), drop it so the links stay reachable; nav.ts puts it back (with nq-hydrated) when it does start.
+        (function (r) { r.classList.add("nq-js"); setTimeout(function () { if (!r.classList.contains("nq-hydrated")) r.classList.remove("nq-js"); }, 5000); })(document.documentElement);
+    </script>
     %sveltekit.head%
 </head>
 <body>

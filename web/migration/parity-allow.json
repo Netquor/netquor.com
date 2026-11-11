@@ -3,8 +3,14 @@
     "compare.html": {
       "assets": [
         {
-          "match": "script:/fx.js",
-          "reason": "fx.js is loaded after hydration with loadScript (it adds reveal classes to existing nodes)"
+          "match": "script:{/nav.js,/analytics.js,/nudge.js,/fx.js,/bg.js,/readiness.js,/fleet/site.js,/fleet/pricing.js,https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js}",
+          "op": "-",
+          "reason": "the legacy page loads a script that the Svelte page replaces with a bundled component"
+        },
+        {
+          "match": "stylesheet:{https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css,https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css,https://cdn.jsdelivr.net/npm/devices.css@0.2.0/dist/devices.min.css,/nav.css,/nq.css,/fleet/site.css,https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400%3B500&family=IBM+Plex+Sans%3Awght%40400%3B500%3B600&display=swap,https://fonts.googleapis.com/css2?family=Geist%3Awght%40400%3B500%3B600&family=Geist+Mono%3Awght%40400%3B500&display=swap}",
+          "op": "-",
+          "reason": "the legacy page loads a stylesheet, icon font or Google font that the Svelte page bundles with Vite (src/lib/styles, npm packages) and serves from its own origin"
         }
       ]
     },
@@ -17,104 +23,162 @@
       ],
       "assets": [
         {
-          "match": "stylesheet:/nq.css",
-          "reason": "the shared (site) layout loads nav.js before nq.css, the legacy sdn.html loads nq.css first; independent files, no visible effect"
+          "match": "script:{/nav.js,/analytics.js,/nudge.js,/fx.js,/bg.js,/readiness.js,/fleet/site.js,/fleet/pricing.js,https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js}",
+          "op": "-",
+          "reason": "the legacy page loads a script that the Svelte page replaces with a bundled component"
+        },
+        {
+          "match": "stylesheet:{https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css,https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css,https://cdn.jsdelivr.net/npm/devices.css@0.2.0/dist/devices.min.css,/nav.css,/nq.css,/fleet/site.css,https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400%3B500&family=IBM+Plex+Sans%3Awght%40400%3B500%3B600&display=swap,https://fonts.googleapis.com/css2?family=Geist%3Awght%40400%3B500%3B600&family=Geist+Mono%3Awght%40400%3B500&display=swap}",
+          "op": "-",
+          "reason": "the legacy page loads a stylesheet, icon font or Google font that the Svelte page bundles with Vite (src/lib/styles, npm packages) and serves from its own origin"
         }
       ]
     },
     "readiness.html": {
       "assets": [
         {
-          "match": "script:/readiness.js",
-          "reason": "readiness.js is loaded after hydration with loadScript (it fills the result boxes)"
+          "match": "script:{/nav.js,/analytics.js,/nudge.js,/fx.js,/bg.js,/readiness.js,/fleet/site.js,/fleet/pricing.js,https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js}",
+          "op": "-",
+          "reason": "the legacy page loads a script that the Svelte page replaces with a bundled component"
         },
         {
-          "match": "script:/fx.js",
-          "reason": "fx.js is loaded after hydration with loadScript (it adds reveal classes to existing nodes)"
+          "match": "stylesheet:{https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css,https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css,https://cdn.jsdelivr.net/npm/devices.css@0.2.0/dist/devices.min.css,/nav.css,/nq.css,/fleet/site.css,https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400%3B500&family=IBM+Plex+Sans%3Awght%40400%3B500%3B600&display=swap,https://fonts.googleapis.com/css2?family=Geist%3Awght%40400%3B500%3B600&family=Geist+Mono%3Awght%40400%3B500&display=swap}",
+          "op": "-",
+          "reason": "the legacy page loads a stylesheet, icon font or Google font that the Svelte page bundles with Vite (src/lib/styles, npm packages) and serves from its own origin"
         }
       ]
     },
     "startups.html": {
       "assets": [
         {
-          "match": "script:/fx.js",
-          "reason": "loaded after hydration with loadScript (fx.js adds reveal classes to rendered nodes, so it must run after Svelte adopts them)"
+          "match": "script:{/nav.js,/analytics.js,/nudge.js,/fx.js,/bg.js,/readiness.js,/fleet/site.js,/fleet/pricing.js,https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js}",
+          "op": "-",
+          "reason": "the legacy page loads a script that the Svelte page replaces with a bundled component"
+        },
+        {
+          "match": "stylesheet:{https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css,https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css,https://cdn.jsdelivr.net/npm/devices.css@0.2.0/dist/devices.min.css,/nav.css,/nq.css,/fleet/site.css,https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400%3B500&family=IBM+Plex+Sans%3Awght%40400%3B500%3B600&display=swap,https://fonts.googleapis.com/css2?family=Geist%3Awght%40400%3B500%3B600&family=Geist+Mono%3Awght%40400%3B500&display=swap}",
+          "op": "-",
+          "reason": "the legacy page loads a stylesheet, icon font or Google font that the Svelte page bundles with Vite (src/lib/styles, npm packages) and serves from its own origin"
         }
       ]
     },
     "referrals.html": {
       "assets": [
         {
-          "match": "script:/fx.js",
-          "reason": "loaded after hydration with loadScript (fx.js adds reveal classes to rendered nodes, so it must run after Svelte adopts them)"
+          "match": "script:{/nav.js,/analytics.js,/nudge.js,/fx.js,/bg.js,/readiness.js,/fleet/site.js,/fleet/pricing.js,https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js}",
+          "op": "-",
+          "reason": "the legacy page loads a script that the Svelte page replaces with a bundled component"
+        },
+        {
+          "match": "stylesheet:{https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css,https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css,https://cdn.jsdelivr.net/npm/devices.css@0.2.0/dist/devices.min.css,/nav.css,/nq.css,/fleet/site.css,https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400%3B500&family=IBM+Plex+Sans%3Awght%40400%3B500%3B600&display=swap,https://fonts.googleapis.com/css2?family=Geist%3Awght%40400%3B500%3B600&family=Geist+Mono%3Awght%40400%3B500&display=swap}",
+          "op": "-",
+          "reason": "the legacy page loads a stylesheet, icon font or Google font that the Svelte page bundles with Vite (src/lib/styles, npm packages) and serves from its own origin"
         }
       ]
     },
     "partners.html": {
       "assets": [
         {
-          "match": "script:/fx.js",
-          "reason": "loaded after hydration with loadScript (fx.js adds reveal classes to rendered nodes, so it must run after Svelte adopts them)"
+          "match": "script:{/nav.js,/analytics.js,/nudge.js,/fx.js,/bg.js,/readiness.js,/fleet/site.js,/fleet/pricing.js,https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js}",
+          "op": "-",
+          "reason": "the legacy page loads a script that the Svelte page replaces with a bundled component"
+        },
+        {
+          "match": "stylesheet:{https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css,https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css,https://cdn.jsdelivr.net/npm/devices.css@0.2.0/dist/devices.min.css,/nav.css,/nq.css,/fleet/site.css,https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400%3B500&family=IBM+Plex+Sans%3Awght%40400%3B500%3B600&display=swap,https://fonts.googleapis.com/css2?family=Geist%3Awght%40400%3B500%3B600&family=Geist+Mono%3Awght%40400%3B500&display=swap}",
+          "op": "-",
+          "reason": "the legacy page loads a stylesheet, icon font or Google font that the Svelte page bundles with Vite (src/lib/styles, npm packages) and serves from its own origin"
         }
       ]
     },
     "homeassistant.html": {
       "assets": [
         {
-          "match": "stylesheet:/nq.css",
-          "reason": "the shared (site) layout loads nav.js before nq.css where the legacy head has nq.css first, and the page links nq.css a second time after its own inline rules (same URL, from cache) because the legacy head has those rules before nq.css; no visible effect and the files are unchanged"
+          "match": "script:{/nav.js,/analytics.js,/nudge.js,/fx.js,/bg.js,/readiness.js,/fleet/site.js,/fleet/pricing.js,https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js}",
+          "op": "-",
+          "reason": "the legacy page loads a script that the Svelte page replaces with a bundled component"
+        },
+        {
+          "match": "stylesheet:{https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css,https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css,https://cdn.jsdelivr.net/npm/devices.css@0.2.0/dist/devices.min.css,/nav.css,/nq.css,/fleet/site.css,https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400%3B500&family=IBM+Plex+Sans%3Awght%40400%3B500%3B600&display=swap,https://fonts.googleapis.com/css2?family=Geist%3Awght%40400%3B500%3B600&family=Geist+Mono%3Awght%40400%3B500&display=swap}",
+          "op": "-",
+          "reason": "the legacy page loads a stylesheet, icon font or Google font that the Svelte page bundles with Vite (src/lib/styles, npm packages) and serves from its own origin"
         }
       ]
     },
     "terms.html": {
       "assets": [
         {
+          "match": "script:{/nav.js,/analytics.js,/nudge.js,/fx.js,/bg.js,/readiness.js,/fleet/site.js,/fleet/pricing.js,https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js}",
+          "op": "-",
+          "reason": "the legacy page loads a script that the Svelte page replaces with a bundled component"
+        },
+        {
           "match": "stylesheet:/css/main.css",
           "reason": "the legacy head links /css/main.css, a file that does not exist in the repository (it 404s); it is not recreated"
         },
         {
-          "match": "stylesheet:/nq.css",
-          "reason": "the legacy head loads nq.css before nav.js and the shared layout loads it after; same files, only the order of a stylesheet and a script differs"
+          "match": "stylesheet:{https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css,https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css,https://cdn.jsdelivr.net/npm/devices.css@0.2.0/dist/devices.min.css,/nav.css,/nq.css,/fleet/site.css,https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400%3B500&family=IBM+Plex+Sans%3Awght%40400%3B500%3B600&display=swap,https://fonts.googleapis.com/css2?family=Geist%3Awght%40400%3B500%3B600&family=Geist+Mono%3Awght%40400%3B500&display=swap}",
+          "op": "-",
+          "reason": "the legacy page loads a stylesheet, icon font or Google font that the Svelte page bundles with Vite (src/lib/styles, npm packages) and serves from its own origin"
         }
       ]
     },
     "privacy.html": {
       "assets": [
         {
+          "match": "script:{/nav.js,/analytics.js,/nudge.js,/fx.js,/bg.js,/readiness.js,/fleet/site.js,/fleet/pricing.js,https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js}",
+          "op": "-",
+          "reason": "the legacy page loads a script that the Svelte page replaces with a bundled component"
+        },
+        {
           "match": "stylesheet:/css/main.css",
           "reason": "the legacy head links /css/main.css, a file that does not exist in the repository (it 404s); it is not recreated"
         },
         {
-          "match": "stylesheet:/nq.css",
-          "reason": "the legacy head loads nq.css before nav.js and the shared layout loads it after; same files, only the order of a stylesheet and a script differs"
+          "match": "stylesheet:{https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css,https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css,https://cdn.jsdelivr.net/npm/devices.css@0.2.0/dist/devices.min.css,/nav.css,/nq.css,/fleet/site.css,https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400%3B500&family=IBM+Plex+Sans%3Awght%40400%3B500%3B600&display=swap,https://fonts.googleapis.com/css2?family=Geist%3Awght%40400%3B500%3B600&family=Geist+Mono%3Awght%40400%3B500&display=swap}",
+          "op": "-",
+          "reason": "the legacy page loads a stylesheet, icon font or Google font that the Svelte page bundles with Vite (src/lib/styles, npm packages) and serves from its own origin"
         }
       ]
     },
     "network.html": {
       "assets": [
         {
-          "match": "stylesheet:/nq.css",
-          "reason": "the shared (site) layout loads nav.js before nq.css, the legacy network.html loads nq.css first; independent files, no visible effect"
+          "match": "script:{/nav.js,/analytics.js,/nudge.js,/fx.js,/bg.js,/readiness.js,/fleet/site.js,/fleet/pricing.js,https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js}",
+          "op": "-",
+          "reason": "the legacy page loads a script that the Svelte page replaces with a bundled component"
+        },
+        {
+          "match": "stylesheet:{https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css,https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css,https://cdn.jsdelivr.net/npm/devices.css@0.2.0/dist/devices.min.css,/nav.css,/nq.css,/fleet/site.css,https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400%3B500&family=IBM+Plex+Sans%3Awght%40400%3B500%3B600&display=swap,https://fonts.googleapis.com/css2?family=Geist%3Awght%40400%3B500%3B600&family=Geist+Mono%3Awght%40400%3B500&display=swap}",
+          "op": "-",
+          "reason": "the legacy page loads a stylesheet, icon font or Google font that the Svelte page bundles with Vite (src/lib/styles, npm packages) and serves from its own origin"
         }
       ]
     },
     "fleet.html": {
       "assets": [
         {
-          "match": "script:/fleet/site.js",
-          "reason": "fleet/site.js (the cost calculator and the free-trial form, a module that imports fleet/pricing.js) is loaded with import() from onMount, because it fills in nodes Svelte is adopting; run before hydration it would break it"
+          "match": "script:{/nav.js,/analytics.js,/nudge.js,/fx.js,/bg.js,/readiness.js,/fleet/site.js,/fleet/pricing.js,https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js}",
+          "op": "-",
+          "reason": "the legacy page loads a script that the Svelte page replaces with a bundled component"
         },
         {
-          "match": "stylesheet:https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400%3B500&family=IBM+Plex+Sans%3Awght%40400%3B500%3B600&display=swap",
-          "reason": "the IBM Plex fonts link is the same URL; the legacy head writes the & between its parameters bare, Svelte writes it as &amp; (the same URL once parsed)"
+          "match": "stylesheet:{https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css,https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css,https://cdn.jsdelivr.net/npm/devices.css@0.2.0/dist/devices.min.css,/nav.css,/nq.css,/fleet/site.css,https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400%3B500&family=IBM+Plex+Sans%3Awght%40400%3B500%3B600&display=swap,https://fonts.googleapis.com/css2?family=Geist%3Awght%40400%3B500%3B600&family=Geist+Mono%3Awght%40400%3B500&display=swap}",
+          "op": "-",
+          "reason": "the legacy page loads a stylesheet, icon font or Google font that the Svelte page bundles with Vite (src/lib/styles, npm packages) and serves from its own origin"
         }
       ]
     },
     "digitalaccess.html": {
       "assets": [
         {
-          "match": "stylesheet:/nq.css",
-          "reason": "the shared (site) layout loads nav.js before nq.css where the legacy head has nq.css first, and the page links nq.css a second time after its own inline rules (same URL, from cache) because the legacy head has those rules before nq.css; no visible effect and the files are unchanged"
+          "match": "script:{/nav.js,/analytics.js,/nudge.js,/fx.js,/bg.js,/readiness.js,/fleet/site.js,/fleet/pricing.js,https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js}",
+          "op": "-",
+          "reason": "the legacy page loads a script that the Svelte page replaces with a bundled component"
+        },
+        {
+          "match": "stylesheet:{https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css,https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css,https://cdn.jsdelivr.net/npm/devices.css@0.2.0/dist/devices.min.css,/nav.css,/nq.css,/fleet/site.css,https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400%3B500&family=IBM+Plex+Sans%3Awght%40400%3B500%3B600&display=swap,https://fonts.googleapis.com/css2?family=Geist%3Awght%40400%3B500%3B600&family=Geist+Mono%3Awght%40400%3B500&display=swap}",
+          "op": "-",
+          "reason": "the legacy page loads a stylesheet, icon font or Google font that the Svelte page bundles with Vite (src/lib/styles, npm packages) and serves from its own origin"
         }
       ]
     },
@@ -131,36 +195,56 @@
       ],
       "assets": [
         {
-          "match": "script:/fx.js",
-          "reason": "fx.js is loaded after hydration with loadScript (it adds reveal classes, the progress bar and the map pulses to rendered nodes)"
+          "match": "script:{/nav.js,/analytics.js,/nudge.js,/fx.js,/bg.js,/readiness.js,/fleet/site.js,/fleet/pricing.js,https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js}",
+          "op": "-",
+          "reason": "the legacy page loads a script that the Svelte page replaces with a bundled component"
         },
         {
-          "match": "script:/bg.js",
-          "reason": "bg.js is loaded after hydration with loadScript (it inserts the hero background and its pause control into the rendered hero)"
-        },
-        {
-          "match": "stylesheet:https://cdn.jsdelivr.net/npm/devices.css@0.2.0/dist/devices.min.css",
-          "reason": "the page head comes after the shared layout head, so devices.css (unused by this page, no .device markup) now follows nav.css and nq.css instead of preceding them"
-        },
-        {
-          "match": "stylesheet:/nq.css",
-          "reason": "same ordering difference: the shared (site) layout loads nq.css before the page's own stylesheet link"
+          "match": "stylesheet:{https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css,https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css,https://cdn.jsdelivr.net/npm/devices.css@0.2.0/dist/devices.min.css,/nav.css,/nq.css,/fleet/site.css,https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400%3B500&family=IBM+Plex+Sans%3Awght%40400%3B500%3B600&display=swap,https://fonts.googleapis.com/css2?family=Geist%3Awght%40400%3B500%3B600&family=Geist+Mono%3Awght%40400%3B500&display=swap}",
+          "op": "-",
+          "reason": "the legacy page loads a stylesheet, icon font or Google font that the Svelte page bundles with Vite (src/lib/styles, npm packages) and serves from its own origin"
         }
       ]
     },
     "vpn.html": {
       "assets": [
         {
-          "match": "stylesheet:/nq.css",
-          "reason": "the shared (site) layout loads nav.js before nq.css, the legacy vpn.html loads nq.css first; independent files, no visible effect"
+          "match": "script:{/nav.js,/analytics.js,/nudge.js,/fx.js,/bg.js,/readiness.js,/fleet/site.js,/fleet/pricing.js,https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js}",
+          "op": "-",
+          "reason": "the legacy page loads a script that the Svelte page replaces with a bundled component"
+        },
+        {
+          "match": "stylesheet:{https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css,https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css,https://cdn.jsdelivr.net/npm/devices.css@0.2.0/dist/devices.min.css,/nav.css,/nq.css,/fleet/site.css,https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400%3B500&family=IBM+Plex+Sans%3Awght%40400%3B500%3B600&display=swap,https://fonts.googleapis.com/css2?family=Geist%3Awght%40400%3B500%3B600&family=Geist+Mono%3Awght%40400%3B500&display=swap}",
+          "op": "-",
+          "reason": "the legacy page loads a stylesheet, icon font or Google font that the Svelte page bundles with Vite (src/lib/styles, npm packages) and serves from its own origin"
         }
       ]
     },
     "central.html": {
       "assets": [
         {
-          "match": "stylesheet:/nq.css",
-          "reason": "the page links nq.css a second time after its own inline rules (same URL, from cache), because the legacy head has those rules before nq.css and the shared layout loads nq.css before the page head; without it nq.css would lose the cascade to the page rules"
+          "match": "script:{/nav.js,/analytics.js,/nudge.js,/fx.js,/bg.js,/readiness.js,/fleet/site.js,/fleet/pricing.js,https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js}",
+          "op": "-",
+          "reason": "the legacy page loads a script that the Svelte page replaces with a bundled component"
+        },
+        {
+          "match": "stylesheet:{https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css,https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css,https://cdn.jsdelivr.net/npm/devices.css@0.2.0/dist/devices.min.css,/nav.css,/nq.css,/fleet/site.css,https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400%3B500&family=IBM+Plex+Sans%3Awght%40400%3B500%3B600&display=swap,https://fonts.googleapis.com/css2?family=Geist%3Awght%40400%3B500%3B600&family=Geist+Mono%3Awght%40400%3B500&display=swap}",
+          "op": "-",
+          "reason": "the legacy page loads a stylesheet, icon font or Google font that the Svelte page bundles with Vite (src/lib/styles, npm packages) and serves from its own origin"
+        }
+      ]
+    },
+    "subnet-calculator.html": {
+      "assets": [
+        {
+          "match": "script:{/nav.js,/analytics.js,/nudge.js,/fx.js,/bg.js,/readiness.js,/fleet/site.js,/fleet/pricing.js,https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js}",
+          "op": "-",
+          "reason": "the legacy page loads a script that the Svelte page replaces with a bundled component"
+        },
+        {
+          "match": "stylesheet:{https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css,https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css,https://cdn.jsdelivr.net/npm/devices.css@0.2.0/dist/devices.min.css,/nav.css,/nq.css,/fleet/site.css,https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400%3B500&family=IBM+Plex+Sans%3Awght%40400%3B500%3B600&display=swap,https://fonts.googleapis.com/css2?family=Geist%3Awght%40400%3B500%3B600&family=Geist+Mono%3Awght%40400%3B500&display=swap}",
+          "op": "-",
+          "reason": "the legacy page loads a stylesheet, icon font or Google font that the Svelte page bundles with Vite (src/lib/styles, npm packages) and serves from its own origin"
         }
       ]
     }

@@ -18,7 +18,7 @@
                     <img src="/brand/nq-logo-primary-color-dark.svg" alt="Netquor Technologies" width="200" height="120">
                     <p>Technical services that connect hardware and software, from Fargo, North Dakota.</p>
                     <p class="nq-footer-contact"><a href="mailto:hello@netquor.com">hello@netquor.com</a><br><a href="tel:+18887171701">+1 (888) 717-1701</a></p>
-                    <p class="nq-social"><a href="https://x.com/netquor" rel="me noopener" target="_blank" aria-label="Netquor on X"><i class="bi bi-twitter-x" aria-hidden="true"></i></a><a href="https://www.linkedin.com/company/netquor" rel="me noopener" target="_blank" aria-label="Netquor on LinkedIn"><i class="bi bi-linkedin" aria-hidden="true"></i></a></p>
+                    <p class="nq-social"><a href="https://www.facebook.com/people/Netquor-Technologies/61596308317634/" rel="me noopener" target="_blank" aria-label="Netquor on Facebook"><i class="bi bi-facebook" aria-hidden="true"></i></a><a href="https://x.com/netquor" rel="me noopener" target="_blank" aria-label="Netquor on X"><i class="bi bi-twitter-x" aria-hidden="true"></i></a><a href="https://www.linkedin.com/company/netquor" rel="me noopener" target="_blank" aria-label="Netquor on LinkedIn"><i class="bi bi-linkedin" aria-hidden="true"></i></a><a href="https://github.com/Netquor" rel="me noopener" target="_blank" aria-label="Netquor on GitHub"><i class="bi bi-github" aria-hidden="true"></i></a></p>
                 </div>
                 <nav aria-label="Business products">
                     <h2>Business</h2>

@@ -8,12 +8,11 @@ const site = (url: string, chrome?: unknown) => renderSvelte("routes/(site)/+lay
 const fleet = () => renderSvelte("routes/(fleet)/+layout.svelte", { data: data() }, data(), "http://localhost/fleet.html", "<p>PAGE</p>");
 
 describe("(site) layout", () => {
-    test("head carries the site stylesheets and scripts with fingerprints; nav, page and footer come in that order", async () => {
+    test("head carries no stylesheet or script link of its own (the CSS is bundled by Vite); nav, page and footer come in that order", async () => {
         const { head, body } = await site("http://localhost/subnet-calculator.html");
-        expect(head).toContain('href="/nq.css?v=h-nqcss"');
-        expect(head).toContain('href="/nav.css?v=h-navcss"');
-        expect(head).toContain('src="/nav.js?v=h-navjs"');
-        expect(head).toContain("bootstrap.min.css");
+        for (const gone of ["nav.js", "analytics.js", "nudge.js", "fx.js", "bg.js", "readiness.js", "/nq.css", "/nav.css", "bootstrap", "fonts.googleapis", "cdn.jsdelivr"]) expect(head).not.toContain(gone);
+        expect(head).not.toContain('rel="stylesheet"');
+        expect(head).not.toContain("<style");
         const nav = body.indexOf('class="nq-nav"'), page = body.indexOf("PAGE"), foot = body.indexOf("<footer");
         expect(nav).toBeGreaterThan(-1);
         expect(page).toBeGreaterThan(nav);
@@ -33,13 +32,12 @@ describe("(site) layout", () => {
 });
 
 describe("(fleet) layout", () => {
-    test("loads fleet's own stylesheet and fonts, and draws no site nav or footer around the page", async () => {
+    test("has its own head (theme color, icon), links no stylesheet or font from anywhere, and draws no site nav or footer around the page", async () => {
         const { head, body } = await fleet();
-        expect(head).toContain('href="/fleet/site.css?v=h-fleetsitecss"');
-        expect(head).toContain("family=Geist");
         expect(head).toContain('content="#0B0D14"');
-        expect(head).not.toContain("/nq.css");
-        expect(head).not.toContain("bootstrap.min.css");
+        expect(head).toContain('href="/fleet/favicon.svg"');
+        expect(head).not.toContain('rel="stylesheet"');
+        for (const gone of ["/fleet/site.css", "/nq.css", "/nav.css", "fonts.googleapis", "cdn.jsdelivr", "bootstrap"]) expect(head).not.toContain(gone);
         expect(body).toContain("PAGE");
         expect(body).not.toContain("nq-nav");
         expect(body).not.toContain("<footer");

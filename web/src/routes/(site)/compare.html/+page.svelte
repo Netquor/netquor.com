@@ -1,9 +1,7 @@
 <script lang="ts">
     // /compare.html: Netquor prices next to other vendors', each with a source and the date it was checked. Same URL, head and text as the legacy page; Netquor's own prices render from the price cache.
-    import { onMount } from "svelte";
-    import { assetUrl } from "#lib/assets.ts";
+    import Fx from "#lib/behaviors/fx/Fx.svelte";
     import Seo from "#lib/components/Seo.svelte";
-    import { loadScript } from "#lib/loadScript.ts";
     import CompareTables from "#lib/pages/compare/CompareTables.svelte";
     import { CHECKED, TABS } from "#lib/pages/compare/data.ts";
     import type { PageData } from "./$types";
@@ -12,8 +10,6 @@
 
     const description = `Netquor prices next to Jamf, Mosyle, Addigy, JumpCloud, Okta, Tailscale, Twingate, Nabu Casa, ButterflyMX and others, checked ${CHECKED} against each company's own pricing page.`;
 
-    // fx.js adds the reveal classes to what it finds, so it runs after hydration.
-    onMount(() => { void loadScript(assetUrl(data.assets, "fx")); });
 </script>
 
 <Seo
@@ -22,6 +18,8 @@
     title="How Netquor compares: prices side by side, with sources | Netquor"
     {description}
 />
+
+<Fx />
 
 <header class="hero-section" style="padding-bottom: 24px;">
     <div class="container" style="max-width: 1000px;">

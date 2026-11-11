@@ -30,22 +30,6 @@ export const TITLE = "Netquor SDN: Ubiquiti, VyOS, Cloud & Converged Infrastruct
 export const DESCRIPTION = "Software-defined networking for Ubiquiti UniFi and VyOS: WireGuard VPN, cloud and converged infrastructure, hosting and virtualization services, static IPv4 and BGP. Affordable managed networking for small business in Fargo, ND and the Midwest.";
 export const KEYWORDS = "Ubiquiti, UniFi, VyOS, software-defined networking, SDN, managed network, cloud infrastructure, converged infrastructure, hosting and virtualization services, Proxmox, WireGuard VPN, BGP, static IPv4, network automation, small business network, Fargo ND, Moorhead MN, North Dakota, Midwest, structured cabling, Wi-Fi 7, managed hosting, affordable";
 
-/** The page's inline <style> without its `body { background-color; color; font-family }` rule. On the legacy page that sheet comes before nq.css, whose own `body` rule overrides all three properties; here the page style is emitted after the layout's stylesheets, so keeping the rule would win over nq.css and change the page's colors and font. Every other rule has a selector nq.css out-ranks with its `body` prefix or does not set, so order does not matter for them. */
-export const PAGE_CSS = `
-        :root { --cyber-blue: #5eaaf0; --obsidian: #12161c; }
-        .navbar { backdrop-filter: blur(15px); background: rgba(2, 6, 23, 0.8); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-        .hero-section { padding: 90px 0 70px; background: none; }
-        .fw-black { font-weight: 900; }
-        .feature-card { background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 2rem; height: 100%; transition: border-color .3s, background .3s; }
-        .feature-card:hover { border-color: var(--cyber-blue); background: rgba(30, 41, 59, 0.5); }
-        .icon-accent { font-size: 1.8rem; color: var(--cyber-blue); margin-bottom: 1rem; display: inline-block; }
-        .btn-primary-cyber { background: var(--cyber-blue); color: var(--obsidian); border: none; border-radius: 50px; padding: 12px 32px; font-weight: 700; transition: .3s; }
-        .btn-primary-cyber:hover { background: #8cc4f7; color: var(--obsidian); box-shadow: none; }
-        .brand-logo-img { height: 44px; width: auto; background: #f1f5f9; border-radius: 10px; padding: 3px 8px; }
-        footer { border-top: 1px solid rgba(255, 255, 255, 0.05); padding: 50px 0; }
-        .accordion { --bs-accordion-bg: transparent; --bs-accordion-border-color: rgba(255, 255, 255, 0.08); }
-        .accordion-button:not(.collapsed) { background: rgba(47, 143, 224, 0.07); color: #f8fafc; box-shadow: none; }
-    `;
 
 const SITE = "https://www.netquor.com";
 const LOGO = `${SITE}/brand/nq-logo-primary-plate-600w.png`;

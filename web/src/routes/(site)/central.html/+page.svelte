@@ -1,11 +1,12 @@
 <script lang="ts">
+    import "#lib/pages/central/page.css";
+    import Nudge from "#lib/behaviors/nudge/Nudge.svelte";
     // Netquor Central (in development, no price). Same markup, head and text as the legacy central.html.
-    import { assetUrl } from "#lib/assets.ts";
     import Faq from "#lib/components/Faq.svelte";
     import Seo from "#lib/components/Seo.svelte";
     import Capabilities from "#lib/pages/central/Capabilities.svelte";
     import Contact from "#lib/pages/central/Contact.svelte";
-    import { DESCRIPTION, FAQ_ITEMS, OG_DESCRIPTION, PAGE_CSS, TITLE } from "#lib/pages/central/data.ts";
+    import { DESCRIPTION, FAQ_ITEMS, OG_DESCRIPTION, TITLE } from "#lib/pages/central/data.ts";
     import FitMap from "#lib/pages/central/FitMap.svelte";
     import Hero from "#lib/pages/central/Hero.svelte";
     import Safe from "#lib/pages/central/Safe.svelte";
@@ -15,12 +16,8 @@
 </script>
 
 <Seo origin={data.origin} canonical="/central.html" title={TITLE} description={DESCRIPTION} ogDescription={OG_DESCRIPTION} />
-<svelte:head>
-    {@html `<style>${PAGE_CSS}</style>`}
-    <!-- The legacy head has this page's own rules before nq.css, so nq.css wins where both set the same property (body colour, fonts). The shared layout loads nq.css before the page head, so it is linked again here to keep the legacy order. It is the same URL, served from cache. -->
-    <link rel="stylesheet" href={assetUrl(data.assets, "nq")}>
-    <script src={assetUrl(data.assets, "nudge")} defer></script>
-</svelte:head>
+
+<Nudge page="central.html" />
 
 <Hero />
 
