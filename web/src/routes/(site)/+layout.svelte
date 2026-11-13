@@ -6,6 +6,7 @@
     import { page } from "$app/state";
     import { resolveChrome } from "#lib/chrome.ts";
     import Analytics from "#lib/behaviors/analytics/Analytics.svelte";
+    import WebChat from "#lib/components/WebChat.svelte";
     import Footer from "#lib/components/Footer.svelte";
     import Nav from "#lib/components/Nav.svelte";
 
@@ -22,6 +23,7 @@
 </svelte:head>
 
 <Analytics />
+<WebChat />
 {#if chrome.nav}<Nav current={chrome.navCurrent} static={chrome.navStatic} />{/if}
 {@render children()}
 {#if chrome.footer !== "none"}<Footer variant={chrome.footer} />{/if}

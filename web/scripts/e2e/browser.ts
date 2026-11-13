@@ -28,7 +28,8 @@ export interface LaunchOptions extends PageOptions {
 export interface RequestRecord { url: string; method: string; type: string; status?: number; failed?: string; stubbed?: boolean }
 export interface ConsoleRecord { type: "error" | "warning"; text: string; source: "console" | "exception" | "log" }
 
-const ANALYTICS_PATTERNS = ["*googletagmanager.com*", "*google-analytics.com*", "*analytics.google.com*", "*doubleclick.net*", "*googleadservices.com*"];
+// The web chat widget (our PBX host) also never reaches the network in the comparisons: its server only allows the real site origin, and the page path it reports differs between the two servers.
+const ANALYTICS_PATTERNS = ["*pbx-iad-c-01.netquor.net*", "*googletagmanager.com*", "*google-analytics.com*", "*analytics.google.com*", "*doubleclick.net*", "*googleadservices.com*"];
 
 const KEYS: Record<string, { key: string; code: string; vk: number; text?: string }> = {
     Enter: { key: "Enter", code: "Enter", vk: 13, text: "\r" },

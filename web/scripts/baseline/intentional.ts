@@ -4,7 +4,8 @@
 // Rules: a patch is idempotent, touches only what the decision changed, and mirrors the markup the Svelte page now renders. When changes pile
 // up, cut a new baseline tag instead of adding patches forever.
 
-import { blocksHtml, SMS_HEADING_PRIVACY, SMS_HEADING_TERMS, smsPrivacy, smsProgram } from "../../src/lib/pages/legal/sms";
+import { blocksHtml, SMS_HEADING_PRIVACY, SMS_HEADING_TERMS, smsPrivacy, smsProgram, webchatPrivacy } from "../../src/lib/pages/legal/sms";
+import { WEBCHAT_SRC } from "../../src/lib/webchat";
 
 export interface IntentionalChange { id: string; since: string; reason: string; apply(html: string): string }
 
@@ -71,15 +72,28 @@ export const legalPages: IntentionalChange = {
         if (html.includes(SMS_HEADING_TERMS) || html.includes(SMS_HEADING_PRIVACY)) return html;
         const logo = `<img src="/brand/nq-emblem.svg" alt="" width="48" height="48" class="me-3">`;
         let h = html.replace(`<i class="bi bi-shield-check fs-2 text-primary me-3"></i>`, logo).replace(`<i class="bi bi-shield-lock fs-2 text-primary me-3"></i>`, logo);
-        h = h.replace("Last Updated: January 27, 2026", "Last Updated: November 11, 2026").replace("Last Updated: March 24, 2026", "Last Updated: November 11, 2026");
+        h = h.replace("Last Updated: January 27, 2026", "Last Updated: November 11, 2026").replace("Last Updated: March 24, 2026", "Last Updated: November 13, 2026");
         h = h.replace(/(located\s+in\s+Fargo,\s+North\s+Dakota\.\s*<\/p>)/, (m) => `${m}\n${blocksHtml(SMS_HEADING_TERMS, smsProgram)}`);
         h = h.replace(`<h3>Changes to This Policy</h3>`, () => `${blocksHtml(SMS_HEADING_PRIVACY, smsPrivacy)}\n<h3>Changes to This Policy</h3>`);
         return h;
     },
 };
 
+/** 2026-11-13: every page loads the web chat widget (NQ Phone web chat from Netquor's PBX host), and the Privacy Policy says what it stores. */
+export const webChat: IntentionalChange = {
+    id: "web-chat-widget",
+    since: "2026-11-13",
+    reason: "the site embeds Netquor's web chat widget on every page and the Privacy Policy describes it",
+    apply(html) {
+        if (html.includes("/webchat/widget.js")) return html;
+        let h = html.replace("</head>", () => `<script src="${WEBCHAT_SRC}" async></script>\n</head>`);
+        h = h.replace(/(browser's\s+cookie\s+settings\.\s*<\/p>)/, (m) => `${m}\n${blocksHtml("", [webchatPrivacy]).split("\n").slice(1).join("\n")}`);
+        return h;
+    },
+};
+
 /** Every recorded change, oldest first. */
-export const INTENTIONAL_CHANGES: readonly IntentionalChange[] = [contactNumbers, localPageLinks, lookingGlassLinks, footerLinksBelow, legalPages];
+export const INTENTIONAL_CHANGES: readonly IntentionalChange[] = [contactNumbers, localPageLinks, lookingGlassLinks, footerLinksBelow, legalPages, webChat];
 
 /** The baseline page with every recorded decision applied. */
 export const applyIntentionalChanges = (html: string): string => INTENTIONAL_CHANGES.reduce((h, c) => c.apply(h), html);

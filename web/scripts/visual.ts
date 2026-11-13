@@ -78,6 +78,13 @@ const shoot = async (cdp: Cdp, url: string, vp: { width: number; height: number 
     };
     try {
         await s("Page.enable"); await s("Runtime.enable"); await s("Log.enable");
+        // The web chat widget's host only allows the real site origin: answer its script with an empty file so the comparison never reaches the network.
+        await s("Fetch.enable", { patterns: [{ urlPattern: "*pbx-iad-c-01.netquor.net*", requestStage: "Request" }] });
+        const prevEv = cdp.onEvent;
+        cdp.onEvent = (m) => {
+            if (m.sessionId === sessionId && m.method === "Fetch.requestPaused") { void cdp.send("Fetch.fulfillRequest", { requestId: m.params.requestId, responseCode: 200, responseHeaders: [{ name: "Content-Type", value: "text/javascript" }, { name: "Access-Control-Allow-Origin", value: "*" }], body: "" }, sessionId).catch(() => {}); return; }
+            prevEv?.(m);
+        };
         await s("Emulation.setDeviceMetricsOverride", { width: vp.width, height: vp.height, deviceScaleFactor: 1, mobile: false });
         await s("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
         await s("Page.addScriptToEvaluateOnNewDocument", { source: `document.addEventListener("DOMContentLoaded",()=>{const s=document.createElement("style");s.textContent=${JSON.stringify(STYLE)};document.head.appendChild(s)});` });

@@ -1,6 +1,6 @@
 // wiring.test.ts: the ported behaviors are adopted everywhere. No Svelte page or layout loads nav.js, fx.js, bg.js, nudge.js, analytics.js, readiness.js or the Bootstrap JavaScript bundle; the components that replace them are in place; the three pure calculation scripts are the only legacy scripts left.
 import { describe, expect, test } from "bun:test";
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { assetVersions } from "./assets";
 import { renderSvelte } from "./server/svelteHarness";
@@ -98,15 +98,29 @@ describe("footer", () => {
 });
 
 describe("error page", () => {
-    const src = readFileSync(join(SRC, "routes/+error.svelte"), "utf8");
+    const src = readFileSync(join(SRC, "routes/(site)/+error.svelte"), "utf8");
     test("is not indexed, says the trace is a joke, and respects reduced motion", () => {
         expect(src).toContain('<meta name="robots" content="noindex">');
         expect(src).toContain("nothing was traced");
         expect(src).toContain("prefers-reduced-motion: reduce");
     });
-    test("draws the site nav and footer itself, since the root layout draws nothing", () => {
-        expect(src).toContain("<Nav ");
-        expect(src).toContain("<Footer ");
-        expect(src).toContain("entry-site.css");
+    test("lives in the (site) group and imports no stylesheet, so fleet.html never loads the site styles", () => {
+        expect(src).not.toContain("entry-site.css");
+        expect(existsSync(join(SRC, "routes/+error.svelte"))).toBe(false);
+        expect(readFileSync(join(SRC, "routes/(site)/[...rest]/+page.ts"), "utf8")).toContain("error(404");
+    });
+});
+
+describe("web chat widget", () => {
+    test("every layout loads it once, from Netquor's own PBX host, async", () => {
+        const comp = readFileSync(join(SRC, "lib/components/WebChat.svelte"), "utf8");
+        expect(comp).toContain("async");
+        for (const rel of ["routes/(site)/+layout.svelte", "routes/(fleet)/+layout.svelte"]) {
+            const src = readFileSync(join(SRC, rel), "utf8");
+            expect(src.match(/<WebChat \/>/g)).toHaveLength(1);
+        }
+        const web = readFileSync(join(SRC, "lib/webchat.ts"), "utf8");
+        expect(web).toContain("https://pbx-iad-c-01.netquor.net");
+        expect(web).toMatch(/WEBCHAT_SITE = "[0-9a-f-]{36}"/);
     });
 });

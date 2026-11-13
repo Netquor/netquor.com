@@ -28,12 +28,14 @@ const gtagRequests = (o: { requests?: string[] }) => (o.requests ?? []).filter((
 // The legacy pages request the Bootstrap JavaScript bundle (every page but fleet and the tool pages), Bootstrap's and Bootstrap Icons' CSS from jsDelivr, and the Plex or Geist fonts from Google. The Svelte pages bundle all of it (a collapse component replaces the Bootstrap JavaScript; the CSS and fonts are Vite assets from our own origin), so their request list must hold no third party but Google's analytics. The Google requests themselves are asserted exactly, on each side, by the expectations below.
 const NO_CDN: AllowEntry = { path: "* :: requests", reason: "IMPROVEMENT: the Svelte pages request no Bootstrap JavaScript, no stylesheet or icon font from a CDN and no Google font (all bundled, served from our own origin); the Google analytics request list is asserted exactly on both sides by the step expectation" };
 const ANALYTICS_HOST = /^https:\/\/[^/]*\b(googletagmanager|google-analytics|doubleclick|googleadservices|analytics\.google)\.com\//;
+// Netquor's own web chat widget (the PBX host, src/lib/webchat.ts) is the one other host a page may request: its script, from our own domain.
+const CHAT_HOST = /^https:\/\/pbx-iad-c-01\.netquor\.net\/webchat\/widget\.js(\?|$)/;
 const noThirdParty = (o: { requests?: string[] }, side: string) => {
     if (side !== "svelte") return;
     const rs = o.requests ?? [];
     must(!rs.some((u) => /bootstrap[^/]*\.js/.test(u)), `the Svelte page requests no Bootstrap JavaScript: ${JSON.stringify(rs)}`);
-    const foreign = rs.filter((u) => /^https?:\/\//.test(u) && !ANALYTICS_HOST.test(u));
-    must(foreign.length === 0, `the Svelte page requests nothing from a third party but analytics: ${JSON.stringify(foreign)}`);
+    const foreign = rs.filter((u) => /^https?:\/\//.test(u) && !ANALYTICS_HOST.test(u) && !CHAT_HOST.test(u));
+    must(foreign.length === 0, `the Svelte page requests nothing from a third party but analytics and the chat widget: ${JSON.stringify(foreign)}`);
 };
 
 const on = (page: string): Scenario => ({

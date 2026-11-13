@@ -54,6 +54,15 @@ describe("routing", () => {
         expect(await r.text()).toBe("calc");
         expect(seen.resolved).toEqual([]);
     });
+    test("the (site) catch-all counts as no route: a static asset is still served, and an unknown address reaches SvelteKit for its 404", async () => {
+        const { run, seen } = world({ routeIds: { "/cost-calc.js": "/(site)/[...rest]", "/old/page.html": "/(site)/[...rest]" } });
+        const asset = await run("/cost-calc.js");
+        expect(asset.status).toBe(200);
+        expect(await asset.text()).toBe("calc");
+        expect(seen.resolved).toEqual([]);
+        expect((await run("/old/page.html")).status).toBe(404);
+        expect(seen.resolved).toEqual(["/old/page.html"]);
+    });
     test("route group ids still take precedence over a stray file of the same name", async () => {
         for (const id of ["/(site)/subnet-calculator.html", "/(fleet)/subnet-calculator.html"]) {
             const { run, seen } = world({ routeIds: { "/subnet-calculator.html": id } });

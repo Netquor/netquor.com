@@ -4,6 +4,7 @@
     import "#lib/styles/entry-fleet.css";
     import type { Snippet } from "svelte";
     import Analytics from "#lib/behaviors/analytics/Analytics.svelte";
+    import WebChat from "#lib/components/WebChat.svelte";
     import Nudge from "#lib/behaviors/nudge/Nudge.svelte";
 
     let { children }: { children: Snippet } = $props();
@@ -15,5 +16,6 @@
 </svelte:head>
 
 <Analytics />
+<WebChat />
 <Nudge page="fleet.html" />
 {@render children()}

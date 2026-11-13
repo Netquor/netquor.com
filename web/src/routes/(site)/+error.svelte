@@ -1,10 +1,6 @@
 <script lang="ts">
-    // The error page for the whole site: a 404 drawn as a traceroute that reaches netquor.com and then finds no route to the page, with a cable that is not quite plugged in. Any other error gets the plain version. A root error page renders inside the root layout, which draws nothing, so the site styles, nav and footer come from here. The trace is a joke and says so: nothing is traced.
-    import "#lib/styles/entry-site.css";
+    // The error page for the whole site: a 404 drawn as a traceroute that reaches netquor.com and then finds no route to the page, with a cable that is not quite plugged in. Any other error gets the plain version. It lives in the (site) group, so the site layout draws the styles, nav, footer, analytics and chat widget around it; an unmatched address reaches it through the catch-all route next to it (it throws a 404). The trace is a joke and says so: nothing is traced.
     import { page } from "$app/state";
-    import Analytics from "#lib/behaviors/analytics/Analytics.svelte";
-    import Footer from "#lib/components/Footer.svelte";
-    import Nav from "#lib/components/Nav.svelte";
     import { EMAIL } from "#lib/contact.ts";
 
     const missing = $derived(page.status === 404);
@@ -32,9 +28,6 @@
     <title>{missing ? "Page not found" : "Something went wrong"} | Netquor</title>
     <meta name="robots" content="noindex">
 </svelte:head>
-
-<Analytics />
-<Nav current="" />
 
 <main class="nf">
     <div class="container nf-wrap">
@@ -93,7 +86,6 @@
     </div>
 </main>
 
-<Footer variant="simple" />
 
 <style>
     .nf { padding: 72px 0 96px; }

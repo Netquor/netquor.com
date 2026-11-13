@@ -1,6 +1,6 @@
 // The copy of /privacy.html, moved from the legacy page. Text is unchanged apart from line wrapping. `html` blocks hold the few inline tags the copy uses (trusted static strings).
 import type { LegalPageData } from "../legal/types";
-import { SMS_HEADING_PRIVACY, smsPrivacy } from "../legal/sms";
+import { SMS_HEADING_PRIVACY, smsPrivacy, webchatPrivacy } from "../legal/sms";
 
 export const privacyPage: LegalPageData = {
     meta: { title: "Privacy Policy" },
@@ -8,7 +8,7 @@ export const privacyPage: LegalPageData = {
     icon: "bi-shield-lock",
     logo: "/brand/nq-emblem.svg",
     subtitle: "Privacy Policy",
-    updated: "Last Updated: November 11, 2026",
+    updated: "Last Updated: November 13, 2026",
     intro: "This Privacy Policy explains how Netquor Technologies collects, uses, stores, discloses, and protects information when you visit netquor.com or use our related products and services. It is structured around ten core privacy and disclosure clauses, including contact and request-handling provisions.",
     blocks: [
         {"k": "h3", "t": "1. Scope of This Policy"},
@@ -24,6 +24,7 @@ export const privacyPage: LegalPageData = {
         {"k": "h3", "t": "5. Cookies and Similar Technologies"},
         {"k": "p", "t": "Our Services may use cookies, analytics tools, logs, and similar technologies to remember preferences, measure traffic, improve performance, and maintain security. You may control cookies through your browser settings, though disabling them may affect site functionality."},
         {"k": "p", "t": "We use Google Analytics on netquor.com to understand which pages are visited and how visitors find us. It sets cookies and collects usage information such as pages viewed, approximate location, device and browser type. We have turned off Google's advertising and cross-device features. Analytics does not run if your browser sends a Global Privacy Control or Do Not Track signal, and you can also block it with Google's opt-out browser add-on at tools.google.com/dlpage/gaoptout or with your browser's cookie settings."},
+        webchatPrivacy,
         {"k": "h3", "t": "6. Data Retention and Data Lifecycle Controls"},
         {"k": "p", "t": "We retain personal and operational information only for as long as reasonably necessary for the purposes described in this Policy, including service delivery, recordkeeping, security, dispute resolution, and legal compliance. We apply practical data lifecycle controls, including access limitation, retention review, and deletion or anonymization where appropriate."},
         {"k": "h3", "t": "7. Security Safeguards"},

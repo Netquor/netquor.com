@@ -59,6 +59,9 @@ const cachePage = async (request: Request, res: Response): Promise<Response> => 
     return conditional(request, body, headers, etag);
 };
 
+/** The route id of the (site) catch-all (routes/(site)/[...rest]): it only exists so an unknown address is drawn as a 404 inside the site layout, so it counts as "no route" for the static allowlist. */
+export const CATCH_ALL_ROUTE = "/(site)/[...rest]";
+
 export const handleRequest = async (rt: HandleRuntime, event: HandleEvent, resolve: (event: HandleEvent) => Promise<Response>): Promise<Response> => {
     const { pathname } = event.url;
     // Operational detail is for the host only (bun run deploy --status). Anything that came through the edge carries X-Real-IP, so refuse every spelling of the path for it.
@@ -66,12 +69,13 @@ export const handleRequest = async (rt: HandleRuntime, event: HandleEvent, resol
     if (isApiPath(pathname)) return withSecurityHeaders(await rt.api(withClientIp(event.request, safeAddress(event))));
 
     event.locals.prices = rt.prices.get();
-    if (event.route.id === null) {
+    const unmatched = event.route.id === null || event.route.id === CATCH_ALL_ROUTE;
+    if (unmatched) {
         const legacy = rt.legacy.serve(event.request, event.url);
         if (legacy) return withSecurityHeaders(legacy);
     }
     const res = await resolve(event);
     const get = event.request.method === "GET" || event.request.method === "HEAD";
-    if (rt.cachePages && get && event.route.id !== null && res.status === 200 && isHtml(res)) return withSecurityHeaders(await cachePage(event.request, res));
+    if (rt.cachePages && get && !unmatched && res.status === 200 && isHtml(res)) return withSecurityHeaders(await cachePage(event.request, res));
     return withSecurityHeaders(res);
 };

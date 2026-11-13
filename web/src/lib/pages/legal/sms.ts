@@ -28,6 +28,9 @@ export const smsPrivacy: readonly LegalBlock[] = [
     { k: "html", t: "You can opt out at any time by replying STOP to any message (or CANCEL, END, QUIT or UNSUBSCRIBE). We keep a record of your opt-out so that we do not text you again. The full program terms are in our <a href=\"/sms.html\">text messaging terms</a>." },
 ];
 
+/** Privacy Policy paragraph (section 5) for the web chat widget. */
+export const webchatPrivacy: LegalBlock = { k: "p", t: "Our website chat is served from Netquor's own phone system. It keeps a chat session token in your browser's local storage so a conversation can continue, and it sends your chat messages and the page you are on to Netquor so we can answer them. Chats are recorded and kept by Netquor as a record of the conversation, and the chat window says so. We do not use chat for advertising." };
+
 const esc = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 /** The markup the legal card renders for a list of blocks (used to patch the baseline pages so parity compares like with like). */
 export const blocksHtml = (heading: string, blocks: readonly LegalBlock[]): string =>
