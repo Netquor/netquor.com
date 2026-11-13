@@ -1,0 +1,32 @@
+/* Fleet roadmap, FAQ, demo form and footer. */
+
+/* Roadmap, FAQ */
+.roadmap { list-style: none; margin: 36px 0 0; padding: 0; display: grid; gap: 12px; }
+.roadmap li { display: grid; gap: 4px; padding: 16px 20px; border: 1px dashed var(--hair); border-radius: 10px; }
+.roadmap b { font: 700 22px/1.1 var(--display); letter-spacing: .03em; text-transform: uppercase; }
+.roadmap span { color: var(--muted); font-size: 15px; }
+details { border-bottom: 1px solid var(--hair); }
+details:first-of-type { margin-top: 30px; border-top: 1px solid var(--hair); }
+summary { cursor: pointer; padding: 18px 4px; font-weight: 500; font-size: 17px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--accent-2); font: 500 22px/1 var(--mono); }
+details[open] summary::after { content: "\2212"; }
+details p { margin: 0 0 20px; color: var(--muted); max-width: 70ch; }
+
+/* Demo form */
+.demo { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+.form { display: grid; gap: 14px; padding: 28px; }
+.form label { display: grid; gap: 6px; font-size: 14px; color: var(--muted); }
+.form .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+input, textarea { width: 100%; padding: 11px 12px; border: 1px solid var(--hair); border-radius: 6px; background: var(--base); color: var(--ink); font: 400 16px/1.4 var(--body); }
+input:focus, textarea:focus { border-color: var(--accent); }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form .btn { justify-content: center; }
+.status { min-height: 1.4em; margin: 0; font-size: 14px; color: var(--muted); }
+.status.ok { color: var(--good); }
+.status.bad { color: #f0554b; }
+
+/* Footer */
+.foot { padding: 36px 0 48px; border-top: 1px solid var(--hair); }
+.foot-in { display: flex; gap: 28px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.foot p { margin: 0; max-width: 70ch; color: var(--muted); font-size: 13px; }

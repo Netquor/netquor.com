@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="dark">
+<title>Netquor Technologies | Back in a minute</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#12161c;--s1:#1b212b;--s2:#222a36;--ink:#eaf1f8;--ink2:#a9b6c6;--ink3:#8794a7;--acc:#2f8fe0;--accT:#5eaaf0}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.5 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden;-webkit-tap-highlight-color:transparent}
+#sky{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:manipulation}
+#flash{position:fixed;inset:0;background:#5eaaf0;opacity:0;pointer-events:none}
+main{position:relative;z-index:2;min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px;text-align:center;pointer-events:none}
+main>*{pointer-events:auto}
+.logo{width:min(240px,60vw);height:auto;display:block}
+h1{font:500 clamp(30px,6vw,48px)/1.1 "IBM Plex Sans",system-ui,sans-serif;letter-spacing:-.02em;margin:4px 0 0}
+.sub{color:var(--ink2);max-width:34rem;margin:0}
+.bench{position:relative;width:min(300px,70vw);margin:clamp(44px,9vh,72px) 0 0}
+#box{all:unset;pointer-events:auto;cursor:pointer;display:block;width:100%;border-radius:16px}
+#box:focus-visible{outline:2px solid var(--accT);outline-offset:6px}
+#box svg{width:100%;height:auto;display:block;overflow:visible}
+.lid{transform-box:fill-box;transform-origin:center}
+.tool{transform:translateY(0);transform-box:fill-box}
+.open .tool{animation:pop .7s cubic-bezier(.3,1.6,.5,1) forwards,bob 2.4s ease-in-out .8s infinite}
+.open .t2{animation-delay:.08s,.9s}.open .t3{animation-delay:.16s,1s}
+@keyframes pop{from{transform:translateY(0) rotate(0)}to{transform:translateY(-34px) rotate(var(--r,0deg))}}
+@keyframes bob{0%,100%{transform:translateY(-34px) rotate(var(--r,0deg))}50%{transform:translateY(-40px) rotate(var(--r,0deg))}}
+.t1{--r:-8deg}.t2{--r:4deg}.t3{--r:9deg}
+.tbtn{all:unset;position:absolute;display:block;z-index:3;cursor:grab;touch-action:none;pointer-events:none;border-radius:8px}
+.tbtn::after{content:"";position:absolute;inset:-12px}
+#box.open~.tbtn{pointer-events:auto}
+.tbtn:focus-visible{outline:2px solid var(--accT);outline-offset:2px}
+.tbtn.armed{outline:2px dashed var(--accT);outline-offset:2px}
+.tool.held{opacity:.25}
+#ghost{position:fixed;left:0;top:0;z-index:6;pointer-events:none;display:none;overflow:visible;filter:drop-shadow(0 8px 10px rgba(0,0,0,.55))}
+[data-target]{display:block;width:fit-content;max-width:100%;margin-left:auto;margin-right:auto}
+.logo[data-target]{width:min(240px,60vw)}
+.lv1{transform:rotate(-2.5deg) translateY(2px)}
+.lv2{transform-origin:12% 0;animation:swing 2.4s ease-in-out infinite alternate}
+.lv3{animation:fall .95s cubic-bezier(.5,0,.9,.5) forwards}
+@keyframes swing{from{transform:rotate(13deg)}to{transform:rotate(21deg)}}
+@keyframes fall{to{transform:translateY(var(--fall,200px)) rotate(var(--rot,12deg))}}
+.armed-mode [data-target]{outline:1px dashed rgba(94,170,240,.55);outline-offset:6px;cursor:crosshair}
+[data-target]:focus-visible{outline:2px solid var(--accT);outline-offset:6px;border-radius:4px}
+.zapfx{animation:zapfx .42s linear}
+@keyframes zapfx{0%{filter:brightness(2.2) contrast(1.2);translate:3px 0}25%{filter:brightness(1.2);translate:-3px 1px}50%{filter:brightness(1.8);translate:2px -1px}100%{filter:none;translate:0 0}}
+.fix{all:unset;pointer-events:auto;cursor:pointer;font:400 13px "IBM Plex Mono",ui-monospace,monospace;color:var(--accT);border-bottom:1px solid rgba(94,170,240,.4);padding:12px 0;display:inline-block}
+.fix[hidden]{display:none}
+.fix:focus-visible{outline:2px solid var(--accT);outline-offset:3px;border-radius:4px}
+.glow{opacity:.55;transition:opacity .2s}
+.zap #box .glow,.open .glow{opacity:1}
+#box.hit svg{animation:shake .35s linear}
+@keyframes shake{0%,100%{transform:translate(0)}20%{transform:translate(-3px,1px)}40%{transform:translate(3px,-1px)}60%{transform:translate(-2px,0)}80%{transform:translate(2px,1px)}}
+.hint{font:400 13px "IBM Plex Mono",ui-monospace,monospace;color:var(--ink3);margin:0;min-height:1.5em}
+.contact{margin:8px 0 0;color:var(--ink2);font-size:15px}
+.contact a{color:var(--accT);text-decoration:none;border-bottom:1px solid rgba(94,170,240,.4);padding:10px 0;display:inline-block}
+.contact a:hover{border-bottom-color:var(--accT)}
+.contact a:focus-visible{outline:2px solid var(--accT);outline-offset:3px;border-radius:4px}
+.count{position:fixed;left:16px;bottom:12px;z-index:3;font:400 12px "IBM Plex Mono",ui-monospace,monospace;color:var(--ink3);pointer-events:none}
+@media (prefers-reduced-motion:reduce){.open .lid{opacity:0}.lv2,.lv3,.zapfx{animation:none}.lv2{transform:rotate(15deg)}.lv3{transform:translateY(var(--fall,200px)) rotate(var(--rot,12deg))}.lid{transition:none}.open .tool{animation:none;transform:translateY(-34px) rotate(var(--r,0deg))}#box.hit svg{animation:none}}
+@media (max-height:640px){.logo{width:160px}.bench{width:200px;margin-top:40px}}
+</style>
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+<div id="flash" aria-hidden="true"></div>
+<main>
+  <img class="logo" data-target data-name="logo" src="https://cdn.netquor.com/global/logo/primary/svg/nq-logo-primary-color-dark.svg" alt="Netquor Technologies" width="240" height="144">
+  <h1 data-target data-name="headline">Back in a minute</h1>
+  <p class="sub" data-target data-name="subtitle">We are rebuilding netquor.com. Nothing is broken, we are just tightening a few bolts.</p>
+
+  <div class="bench"><button id="box" type="button" aria-pressed="false" aria-label="Toolbox: open it">
+    <svg viewBox="0 0 320 250" aria-hidden="true">
+      <defs><filter id="g" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5"/></filter></defs>
+      <ellipse cx="160" cy="244" rx="120" ry="6" fill="#000" opacity=".35"/>
+      <!-- tools: drawn first so the body and lid hide them until the lid opens -->
+      <g class="tool t1" data-tool="wrench"><circle cx="236" cy="92" r="12" fill="none" stroke="#eaf1f8" stroke-width="6"/><rect x="230" y="78" width="12" height="11" fill="#12161c"/><line x1="236" y1="104" x2="236" y2="160" stroke="#eaf1f8" stroke-width="8" stroke-linecap="round"/></g>
+      <g class="tool t2" data-tool="screwdriver"><rect x="94" y="116" width="14" height="40" rx="5" fill="#2f8fe0"/><line x1="101" y1="116" x2="101" y2="84" stroke="#eaf1f8" stroke-width="5" stroke-linecap="round"/></g>
+      <g class="tool t3" data-tool="plug"><rect x="141" y="82" width="22" height="26" rx="3" fill="#eaf1f8"/><g stroke="#5eaaf0" stroke-width="2"><line x1="146" y1="88" x2="146" y2="98"/><line x1="152" y1="88" x2="152" y2="98"/><line x1="158" y1="88" x2="158" y2="98"/></g><path d="M152 108 V160" stroke="#2f8fe0" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+      <!-- body -->
+      <rect x="40" y="110" width="240" height="126" rx="12" fill="#222a36" stroke="#2f8fe0" stroke-width="3"/>
+      <path class="glow" d="M172 124 L142 176 L164 176 L150 222 L196 160 L172 160 Z" fill="#2f8fe0" filter="url(#g)"/>
+      <path d="M172 124 L142 176 L164 176 L150 222 L196 160 L172 160 Z" fill="#2f8fe0"/>
+      <rect x="62" y="200" width="30" height="22" rx="4" fill="#1b212b" stroke="#2f8fe0" stroke-opacity=".6" stroke-width="2"/>
+      <rect x="228" y="200" width="30" height="22" rx="4" fill="#1b212b" stroke="#2f8fe0" stroke-opacity=".6" stroke-width="2"/>
+      <!-- lid -->
+      <g class="lid"><path d="M118 70 V52 Q118 44 126 44 H194 Q202 44 202 52 V70" fill="none" stroke="#2f8fe0" stroke-width="7" stroke-linecap="round"/><rect x="40" y="68" width="240" height="44" rx="10" fill="#1b212b" stroke="#2f8fe0" stroke-width="3"/><rect x="146" y="84" width="28" height="14" rx="4" fill="#2f8fe0"/></g>
+    </svg>
+  </button>
+  <button class="tbtn" type="button" data-tool="wrench" aria-label="Wrench: pick it up" tabindex="-1"></button>
+  <button class="tbtn" type="button" data-tool="screwdriver" aria-label="Screwdriver: pick it up" tabindex="-1"></button>
+  <button class="tbtn" type="button" data-tool="plug" aria-label="Network plug: pick it up" tabindex="-1"></button>
+  </div>
+  <p class="hint" id="hint" data-target data-name="hint" aria-live="polite">Click anywhere. Try the toolbox.</p>
+  <p class="contact" data-target data-name="contact line">Need us now? <a href="mailto:hello@netquor.com">hello@netquor.com</a> &middot; <a href="tel:+18887171701">Toll-free +1 (888) 717-1701</a> &middot; <a href="tel:+17019601701">Local +1 (701) 960-1701</a></p>
+</main>
+<svg id="ghost" aria-hidden="true"></svg>
+<div class="count" id="count" aria-hidden="true">bolts struck 0</div>
+<button class="fix" id="fix" type="button" hidden style="position:fixed;right:16px;bottom:4px;z-index:4">Put it all back</button>
+
+<script>
+(function(){
+  var cv=document.getElementById('sky'),ctx=cv.getContext('2d'),flash=document.getElementById('flash'),box=document.getElementById('box'),hint=document.getElementById('hint'),countEl=document.getElementById('count');
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W=0,H=0,dpr=1,strikes=[],sparks=[],motes=[],bolts=0,lastStrike=0,mouse={x:-1e3,y:-1e3},nextAuto=2500,open=false,opens=0;
+  function size(){dpr=Math.min(window.devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    var n=Math.round(Math.min(70,W*H/20000));motes=[];for(var i=0;i<n;i++)motes.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+.6,v:Math.random()*.25+.05,a:Math.random()*.35+.1});}
+  addEventListener('resize',size);size();
+
+  function path(x1,y1,x2,y2,d){ if(d<5)return [[x1,y1],[x2,y2]];
+    var mx=(x1+x2)/2,my=(y1+y2)/2,dx=x2-x1,dy=y2-y1,l=Math.hypot(dx,dy)||1,o=(Math.random()-.5)*d;
+    mx+=-dy/l*o;my+=dx/l*o;var a=path(x1,y1,mx,my,d/2),b=path(mx,my,x2,y2,d/2);return a.concat(b.slice(1));}
+  function makeBolt(x1,y1,x2,y2){
+    var main=path(x1,y1,x2,y2,Math.hypot(x2-x1,y2-y1)*.35),segs=[{p:main,w:1}];
+    for(var i=3;i<main.length-2;i+=2+Math.floor(Math.random()*3)){ if(Math.random()<.55){var p=main[i],ang=Math.atan2(y2-y1,x2-x1)+(Math.random()<.5?-1:1)*(.4+Math.random()*.7),len=40+Math.random()*130;
+      segs.push({p:path(p[0],p[1],p[0]+Math.cos(ang)*len,p[1]+Math.sin(ang)*len,len*.4),w:.5});}}
+    return segs;}
+  function strike(tx,ty,fromX){
+    var now=performance.now(); if(now-lastStrike<700)return false; lastStrike=now;
+    var sx=(fromX==null)?tx+(Math.random()-.5)*Math.min(260,W*.4):fromX; sx=Math.max(20,Math.min(W-20,sx));
+    strikes.push({segs:makeBolt(sx,-10,tx,ty),born:now,tx:tx,ty:ty});
+    for(var i=0;i<16;i++){var a=Math.PI*(1+Math.random()),s=1.5+Math.random()*3.5;sparks.push({x:tx,y:ty,vx:Math.cos(a)*s*(Math.random()<.5?-1:1),vy:-Math.abs(Math.sin(a)*s)-.5,life:1});}
+    bolts++;refresh();
+    if(!reduce){flash.style.transition='none';flash.style.opacity='.06';requestAnimationFrame(function(){flash.style.transition='opacity .35s ease-out';flash.style.opacity='0';});}
+    if(bolts===12)say('Okay, that is enough electricity for one day.');
+    return true;}
+  function say(t){hint.textContent=t;}
+  function draw(t){
+    ctx.clearRect(0,0,W,H);
+    // grid and motes
+    ctx.globalCompositeOperation='source-over';ctx.strokeStyle='rgba(234,241,248,.045)';ctx.lineWidth=1;ctx.beginPath();
+    for(var gx=0;gx<W;gx+=48){ctx.moveTo(gx+.5,0);ctx.lineTo(gx+.5,H);}for(var gy=0;gy<H;gy+=48){ctx.moveTo(0,gy+.5);ctx.lineTo(W,gy+.5);}ctx.stroke();
+    for(var i=0;i<motes.length;i++){var m=motes[i];m.y-=m.v;if(m.y<-4){m.y=H+4;m.x=Math.random()*W;}
+      var dx=mouse.x-m.x,dy=mouse.y-m.y,d=Math.hypot(dx,dy);if(d<140&&d>1){m.x+=dx/d*.6;m.y+=dy/d*.6;}
+      ctx.fillStyle='rgba(94,170,240,'+m.a+')';ctx.fillRect(m.x,m.y,m.r,m.r);}
+    ctx.globalCompositeOperation='lighter';
+    // bolts
+    for(var s=strikes.length-1;s>=0;s--){var k=strikes[s],age=(t-k.born)/520;if(age>=1){strikes.splice(s,1);continue;}
+      var flick=age<.18?1:(Math.random()<.5?.9:.35)*(1-age);
+      for(var q=0;q<k.segs.length;q++){var sg=k.segs[q];
+        [[9,.10],[4,.28],[1.6,1]].forEach(function(pass,ix){ctx.beginPath();for(var z=0;z<sg.p.length;z++){z?ctx.lineTo(sg.p[z][0],sg.p[z][1]):ctx.moveTo(sg.p[z][0],sg.p[z][1]);}
+          ctx.strokeStyle=ix===2?'rgba(234,241,248,'+(flick*sg.w)+')':'rgba(47,143,224,'+(flick*pass[1]*sg.w*1.4)+')';ctx.lineWidth=pass[0]*(sg.w===1?1:.6);ctx.lineJoin='round';ctx.stroke();});}
+      var gr=ctx.createRadialGradient(k.tx,k.ty,0,k.tx,k.ty,70);gr.addColorStop(0,'rgba(94,170,240,'+(.35*flick)+')');gr.addColorStop(1,'rgba(94,170,240,0)');ctx.fillStyle=gr;ctx.fillRect(k.tx-70,k.ty-70,140,140);}
+    // sparks
+    for(var p=sparks.length-1;p>=0;p--){var sp=sparks[p];sp.x+=sp.vx;sp.y+=sp.vy;sp.vy+=.12;sp.life-=.025;if(sp.life<=0){sparks.splice(p,1);continue;}
+      ctx.fillStyle='rgba(234,241,248,'+sp.life+')';ctx.fillRect(sp.x,sp.y,2,2);}
+    // idle strike
+    if(!reduce&&t>nextAuto&&!document.hidden){var r=box.getBoundingClientRect();var edge=Math.random()<.5;
+      var tx=edge?(Math.random()<.5?Math.random()*W*.22:W*.78+Math.random()*W*.22):r.left+r.width/2+(Math.random()-.5)*r.width*.6,ty=edge?H*.6+Math.random()*H*.35:r.top+r.height*.35;
+      strike(tx,ty);nextAuto=t+5000+Math.random()*4000;}
+  }
+  var raf=0;function loop(t){raf=requestAnimationFrame(loop);if(document.hidden)return;draw(t);}
+  if(!reduce)raf=requestAnimationFrame(loop);
+  document.addEventListener('visibilitychange',function(){if(!document.hidden&&!reduce&&!raf)raf=requestAnimationFrame(loop);});
+
+  addEventListener('pointermove',function(e){mouse.x=e.clientX;mouse.y=e.clientY;},{passive:true});
+  addEventListener('pointerleave',function(){mouse.x=mouse.y=-1e3;});
+  document.addEventListener('pointerdown',function(e){
+    if(armed||drag)return;
+    if(e.target.closest&&e.target.closest('a,.tbtn,.fix'))return;
+    if(box.contains(e.target))return;
+    if(reduce){ctx.clearRect(0,0,W,H);return;}
+    strike(e.clientX,e.clientY);
+  });
+  function burst(x,y,n){for(var i=0;i<n;i++){var a=Math.PI*(1+Math.random()),sp=1.5+Math.random()*3;sparks.push({x:x,y:y,vx:Math.cos(a)*sp*(Math.random()<.5?-1:1),vy:-Math.abs(Math.sin(a)*sp)-.5,life:1});}}
+  var targets=[].slice.call(document.querySelectorAll('[data-target]')),tbtns=[].slice.call(document.querySelectorAll('.tbtn')),ghost=document.getElementById('ghost'),fix=document.getElementById('fix'),svgEl=box.querySelector('svg');
+  var toolG={};[].forEach.call(svgEl.querySelectorAll('[data-tool]'),function(g){toolG[g.getAttribute('data-tool')]=g;});
+  var LABEL={wrench:'Wrench',screwdriver:'Screwdriver',plug:'Network plug'},armed=null,drag=null;
+  function refresh(){var broken=targets.filter(function(t){return +t.dataset.lv>0;}).length;
+    countEl.textContent='bolts struck '+bolts+(broken?'  \u00b7  broken '+broken:'');fix.hidden=broken===0;
+    if(broken===targets.length&&!refresh.said){refresh.said=1;say('You broke the whole page. Impressive.');}if(broken<targets.length)refresh.said=0;}
+  function place(){var VB_W=320,VB_H=250,lift=34,pad=6;tbtns.forEach(function(b){var g=toolG[b.dataset.tool],bb=g.getBBox();
+    b.style.left=((bb.x-pad)/VB_W*100)+'%';b.style.top=((bb.y-lift-pad)/VB_H*100)+'%';b.style.width=((bb.width+pad*2)/VB_W*100)+'%';b.style.height=((bb.height+pad*2)/VB_H*100)+'%';});}
+  place();
+  function setLevel(el,lv){var before=getComputedStyle(el).transform;
+    el.classList.remove('lv1','lv2','lv3');
+    if(lv===3){var r=el.getBoundingClientRect();el.style.setProperty('--fall',Math.max(40,innerHeight-r.bottom-12)+'px');el.style.setProperty('--rot',(Math.random()<.5?-1:1)*(8+Math.random()*18)+'deg');}
+    if(lv>0)el.classList.add('lv'+lv);el.dataset.lv=lv;
+    if(!reduce&&el.animate&&before&&before!=='none'&&lv<3){var after=getComputedStyle(el).transform;el.animate([{transform:before},{transform:after}],{duration:420,easing:'cubic-bezier(.3,1.4,.5,1)'});}
+    refresh();}
+  function clang(el){if(reduce||!el.animate)return;el.animate([{scale:'1'},{scale:'.93'},{scale:'1.03'},{scale:'1'}],{duration:320,easing:'ease-out'});}
+  function zap(el){if(reduce)return;el.classList.remove('zapfx');void el.offsetWidth;el.classList.add('zapfx');setTimeout(function(){el.classList.remove('zapfx');},450);}
+  function use(tool,el,x,y){
+    var lv=+el.dataset.lv||0,name=el.dataset.name,r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+    if(tool==='screwdriver'){
+      if(lv>=3){say('Nothing left to unscrew on the '+name+'.');return;}
+      setLevel(el,lv+1);burst(x,y,8);say(['That screw was doing real work.','The '+name+' is hanging by one screw.','Gravity noticed.'][lv]);
+    }else if(tool==='wrench'){
+      if(lv>0){setLevel(el,lv-1);say(lv===1?'Tight again. Good as new.':'Back up a notch.');}else say('The '+name+' is already tight. Clang anyway.');
+      clang(el);burst(x,y,10);
+    }else{
+      zap(el);burst(cx,cy,12);strike(cx,Math.min(cy,H-30),cx+(Math.random()-.5)*60);say(['Surge protector not included.','The '+name+' says that tickled.','Fully charged.'][Math.floor(Math.random()*3)]);
+    }}
+  function missed(tool,x,y){burst(x,y,6);say(tool==='plug'?'No sockets out here.':tool==='wrench'?'Clang. Nothing there.':'Nothing to unscrew there.');}
+  function targetAt(x,y){var e=document.elementFromPoint(x,y);return e&&e.closest?e.closest('[data-target]'):null;}
+  function showGhost(name,x,y){var g=toolG[name],bb=g.getBBox(),k=box.getBoundingClientRect().width/320*1.25,pad=4;
+    ghost.setAttribute('viewBox',(bb.x-pad)+' '+(bb.y-pad)+' '+(bb.width+pad*2)+' '+(bb.height+pad*2));
+    ghost.style.width=(bb.width+pad*2)*k+'px';ghost.style.height=(bb.height+pad*2)*k+'px';
+    var c=g.cloneNode(true);c.removeAttribute('class');c.removeAttribute('data-tool');c.style.transform='none';c.style.animation='none';ghost.replaceChildren(c);
+    ghost.style.display='block';ghost.dataset.w=(bb.width+pad*2)*k;ghost.dataset.h=(bb.height+pad*2)*k;g.classList.add('held');moveGhost(x,y);}
+  function moveGhost(x,y){ghost.style.transform='translate('+(x-ghost.dataset.w/2)+'px,'+(y-ghost.dataset.h*.25)+'px) rotate(18deg)';}
+  function hideGhost(){ghost.style.display='none';[].forEach.call(svgEl.querySelectorAll('.held'),function(g){g.classList.remove('held');});}
+  function disarm(){armed=null;document.body.classList.remove('armed-mode');tbtns.forEach(function(b){b.classList.remove('armed');});targets.forEach(function(t){t.removeAttribute('tabindex');t.removeAttribute('role');t.removeAttribute('aria-label');});hideGhost();}
+  function arm(name){if(armed===name){disarm();say('Put the '+LABEL[name].toLowerCase()+' down.');return;}disarm();armed=name;document.body.classList.add('armed-mode');
+    tbtns.forEach(function(b){b.classList.toggle('armed',b.dataset.tool===name);});
+    targets.forEach(function(t){t.setAttribute('tabindex','0');t.setAttribute('role','button');t.setAttribute('aria-label','Use the '+LABEL[name].toLowerCase()+' on the '+t.dataset.name);});
+    showGhost(name,mouse.x>0?mouse.x:innerWidth/2,mouse.y>0?mouse.y:innerHeight/2);say(LABEL[name]+' ready. Click something, or press Escape.');}
+  tbtns.forEach(function(b){var name=b.dataset.tool;
+    b.addEventListener('pointerdown',function(e){if(!open)return;e.preventDefault();e.stopPropagation();try{b.setPointerCapture(e.pointerId);}catch(_){}
+      drag={tool:name,x0:e.clientX,y0:e.clientY,moved:false};if(armed)disarm();showGhost(name,e.clientX,e.clientY);});
+    b.addEventListener('pointermove',function(e){if(!drag)return;if(Math.hypot(e.clientX-drag.x0,e.clientY-drag.y0)>6)drag.moved=true;moveGhost(e.clientX,e.clientY);mouse.x=e.clientX;mouse.y=e.clientY;});
+    b.addEventListener('pointerup',function(e){if(!drag)return;var d=drag;drag=null;
+      if(d.moved){hideGhost();var t=targetAt(e.clientX,e.clientY);if(t)use(d.tool,t,e.clientX,e.clientY);else missed(d.tool,e.clientX,e.clientY);}else{hideGhost();arm(d.tool);}});
+    b.addEventListener('pointercancel',function(){drag=null;hideGhost();});
+    b.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();arm(name);}});});
+  targets.forEach(function(t){t.addEventListener('keydown',function(e){if(armed&&(e.key==='Enter'||e.key===' ')){e.preventDefault();var r=t.getBoundingClientRect();use(armed,t,r.left+r.width/2,r.top+r.height/2);}});});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&armed){disarm();say('Tool put away.');}});
+  document.addEventListener('pointermove',function(e){if(armed&&!drag)moveGhost(e.clientX,e.clientY);},{passive:true});
+  document.addEventListener('pointerdown',function(e){if(!armed||drag)return;if(e.target.closest&&e.target.closest('.tbtn'))return;
+    var t=targetAt(e.clientX,e.clientY);if(t){use(armed,t,e.clientX,e.clientY);}else{burst(e.clientX,e.clientY,5);}},true);
+  fix.addEventListener('click',function(){disarm();targets.forEach(function(t){if(!(+t.dataset.lv>0))return;var before=getComputedStyle(t).transform;t.classList.remove('lv1','lv2','lv3');t.dataset.lv=0;
+      if(!reduce&&t.animate&&before!=='none')t.animate([{transform:before},{transform:'none'}],{duration:520,easing:'cubic-bezier(.3,1.4,.5,1)'});});refresh();say('Good as new. Mostly.');});
+  var lid=box.querySelector('.lid');
+  function flyLid(){
+    var r=lid.getBoundingClientRect(),k=box.getBoundingClientRect().width/320||1,dir=Math.random()<.5?-1:1,up=-(r.bottom+160)/k,side=dir*(100+Math.random()*180)/k,spin=dir*(540+Math.random()*360);
+    burst(r.left+r.width/2,r.top+r.height/2,18);
+    lid.getAnimations().forEach(function(a){a.cancel();});
+    lid.animate([{transform:'translate(0,0) rotate(0deg)',opacity:1},
+      {transform:'translate('+side*.12+'px,'+(-26)+'px) rotate('+(-dir*14)+'deg)',opacity:1,offset:.12},
+      {transform:'translate('+side*.8+'px,'+up*.85+'px) rotate('+spin*.8+'deg)',opacity:1,offset:.75},
+      {transform:'translate('+side+'px,'+up+'px) rotate('+spin+'deg)',opacity:0}],
+      {duration:1100,easing:'cubic-bezier(.15,.75,.35,1)',fill:'forwards'});}
+  function landLid(){
+    var r=box.getBoundingClientRect(),k=r.width/320||1,dir=Math.random()<.5?-1:1;
+    lid.getAnimations().forEach(function(a){a.cancel();});
+    var a=lid.animate([{transform:'translate('+(dir*140/k)+'px,'+(-(r.top+200)/k)+'px) rotate('+(dir*420)+'deg)',opacity:0},
+      {opacity:1,offset:.08},
+      {transform:'translate(0,4px) rotate(-4deg)',opacity:1,offset:.78},
+      {transform:'translate(0,-6px) rotate(2deg)',opacity:1,offset:.9},
+      {transform:'translate(0,0) rotate(0deg)',opacity:1}],
+      {duration:760,easing:'cubic-bezier(.5,0,.9,.6)',fill:'none'});
+    a.onfinish=function(){var b=box.getBoundingClientRect();burst(b.left+b.width/2,b.top+b.height*.3,14);box.classList.add('hit');setTimeout(function(){box.classList.remove('hit');},380);};}
+  function toggle(){
+    open=!open;box.classList.toggle('open',open);box.setAttribute('aria-pressed',open);box.setAttribute('aria-label','Toolbox: '+(open?'close it':'open it'));
+    tbtns.forEach(function(b){b.setAttribute('tabindex',open?'0':'-1');});if(!open)disarm();
+    if(open){opens++;
+      if(!reduce){flyLid();box.classList.add('hit');setTimeout(function(){box.classList.remove('hit');},380);}
+      var r=box.getBoundingClientRect();if(!reduce)strike(r.left+r.width/2,r.top+r.height*.4,r.left+r.width/2+(Math.random()-.5)*80);
+      say(opens===1?'The lid has left the building. Drag a tool onto something, or click a tool and then a target.':opens<4?'Still no hammer. We checked.':'It is a toolbox. It does not get more exciting.');}
+    else{if(!reduce)landLid();say('Lid is back on. Mostly.');}
+  }
+  box.addEventListener('click',toggle);
+})();
+</script>
+</body>
+</html>

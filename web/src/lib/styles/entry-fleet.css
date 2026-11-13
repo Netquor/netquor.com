@@ -1,0 +1,6 @@
+/* The stylesheet of fleet.html, in the cascade order of the legacy page: the Geist fonts, Fleet's own stylesheet, nav.css (the site nav sits above the Fleet header), Bootstrap Icons, then Plex (the nav's font). Fleet loads neither Bootstrap nor the site system. One entry file with @import so the order survives bundling (see entry-site.css). */
+@import "./fonts-fleet.css";
+@import "./fleet/index.css";
+@import "./nav.css";
+@import "bootstrap-icons/font/bootstrap-icons.min.css";
+@import "./fonts.css";

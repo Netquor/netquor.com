@@ -1,0 +1,52 @@
+# Deny by default, then allow exactly what the image needs. Nothing secret or private can get in by accident
+# (no .env, .git, .agents, tools, mockups, deploy, node_modules, build output).
+*
+
+# server package (API, worker, price logic) and the seed prices
+!server/package.json
+!server/bun.lock
+!server/tsconfig.json
+!server/src
+!server/data/prices.seed.json
+!server/data/catalog-map.json
+!server/scripts
+
+# web package (SvelteKit)
+!web/package.json
+!web/bun.lock
+!web/tsconfig.json
+!web/vite.config.ts
+!web/src
+
+# What the runtime serves from /app/legacy: images, the web manifest, the llms.txt template (read, never served) and the three pure
+# calculation scripts the pages load by URL (src/lib/assets.ts). Nothing else at the top level, and no blanket *.js, *.css or *.html.
+!subnet-calc.js
+!cost-calc.js
+!bundle-calc.js
+!*.svg
+!*.png
+!*.jpg
+!*.jpeg
+!*.gif
+!*.webp
+!*.avif
+!*.ico
+!*.webmanifest
+!llms.template.txt
+!brand
+!fleet/img
+!fleet/favicon.svg
+# readiness-data.json is read at build time by the build stage only (it is imported by web/src/lib/pages/readiness/data.ts)
+!readiness-data.json
+
+# container entrypoint
+!deploy/entrypoint.sh
+
+# never, even when matched above
+**/node_modules
+**/.env
+**/.env.*
+**/.DS_Store
+brand/**/*.css
+brand/**/*.js
+**/*.test.ts

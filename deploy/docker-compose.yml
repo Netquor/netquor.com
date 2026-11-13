@@ -1,0 +1,64 @@
+# Runs on doc-iad-c-02 at /opt/netquor-web. ONE image, run twice. The image is ${WEB_IMAGE} (default
+# ghcr.io/netquor/netquor-com-web:main); `docker compose --env-file /opt/netquor-web/.deploy.env` sets it for local deploys.
+#   web     SvelteKit pages rendered per request from an in-memory price cache + the API (/api, /hooks, /health).
+#           The single writer of the data volume. No published ports: only the edge Caddy reaches it (network "web_front",
+#           which only the edge and this container join; web is NOT on the shared "edge" network that Phone uses).
+#   worker  the backup price poll. Delivers to web with a signed POST over the "internal" network and writes nothing.
+# The edge Caddy (/opt/edge) owns ports 80 and 443 and proxies www.netquor.com to netquor-web:3000 over web_front.
+# Secrets live in /opt/netquor-web/.env (mode 0600, never in this file or in git); see ../server/.env.example.
+# env_file is REQUIRED: a missing .env makes `docker compose up` fail instead of starting without secrets.
+# Create the front network once: docker network create web_front
+x-logging: &logging
+  driver: json-file
+  options: {max-size: "10m", max-file: "3"}
+
+services:
+  web:
+    image: ${WEB_IMAGE:-ghcr.io/netquor/netquor-com-web:main}
+    container_name: netquor-web
+    restart: unless-stopped
+    env_file:
+      - /opt/netquor-web/.env
+    environment:
+      HOST: 0.0.0.0
+      PORT: "3000"
+      ORIGIN: https://www.netquor.com
+      ADDRESS_HEADER: X-Real-IP
+      SITE_ORIGIN: https://www.netquor.com
+      ALLOWED_ORIGINS: https://www.netquor.com,https://netquor.com
+      DATA_DIR: /data
+      PRICES_DIR: /data
+      LEAD_FILE: /data/leads.jsonl
+      SEED_DATA: "1"
+    volumes:
+      - data:/data
+    networks: [web_front, internal]
+    stop_grace_period: 20s
+    logging: *logging
+
+  worker:
+    image: ${WEB_IMAGE:-ghcr.io/netquor/netquor-com-web:main}
+    container_name: netquor-web-worker
+    restart: unless-stopped
+    command: ["bun", "server/src/worker.ts"]
+    env_file:
+      - /opt/netquor-web/.env
+    environment:
+      WEB_INTERNAL_URL: http://netquor-web:3000
+      SEED_DATA: "0"
+    healthcheck:
+      disable: true
+    depends_on:
+      web:
+        condition: service_healthy
+    networks: [internal]
+    stop_grace_period: 20s
+    logging: *logging
+
+networks:
+  web_front:
+    external: true
+  internal:
+
+volumes:
+  data:

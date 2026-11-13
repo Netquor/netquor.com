@@ -1,0 +1,15 @@
+node_modules
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+# Leads are personal data: never committed.
+data/leads.jsonl
+data/leads*.jsonl
+
+# Prices: the live snapshot is written by the web process on its volume; only the seed is committed.
+data/prices.json
+data/prices.prev.json
+data/baseline.json
+data/.*.tmp

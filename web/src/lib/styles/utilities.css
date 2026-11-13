@@ -1,0 +1,12 @@
+/* Utilities: the Bootstrap helper classes (accent text, accent and neutral backgrounds, hairline borders, hr) pulled onto the Netquor palette, plus the no-wrap rule for badges, pills and tabs. */
+
+/* Accent text and icons: one blue, nothing else */
+body .text-info, body .icon-accent, body .text-primary { color: var(--nq-accent-t) !important; }
+body .icon-accent { font-size: 1.5rem; margin-bottom: 1rem; }
+body .brand-accent { background: none; -webkit-text-fill-color: currentColor; color: var(--nq-accent-t); font-weight: inherit; letter-spacing: inherit; }
+body .bg-info, body .bg-dark, body .bg-body-tertiary { background-color: var(--nq-s2) !important; }
+body .bg-opacity-10, body .bg-info.bg-opacity-10 { background-color: var(--nq-accent-s) !important; }
+body .border-info, body .border-white, body .border-top, body .border-bottom { border-color: var(--nq-line) !important; }
+body hr { border-color: var(--nq-line); opacity: 1; }
+
+.nq-app-status, .badge, .nq-chips2 a, .nq-check-tabs a, .nq-nudge-go { white-space: nowrap; }

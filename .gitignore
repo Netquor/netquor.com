@@ -1,0 +1,8 @@
+.DS_Store
+.env.deploy
+
+# Internal planning notes: local only, this repo is public
+.agents/
+
+# The legacy site extracted from the legacy-baseline tag by web/scripts/baseline (regression baseline, regenerated on demand)
+.baseline/

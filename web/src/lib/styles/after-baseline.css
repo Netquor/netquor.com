@@ -1,0 +1,6 @@
+/* Rules added after the baseline (the legacy nq.css, which the other parts mirror exactly and a test pins). Each one records a decision made since; they come last in the cascade so they win over the baseline rule of the same selector. */
+
+/* 2026-11-11: the Company list in the footer flows in two independent columns. The baseline grid shared row heights, so a link that wrapped to two lines left a gap in the other column, and a link past the twelfth spilled into a third column. */
+.nq-footer-grid nav.nq-2col { display: block; columns: 2; column-gap: 32px; }
+.nq-footer-grid nav.nq-2col h2 { column-span: all; margin-bottom: 14px; }
+.nq-footer-grid nav.nq-2col a { display: block; break-inside: avoid; margin-bottom: 10px; }
