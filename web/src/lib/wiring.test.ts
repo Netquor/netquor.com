@@ -96,3 +96,17 @@ describe("footer", () => {
         expect(readFileSync(join(SRC, "lib/styles/entry-site.css"), "utf8")).toContain('@import "./after-baseline.css"');
     });
 });
+
+describe("error page", () => {
+    const src = readFileSync(join(SRC, "routes/+error.svelte"), "utf8");
+    test("is not indexed, says the trace is a joke, and respects reduced motion", () => {
+        expect(src).toContain('<meta name="robots" content="noindex">');
+        expect(src).toContain("nothing was traced");
+        expect(src).toContain("prefers-reduced-motion: reduce");
+    });
+    test("draws the site nav and footer itself, since the root layout draws nothing", () => {
+        expect(src).toContain("<Nav ");
+        expect(src).toContain("<Footer ");
+        expect(src).toContain("entry-site.css");
+    });
+});
