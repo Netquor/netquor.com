@@ -99,6 +99,26 @@
       "currency": "USD",
       "unit": "per month, Resilient plan"
     },
+    "homeassistant.home.setup_shipping.once": {
+      "amountCents": 4900,
+      "currency": "USD",
+      "unit": "one-time, setup and shipping, Home plan"
+    },
+    "homeassistant.plus.setup_shipping.once": {
+      "amountCents": 7900,
+      "currency": "USD",
+      "unit": "one-time, setup and shipping, Home Plus plan"
+    },
+    "homeassistant.pro.setup_shipping.once": {
+      "amountCents": 9900,
+      "currency": "USD",
+      "unit": "one-time, setup and shipping, Home Pro plan"
+    },
+    "homeassistant.resilient.setup_shipping.once": {
+      "amountCents": 5900,
+      "currency": "USD",
+      "unit": "one-time, setup and shipping, Resilient plan"
+    },
     "homeassistant.setup_session.once": {
       "amountCents": 7900,
       "currency": "USD",
