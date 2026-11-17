@@ -91,6 +91,10 @@ export const EXTRAS: readonly Extra[] = [
     { before: "Zigbee or Z-Wave USB radio: ", priceKey: "homeassistant.zigbee_radio.once", after: " one-time each" },
     // "about $4 / month off" is a discount, not a published price
     { before: "Bring your own Raspberry Pi: about $4 / month off", after: "" },
+    { before: "Setup and shipping, Home: ", priceKey: "homeassistant.home.setup_shipping.once", after: " one-time" },
+    { before: "Setup and shipping, Home Plus: ", priceKey: "homeassistant.plus.setup_shipping.once", after: " one-time" },
+    { before: "Setup and shipping, Home Pro: ", priceKey: "homeassistant.pro.setup_shipping.once", after: " one-time" },
+    { before: "Setup and shipping, Resilient: ", priceKey: "homeassistant.resilient.setup_shipping.once", after: " one-time" },
     { before: "Setup session or migration from your current setup: ", priceKey: "homeassistant.setup_session.once", after: " one-time (about an hour with an engineer), free on yearly plans and included with Home Pro" },
     { before: "Rent to own: the bridge is yours after 24 months", after: "" },
     { before: "Yearly billing: 2 months free", after: "" },
