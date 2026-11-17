@@ -75,27 +75,27 @@
       "unit": "per month, about, extra bridge for a second home"
     },
     "homeassistant.from.month": {
-      "amountCents": 1200,
+      "amountCents": 2400,
       "currency": "USD",
       "unit": "per month, starting price"
     },
     "homeassistant.home.month": {
-      "amountCents": 1400,
+      "amountCents": 2400,
       "currency": "USD",
       "unit": "per month, Home plan"
     },
     "homeassistant.plus.month": {
-      "amountCents": 2400,
+      "amountCents": 2800,
       "currency": "USD",
       "unit": "per month, Home Plus plan"
     },
     "homeassistant.pro.month": {
-      "amountCents": 3900,
+      "amountCents": 5600,
       "currency": "USD",
       "unit": "per month, Home Pro plan"
     },
     "homeassistant.resilient.month": {
-      "amountCents": 1200,
+      "amountCents": 2600,
       "currency": "USD",
       "unit": "per month, Resilient plan"
     },
