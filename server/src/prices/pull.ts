@@ -22,13 +22,13 @@ export interface FetchDeps {
 export const unwrapPayload = (payload: unknown): unknown =>
     typeof payload === "object" && payload !== null && !Array.isArray(payload) && "snapshot" in payload && !("prices" in payload) ? (payload as { snapshot: unknown }).snapshot : payload;
 
-/** Reads at most maxBytes; null when the body is longer (the stream is cancelled at once). */
+/** Reads at most maxBytes; null when the body is longer (the stream is canceled at once). */
 export const readBodyCapped = async (res: Response, maxBytes: number, signal?: AbortSignal): Promise<Uint8Array | null> => {
     const declared = Number(res.headers.get("content-length"));
     if (Number.isFinite(declared) && declared > maxBytes) { await res.body?.cancel().catch(() => {}); return null; }
     if (!res.body) return new Uint8Array();
     const reader = res.body.getReader();
-    // An abort (timeout, shutdown) stops a body that has stalled: cancelling the reader ends a pending read.
+    // An abort (timeout, shutdown) stops a body that has stalled: canceling the reader ends a pending read.
     const onAbort = () => { void reader.cancel().catch(() => {}); };
     signal?.addEventListener("abort", onAbort);
     if (signal?.aborted) onAbort();

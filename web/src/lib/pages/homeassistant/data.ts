@@ -41,13 +41,14 @@ export interface Tier {
     cardClass?: string;
     ribbon?: string;
     name: string;
-    /** the plan name is cyan unless it carries its own colour */
+    /** the plan name is cyan unless it carries its own color */
     nameStyle?: string;
     priceKey: string;
-    /** the colour of the tick icons when it is not the default cyan */
+    /** the color of the tick icons when it is not the default cyan */
     tickStyle?: string;
     features: readonly Feature[];
-    cta: { href: string; label: string; primary?: boolean };
+    /** The CTA id in lib/checkout.ts: when listed there the button is "checkoutLabel" into the portal and `cta` (the mailto) becomes a quiet "Ask us first" link; when not, `cta` is the button. */
+    cta: { id: string; href: string; label: string; checkoutLabel: string; primary?: boolean };
 }
 export const TIERS: readonly Tier[] = [
     {
@@ -56,7 +57,7 @@ export const TIERS: readonly Tier[] = [
             { text: "Your own isolated Home Assistant in the cloud" }, { text: "Bridge device included" }, { text: "2 users" },
             { text: "Daily backups, kept 7 days" }, { text: "Radios (Zigbee, Z-Wave, Bluetooth) as an add-on", off: true }, { text: "Email support" },
         ],
-        cta: { href: `${MAILTO}%20-%20Home`, label: "Choose Home" },
+        cta: { id: "hosted-home-assistant.home", href: `${MAILTO}%20-%20Home`, label: "Choose Home", checkoutLabel: "Order Home" },
     },
     {
         cardClass: "pop", name: "Home Plus", priceKey: "homeassistant.plus.month",
@@ -64,7 +65,7 @@ export const TIERS: readonly Tier[] = [
             { text: "Dedicated container with more CPU and memory" }, { text: "Bridge device included" }, { text: "5 users" },
             { text: "Daily backups, kept 30 days" }, { text: "Zigbee, Z-Wave and Bluetooth radios included" }, { text: "Up to 2 cameras" }, { text: "Email support, one business day" },
         ],
-        cta: { href: `${MAILTO}%20-%20Home%20Plus`, label: "Choose Home Plus", primary: true },
+        cta: { id: "hosted-home-assistant.home-plus", href: `${MAILTO}%20-%20Home%20Plus`, label: "Choose Home Plus", checkoutLabel: "Order Home Plus", primary: true },
     },
     {
         name: "Home Pro", priceKey: "homeassistant.pro.month",
@@ -72,7 +73,7 @@ export const TIERS: readonly Tier[] = [
             { text: "Dedicated virtual machine" }, { text: "Bridge device included, with a spare shipped if one fails" }, { text: "Unlimited users" },
             { text: "Daily backups, kept 90 days, with an off-site copy" }, { text: "Radios included" }, { text: "Up to 8 cameras" }, { text: "Priority support, same day, plus a setup session" },
         ],
-        cta: { href: `${MAILTO}%20-%20Home%20Pro`, label: "Choose Home Pro" },
+        cta: { id: "hosted-home-assistant.home-pro", href: `${MAILTO}%20-%20Home%20Pro`, label: "Choose Home Pro", checkoutLabel: "Order Home Pro" },
     },
     {
         cardClass: "alt", ribbon: "Works without internet", name: "Resilient", nameStyle: "color: var(--nq-accent-t);", priceKey: "homeassistant.resilient.month", tickStyle: "color: var(--nq-accent-t);",
@@ -80,7 +81,7 @@ export const TIERS: readonly Tier[] = [
             { text: "Home Assistant runs on the bridge in your home" }, { text: "Your automations keep working if the internet goes down" }, { text: "Remote access through our cloud" },
             { text: "A standby copy in the cloud that we help you switch to" }, { text: "3 users, daily backups kept 30 days" }, { text: "Radios and cameras stay on your own network" }, { text: "Email support, one business day" },
         ],
-        cta: { href: `${MAILTO}%20-%20Resilient`, label: "Choose Resilient" },
+        cta: { id: "hosted-home-assistant.resilient", href: `${MAILTO}%20-%20Resilient`, label: "Choose Resilient", checkoutLabel: "Order Resilient" },
     },
 ];
 

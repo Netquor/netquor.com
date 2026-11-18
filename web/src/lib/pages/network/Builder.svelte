@@ -37,7 +37,7 @@
         st.qty[id] = (st.qty[id] || 0) + delta;
         render(delta > 0 ? id : null);
         await tick();
-        // Keep keyboard focus where it was (the tiles are rebuilt): the same button, or its neighbour if that one is now disabled.
+        // Keep keyboard focus where it was (the tiles are rebuilt): the same button, or its neighbor if that one is now disabled.
         const btns = tilesEl?.children[index]?.querySelectorAll("button");
         if (!btns) return;
         const want = btns[which].disabled ? btns[1 - which] : btns[which];

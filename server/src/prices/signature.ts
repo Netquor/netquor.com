@@ -2,7 +2,7 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 
 export const TOLERANCE_SECONDS = 300;
-/** A signed body that carries rebaseVersion or allowLargeChange (it switches a guard off) is honoured only this close to its timestamp, and only once (routes.ts keeps the seen signatures). A poll.ok heartbeat must be no older than this either. */
+/** A signed body that carries rebaseVersion or allowLargeChange (it switches a guard off) is honored only this close to its timestamp, and only once (routes.ts keeps the seen signatures). A poll.ok heartbeat must be no older than this either. */
 export const DANGEROUS_TOLERANCE_SECONDS = 60;
 /** How long a dangerous body's signature is remembered, and how many are remembered at most. */
 export const REPLAY_MEMORY_SECONDS = 300;

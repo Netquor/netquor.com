@@ -13,7 +13,7 @@ Build the bot yourselves on the existing Bun/Elysia server. Call the Anthropic A
 - **Buy:** Cal.com cloud, only when you reach scheduling. Use it for slots and bookings.
 - **Skip:**
   - Chatwoot, Intercom Fin and the other SaaS suites.
-  - Flowise (archived 2026-08-13), Typebot, Dify and Open WebUI (licence conditions).
+  - Flowise (archived 2026-08-13), Typebot, Dify and Open WebUI (license conditions).
   - The Vercel AI SDK, React chat libraries and a vector DB.
 
 Why not the platforms:
@@ -75,9 +75,9 @@ Visitor browser
 
 ## 3. Decision table
 
-| Choice | Chosen | Runner-up | Why, cost, licence |
+| Choice | Chosen | Runner-up | Why, cost, license |
 |---|---|---|---|
-| Model and SDK | `@anthropic-ai/sdk` direct, Sonnet 5.5 ($2 in / $10 out per MTok; cache read $0.10, 5m write $2.50). Haiku 5.5 as budget fallback ($0.10 / $0.50). | Vercel AI SDK 7 (Apache-2.0) | One vendor, so provider neutrality buys little. A wrapper lags features you need (cache breakpoints, `search_result` citations, refusal fallbacks). Not verified: whether AI SDK 7 passes these through. SDK licence is Apache-2.0, not MIT. |
+| Model and SDK | `@anthropic-ai/sdk` direct, Sonnet 5.5 ($2 in / $10 out per MTok; cache read $0.10, 5m write $2.50). Haiku 5.5 as budget fallback ($0.10 / $0.50). | Vercel AI SDK 7 (Apache-2.0) | One vendor, so provider neutrality buys little. A wrapper lags features you need (cache breakpoints, `search_result` citations, refusal fallbacks). Not verified: whether AI SDK 7 passes these through. SDK license is Apache-2.0, not MIT. |
 | Retrieval and grounding | Cached system prompt: `llms.txt` (rendered with live prices) plus a hand-written `facts.md`. Prices via a `get_price` tool. Citations on. | SQLite FTS5 over the Frappe KB, added only when the KB outgrows the prompt | A corpus of tens of pages needs no vector DB. The prompt must be at least 512 tokens to cache. |
 | Chat UI | Hand-rolled Svelte 5 custom element, about 300 lines | assistant-ui (MIT, React only) | React would add a second toolchain. The custom element keeps the host page framework-free, as with looking-glass. Not suited to SSR, so lazy-load it. |
 | Transport | SSE out, POST in | WebSocket | Plain HTTP, native reconnect, and the same stream carries bot and rep messages. |
@@ -85,7 +85,7 @@ Visitor browser
 | SMS bridge | Telnyx Messaging, one toll-free number (registration in progress) | 10DLC local number (about $4 brand, $15 campaign, about $2 to $10 per month; fees unconfirmed) | Already your stack. $0.0055 per part toll-free, plus carrier fees, $1.00 per month. Inbound replies are billed too. Source: https://telnyx.com/pricing/messaging. |
 | Rep console | SMS from the rep's phone, with Slack or Telegram or email as a heartbeat alert | Chatwoot (MIT core, adds a stack) | If a rep texts STOP, the number is blocked until START. Do not rely on SMS alone. |
 | Scheduling | Phase 3a: callback request as a Frappe ticket plus rep SMS, no new vendor. Then Cal.com cloud API v2. | Google Calendar freeBusy plus `events.insert` (build it yourself) | Cal.com Teams is $12 per user per month, Free is one user (https://cal.com/pricing). Pin the `cal-api-version` header. Whether the Free plan's API key works is unconfirmed. Do not self-host: the MIT Cal.diy edition drops teams, SSO and workflows. |
-| PBX and callback | Telnyx Call Control, `POST /calls`, rep-first bridge | Asterisk ARI `POST /channels` (private link only); FreePBX via AMI; 3CX (licence-gated) | Assumption: Netquor Phone runs on Telnyx. Put one `originate_callback()` interface in front. Add other adapters only when the PBX is known. |
+| PBX and callback | Telnyx Call Control, `POST /calls`, rep-first bridge | Asterisk ARI `POST /channels` (private link only); FreePBX via AMI; 3CX (license-gated) | Assumption: Netquor Phone runs on Telnyx. Put one `originate_callback()` interface in front. Add other adapters only when the PBX is known. |
 | Spam and abuse | Cloudflare Turnstile (Free), per-IP and per-session limits, daily token cap | Haiku 5.5 pre-screen | Defer the pre-screen until abuse appears. It adds latency and false refusals on VPN or DDoS questions. |
 
 ## 4. Human handoff by SMS
@@ -220,7 +220,7 @@ Visitor browser
 
 ## 7. Open questions for the owner, and what would change the plan
 
-1. **Which PBX?** FreePBX, 3CX, Asterisk, or only Telnyx and Netquor Phone. The plan assumes Telnyx. A real PBX changes the Phase 3 adapter, and 3CX may force a relay service because of its licence gate.
+1. **Which PBX?** FreePBX, 3CX, Asterisk, or only Telnyx and Netquor Phone. The plan assumes Telnyx. A real PBX changes the Phase 3 adapter, and 3CX may force a relay service because of its license gate.
 2. **Frappe version and hosting.** Which Helpdesk version (v15, v16 or develop), Frappe Cloud or self-hosted, and is ERPNext or Frappe CRM installed? This changes method names and the search backend. Cloud may restrict custom apps and Server Scripts, which affects the gateway-app option.
 3. **Hours of coverage.** Office hours only, or on-call? This sets the availability model, the no-claim timeout and the after-hours "ticket" path. With no real-time coverage, ship P0 and P1 only.
 4. **Budget ceiling.** Model spend of $30 to $45 per 1,000 chats is far below the $500 tier cap. A hard monthly figure sets the daily token cap.
@@ -247,10 +247,10 @@ Visitor browser
   - Whether the Free plan includes an API key.
   - Current enterprise self-host terms. A cited license-key page returned 404 and the 30-user-minimum claim has no source.
   - Whether `Authorization` is strictly required by the schema. It is listed as optional, but a Bearer key is the normal usage.
-- **PBX.** 3CX Call Control licence tier (conflicting sources), FreePBX lacking originate in GraphQL (an undated forum claim), and Number Lookup pricing.
+- **PBX.** 3CX Call Control license tier (conflicting sources), FreePBX lacking originate in GraphQL (an undated forum claim), and Number Lookup pricing.
 - **Chatwoot.** Whether it supports a Telnyx channel through its API channel, and which features are enterprise-only in self-host. The repo may carry a separately licensed `enterprise/` directory, so "core MIT" is the safe wording.
 - **Not re-checked in the skeptic pass.**
-  - Licences and status: Typebot (FSL), Dify (extra conditions), Botpress (MIT), and Rasa maintenance mode.
+  - Licenses and status: Typebot (FSL), Dify (extra conditions), Botpress (MIT), and Rasa maintenance mode.
   - Pricing and library facts: Intercom Fin $0.99 per outcome, AI SDK 7 version numbers, and Crisp, Tidio and Zendesk pricing.
   - Implementation details: Elysia `sse()` behavior and Svelte custom element details.
 - **Legal.** CIPA litigation counts, California SB 1001 and SB 243 scope, Utah's sunset (Davis Polk says July 2027; one source says no end date), EU Omnibus finalization, FTC guidance, TCPA rules, and ND and MN one-party recording consent (a 2020 RCFP guide; read Minn. Stat. 626A.02 and N.D.C.C. 12.1-15-02). Counsel review is needed. One-party consent does not help with visitors in all-party-consent states, so announce recording and keep it off by default.

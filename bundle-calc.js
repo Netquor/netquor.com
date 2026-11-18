@@ -54,7 +54,7 @@
     var today = totals(sum(todayLines), todayLines, todayLines.length);
     today.lines = todayLines;
 
-    // AT PHONE LAUNCH: the same setup with Phone billable. Shown separately and labelled as planned.
+    // AT PHONE LAUNCH: the same setup with Phone billable. Shown separately and labeled as planned.
     var launch = null;
     if (phoneLine) {
       var launchLines = todayLines.concat([phoneLine]);

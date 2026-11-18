@@ -1,4 +1,4 @@
-// smoke.ts: builds the app, starts the BUILT server under Bun on a free loopback port with a temp data folder, a temp seed and a small synthetic assets folder (what the image holds at /app/legacy, with private canaries planted around it), and checks the behaviour that matters end to end. Run with `bun run smoke`. Touches nothing outside temp folders; secrets here are throwaway test values.
+// smoke.ts: builds the app, starts the BUILT server under Bun on a free loopback port with a temp data folder, a temp seed and a small synthetic assets folder (what the image holds at /app/legacy, with private canaries planted around it), and checks the behavior that matters end to end. Run with `bun run smoke`. Touches nothing outside temp folders; secrets here are throwaway test values.
 import { createHmac } from "node:crypto";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { connect } from "node:net";

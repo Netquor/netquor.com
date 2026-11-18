@@ -166,7 +166,7 @@ describe("createCatalogPuller", () => {
         expect(Object.keys(r.books)).toEqual(["netquor-phone"]);
     });
 
-    test("429 honours Retry-After: no request to that product until it passes; the other product is unaffected", async () => {
+    test("429 honors Retry-After: no request to that product until it passes; the other product is unaffected", async () => {
         const s = script((c) => (c.url.includes("netquor-fleet") ? new Response("", { status: 429, headers: { "retry-after": "120" } }) : ok(c)));
         const p = mk(s);
         const a = await p.pull(["netquor-fleet", "netquor-phone"]);

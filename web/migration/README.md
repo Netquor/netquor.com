@@ -1,6 +1,6 @@
 # Migrating a legacy page to Svelte
 
-The playbook for moving one hand-written page (`/<page>.html` at the repository root) to a SvelteKit route with the same URL, the same words and the same behaviour. One agent, one page; the shared pieces below exist so pages do not collide. Read `web/README.md` first for how the process serves pages.
+The playbook for moving one hand-written page (`/<page>.html` at the repository root) to a SvelteKit route with the same URL, the same words and the same behavior. One agent, one page; the shared pieces below exist so pages do not collide. Read `web/README.md` first for how the process serves pages.
 
 The pilot, `src/routes/(site)/subnet-calculator.html/+page.svelte`, is the worked example.
 
@@ -100,7 +100,7 @@ Which way to load a vanilla script:
 
 `loadScript` is in `src/lib/loadScript.ts`: one load per URL, rejects on failure, browser only. A script loaded this way is not in the server HTML, so parity reports it as missing; allow it: `{"match": "script:/fx.js", "reason": "loaded after hydration with loadScript"}`.
 
-Preferred shape for a calculator or other widget: a Svelte island. Keep the pure module (`subnet-calc.js` and friends) unchanged and tested where it is, load it as above, and write the interactive part as a component that reads the module's window global in `onMount`, the way the pilot does. The server renders the page with empty results (as the legacy page does before its script runs); the browser fills them in. Do not port the maths into Svelte unless the module cannot be used as is, and then port it as a typed `.ts` file with tests that compare it with the original on a table of inputs.
+Preferred shape for a calculator or other widget: a Svelte island. Keep the pure module (`subnet-calc.js` and friends) unchanged and tested where it is, load it as above, and write the interactive part as a component that reads the module's window global in `onMount`, the way the pilot does. The server renders the page with empty results (as the legacy page does before its script runs); the browser fills them in. Do not port the math into Svelte unless the module cannot be used as is, and then port it as a typed `.ts` file with tests that compare it with the original on a table of inputs.
 
 Page-local inline scripts in the legacy page: port them to the component (`onMount`, event handlers, `$state`). Keep every id they look up (see below).
 

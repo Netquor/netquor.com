@@ -1,4 +1,4 @@
-// The two cost calculators of the home page (device setup, missed calls), ported from the inline script of the legacy page. The maths is cost-calc.js (window.NQCost, loaded unchanged by the route); this file turns its result into the nodes the legacy page drew, in two steps so the wording is testable without a DOM: devView / missView return plain node descriptions, and initCostCalcs draws them into #dev-out and #miss-out.
+// The two cost calculators of the home page (device setup, missed calls), ported from the inline script of the legacy page. The math is cost-calc.js (window.NQCost, loaded unchanged by the route); this file turns its result into the nodes the legacy page drew, in two steps so the wording is testable without a DOM: devView / missView return plain node descriptions, and initCostCalcs draws them into #dev-out and #miss-out.
 export interface CostApi {
     deviceTime(i: Record<string, string>): CostDevice;
     missedCalls(i: Record<string, string>): CostMissed;

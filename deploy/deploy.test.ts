@@ -392,7 +392,7 @@ describe("edge", () => {
 });
 
 describe("status and logs", () => {
-	test("status summarises the health detail", async () => {
+	test("status summarizes the health detail", async () => {
 		const w = world({ status: () => ({ stdout: `== web\nHEALTH healthy\nIMAGE ${NEW}\nDETAIL {"ok":true,"prices":{"version":9,"updatedAt":"T","ageSeconds":1}}\nTIMER inactive\n` }) });
 		expect(await run(opts({ mode: "status" }), CFG, w.deps)).toBe(0);
 		expect(w.text()).toContain("prices version 9");

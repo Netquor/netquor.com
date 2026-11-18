@@ -6,6 +6,7 @@
 
 import { blocksHtml, SMS_HEADING_PRIVACY, SMS_HEADING_TERMS, smsPrivacy, smsProgram, webchatPrivacy } from "../../src/lib/pages/legal/sms";
 import { WEBCHAT_SRC } from "../../src/lib/webchat";
+import { CHECKOUT } from "../../src/lib/checkout";
 
 export interface IntentionalChange { id: string; since: string; reason: string; apply(html: string): string }
 
@@ -92,8 +93,51 @@ export const webChat: IntentionalChange = {
     },
 };
 
+/** 2026-11-18: the four Hosted Home Assistant plan buttons go to the portal order form (lib/checkout.ts) with a quiet "Ask us first" mailto link under each, instead of being mailto buttons. */
+export const homeAssistantCheckout: IntentionalChange = {
+    id: "home-assistant-checkout",
+    since: "2026-11-18",
+    reason: "Hosted Home Assistant is purchasable in the portal, so its plan buttons link to the order form and keep the mailto as a quiet secondary link",
+    apply(html) {
+        const plans: [string, string, string, string][] = [
+            ["Home", "hosted-home-assistant.home", "btn btn-outline-info rounded-pill", "Order Home"],
+            ["Home%20Plus", "hosted-home-assistant.home-plus", "btn btn-primary-cyber", "Order Home Plus"],
+            ["Home%20Pro", "hosted-home-assistant.home-pro", "btn btn-outline-info rounded-pill", "Order Home Pro"],
+            ["Resilient", "hosted-home-assistant.resilient", "btn btn-outline-info rounded-pill", "Order Resilient"],
+        ];
+        let h = html;
+        for (const [subj, id, cls, label] of plans) {
+            const mail = `mailto:hello@netquor.com?subject=Hosted%20Home%20Assistant%20-%20${subj}`;
+            const old = new RegExp(`<a href="${mail.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}" class="${cls}">Choose [^<]*</a>`);
+            h = h.replace(old, () => `<a href="${CHECKOUT[id]}" class="${cls}">${label}</a>\n<a href="${mail}" class="d-block text-center small text-muted mt-2">Ask us first</a>`);
+        }
+        return h;
+    },
+};
+
+/** 2026-11-18: US spelling in the site's own words. The one visible case in the baseline is the home page FAQ (text and structured data): "cancelled" is now "canceled". (us-spelling:allow, it quotes the baseline) */
+export const usSpelling: IntentionalChange = {
+    id: "us-spelling",
+    since: "2026-11-18",
+    reason: "the site uses US spelling in its own words",
+    apply: (html) => html.replaceAll("can be cancelled any time", "can be canceled any time"), // us-spelling:allow, it matches the baseline text
+};
+
+/** 2026-11-17 (commit 19f6a1f): the Hosted Home Assistant extras list the one-time setup and shipping fee of each plan, after the "Bring your own Raspberry Pi" line. The amounts are the seed's (49, 79, 99, 59). */
+export const homeAssistantSetupFees: IntentionalChange = {
+    id: "home-assistant-setup-fees",
+    since: "2026-11-17",
+    reason: "each Hosted Home Assistant plan has a one-time setup and shipping fee, shown in the extras",
+    apply(html) {
+        if (html.includes("Setup and shipping, Home:")) return html;
+        const row = (plan: string, amount: string) => `<div class="col-md-6 col-lg-4">Setup and shipping, ${plan}: ${amount} one-time</div>`;
+        const add = [row("Home", "$49"), row("Home Plus", "$79"), row("Home Pro", "$99"), row("Resilient", "$59")].join("\n                        ");
+        return html.replace(/(Bring your own Raspberry Pi: about \$4 \/ month off<\/div>)/, (m) => `${m}\n                        ${add}`);
+    },
+};
+
 /** Every recorded change, oldest first. */
-export const INTENTIONAL_CHANGES: readonly IntentionalChange[] = [contactNumbers, localPageLinks, lookingGlassLinks, footerLinksBelow, legalPages, webChat];
+export const INTENTIONAL_CHANGES: readonly IntentionalChange[] = [contactNumbers, localPageLinks, lookingGlassLinks, footerLinksBelow, legalPages, webChat, homeAssistantCheckout, homeAssistantSetupFees, usSpelling];
 
 /** The baseline page with every recorded decision applied. */
 export const applyIntentionalChanges = (html: string): string => INTENTIONAL_CHANGES.reduce((h, c) => c.apply(h), html);

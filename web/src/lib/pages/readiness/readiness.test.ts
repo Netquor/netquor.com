@@ -18,7 +18,7 @@ describe("readiness data", () => {
             expect(embedded[c.key].title).toBe(c.title);
             expect(embedded[c.key].cta).toEqual([...c.cta]);
             expect(embedded[c.key].calc).toEqual([...c.calc]);
-            // The gap texts in readiness.js lag readiness-data.json in the legacy files (the call-handling copy was edited in the JSON only). The page keeps the legacy behaviour: readiness.js is loaded unchanged, so the result boxes show its text. Same number of questions, though.
+            // The gap texts in readiness.js lag readiness-data.json in the legacy files (the call-handling copy was edited in the JSON only). The page keeps the legacy behavior: readiness.js is loaded unchanged, so the result boxes show its text. Same number of questions, though.
             expect(embedded[c.key].qs.length).toBe(c.qs.length);
         }
     });

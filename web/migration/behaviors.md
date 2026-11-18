@@ -61,7 +61,7 @@ An IIFE; everything is optional, with reduced motion the page is complete and st
 - `style.transform = "scaleX(v)"` with `v = h > 0 ? min(1, scrollY / h) : 0`, `h = documentElement.scrollHeight - innerHeight`. Updated on every `scroll` (passive listener) and once at start. Not on resize. Observed: computed `matrix(0, 0, 0, 1, 0, 0)` at the top, `matrix(1, 0, 0, 1, 0, 0)` at the bottom, `scaleX(0.0553978)` at 800 px on the 15,341 px home page at 1280 x 900.
 
 **2. Hero map (only when `.nq-map` exists; also under reduced motion).**
-- `lines` = `.nq-map-lines path` (9 on the home page), `labels` = `.nq-map-labels > a` (9). Label `i` maps to trace `order[i]` with `order = [8, 0, 1, 2, 3, 4, 5, 6, 7]` (the centre label, Netquor Central, is authored first, its trace last).
+- `lines` = `.nq-map-lines path` (9 on the home page), `labels` = `.nq-map-labels > a` (9). Label `i` maps to trace `order[i]` with `order = [8, 0, 1, 2, 3, 4, 5, 6, 7]` (the center label, Netquor Central, is authored first, its trace last).
 - Each trace gets `pathLength="100"`. For each trace `i` a clone is appended to the same parent: `cloneNode()` (attributes kept, so `pathLength="100"`), `class` replaced by `nq-pulse`, `style.animationDelay = (i * 0.55) + "s"` (observed as `0s`, `0.55s`, ... `4.4s`). CSS animates `.nq-pulse` (`nq-flow`, 4.2 s linear infinite, dash `5 95`; hidden under reduced motion).
 - Tap area: for each label a transparent `rect` is inserted as the label's first child, `x = bbox.x - 14`, `y = bbox.y - 22`, `width = bbox.width + 28`, `height = bbox.height + 44`, `fill="transparent"`; failures of `getBBox` are swallowed. (Observed: the rects carry fractional values straight from `getBBox`, e.g. `x="229.94863891601562"`.)
 - Hover and focus: `mouseenter` and `focus` on a label add class `hot` to its trace and its pulse clone; `mouseleave` and `blur` remove it. Observed: hovering label 2 gives hot paths `[0, 9]` (trace 0 and clone 9), label 1 gives `[8, 17]`. `.hot` styling: trace `stroke: #8cc4f7; opacity: 1`, clone `animation-duration: 1.6s`.
@@ -199,7 +199,7 @@ Not a Netquor script: `bootstrap.bundle.min.js` 5.3.3 from jsdelivr drives `data
 
 ## Subnet calculator: subnet-calc.js and the inline script (scenarios `subnet-v4`, `subnet-v6`)
 
-`subnet-calc.js` is pure (also loaded by Node for tests) and sets `window.NQSubnet = { parseV4, fmtV4, calcV4, splitV4, calcV6 }`. Its maths is kept as is by the island; the inline script on the page is what a port re-implements.
+`subnet-calc.js` is pure (also loaded by Node for tests) and sets `window.NQSubnet = { parseV4, fmtV4, calcV4, splitV4, calcV6 }`. Its math is kept as is by the island; the inline script on the page is what a port re-implements.
 
 **Hooks (ids).** `v4` (text input, starts as `192.168.1.0/24`, `aria-describedby="v4err"`), `v4go` (button `Calculate`), `v4err` (`aria-live="polite"`), `v4out` (`dl`, `hidden` until a result), `v4note`, `splitcard` (`hidden` when there is nothing to split), `splitto` (`select`), `splitcount`, `splitrows` (`tbody`), `splitmore`, `v6` (text input, starts as `56`, `aria-describedby="v6out"`), `v6out` (`aria-live="polite"`).
 

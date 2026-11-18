@@ -261,7 +261,7 @@ export class Page {
         }
     }
 
-    /** Two animation frames so style changes made by the last input have been applied, then until the scroll position has not moved for 120 ms (the pages use smooth scrolling for anchors and focus, which is still travelling when the input call returns; at most 1.5 s). */
+    /** Two animation frames so style changes made by the last input have been applied, then until the scroll position has not moved for 120 ms (the pages use smooth scrolling for anchors and focus, which is still traveling when the input call returns; at most 1.5 s). */
     async settle(): Promise<void> {
         await this.eval(`new Promise((res) => {
             let done = false; const finish = () => { if (!done) { done = true; res(true); } };
@@ -338,7 +338,7 @@ export class Page {
         await this.clickAt(x, y);
     }
 
-    /** A touch tap at the element's centre (the page should be launched with touch: true). */
+    /** A touch tap at the element's center (the page should be launched with touch: true). */
     async tap(selector: string, o: { scroll?: boolean; force?: boolean } = {}): Promise<void> {
         const { x, y } = await this.locate(selector, o);
         await this.cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] }, this.sessionId);

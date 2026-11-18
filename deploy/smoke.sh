@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Container smoke test: builds the image (native architecture, see PLATFORM below), runs web and worker on a throwaway network with a throwaway volume,
-# a tiny fake pricing API and two throwaway Caddys that mimic the edge routing, asserts the behaviour that matters, then
+# a tiny fake pricing API and two throwaway Caddys that mimic the edge routing, asserts the behavior that matters, then
 # removes everything it created (containers, network, volume). Touches nothing else on this machine and no remote host.
 #   bash deploy/smoke.sh                     build and test
 #   SKIP_BUILD=1 IMAGE=my:tag bash deploy/smoke.sh   test an image that is already built (CI does this)

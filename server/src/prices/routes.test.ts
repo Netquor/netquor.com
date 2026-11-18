@@ -286,7 +286,7 @@ describe("POST /hooks/pricing: heartbeat answer", () => {
 
 describe("POST /hooks/pricing: replay limits for dangerous bodies", () => {
     const big = (v: number) => ({ snapshot: snap(v, { ...ten, "k.p0": 0 }), allowLargeChange: true, reason: "intended" });
-    test("allowLargeChange and rebaseVersion are honoured within 60 s of the signature, refused beyond it, while a plain body keeps 300 s", async () => {
+    test("allowLargeChange and rebaseVersion are honored within 60 s of the signature, refused beyond it, while a plain body keeps 300 s", async () => {
         const x = setup({ initial: snap(1, ten) });
         expect((await x.post(big(2), { ts: t - 61 })).status).toBe(401);
         expect((await x.post(big(2), { ts: t + 61 })).status).toBe(401);

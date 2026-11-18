@@ -2,7 +2,7 @@
 //   { snapshot, via?: "poll" | "operator", allowLargeChange?, rebaseVersion?, reason? }  a full snapshot (the primary path, and the worker's delivery of a poll)
 //   { event: "prices.changed" } or the Netquor API's { id, type: "price.changed", at, data }  a nudge: pull once from the API (coalesced, see nudge.ts)
 //   { event: "poll.ok" }                                                               the worker's heartbeat: the API was reached and had nothing newer. Answered { ok: true, version } with the snapshot version in force here, so the worker can tell when this process is behind the API. A heartbeat signed more than 60 s ago is refused (401).
-// A body that carries rebaseVersion or allowLargeChange is honoured only within 60 s of its signature timestamp (every other body: 300 s) and each (timestamp, signature) pair is accepted once for 5 minutes (401 otherwise, like any bad signature).
+// A body that carries rebaseVersion or allowLargeChange is honored only within 60 s of its signature timestamp (every other body: 300 s) and each (timestamp, signature) pair is accepted once for 5 minutes (401 otherwise, like any bad signature).
 // Answers: 200 done (or coalesced), 401 bare (bad or missing signature), 400 not a known body, 409 version older or same version with other content, 413 too large, 422 invalid snapshot / change_too_large / reason_required, 429 more than 30 signed requests a minute, 500 could not save, 503 the nudge pull failed.
 // GET /api/prices is public: the snapshot in force, short cache, strong ETag.
 import { Elysia } from "elysia";

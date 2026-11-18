@@ -64,7 +64,7 @@ One at a time (in-process mutex). Then:
 
 1. `X-Netquor-Signature: t=<unix>,v1=<hex>` (the worker and the operator tool use this).
 2. `X-Netquor-Signature-256: <hex>` (a leading `sha256=` is tolerated) together with `X-Netquor-Timestamp: <unix seconds>`.
- Timestamp within 300 s, body at most 256 KB. A body that carries `rebaseVersion` or `allowLargeChange` (it switches a guard off) is honoured only within 60 s of its signature timestamp, and each (timestamp, signature) pair is accepted once (the last 1000 pairs are remembered for 5 minutes); a replay or a late one is a bare 401. A `poll.ok` heartbeat signed more than 60 s ago is a 401 too. During a rotation set `PRICING_WEBHOOK_SECRET_NEXT` as well; either verifies. A secret shorter than 16 characters is ignored with one warning, and with no valid `PRICING_WEBHOOK_SECRET` the routes do not exist.
+ Timestamp within 300 s, body at most 256 KB. A body that carries `rebaseVersion` or `allowLargeChange` (it switches a guard off) is honored only within 60 s of its signature timestamp, and each (timestamp, signature) pair is accepted once (the last 1000 pairs are remembered for 5 minutes); a replay or a late one is a bare 401. A `poll.ok` heartbeat signed more than 60 s ago is a 401 too. During a rotation set `PRICING_WEBHOOK_SECRET_NEXT` as well; either verifies. A secret shorter than 16 characters is ignored with one warning, and with no valid `PRICING_WEBHOOK_SECRET` the routes do not exist.
 
 Bodies (JSON):
 
@@ -104,7 +104,7 @@ The Netquor API (https://api.netquor.com) is already public for reads: `GET /v1/
 
 **Manual keys** (`vpn.*`, `network.*`, `homeassistant.*`, `digitalaccess.*`) are not in the map and are never touched by the catalog; they change only by a signed snapshot (webhook or operator tool). The map never adds or deletes a key: a mapped key missing from the snapshot is left out with a warning (add it to the seed first), and every amount must be a whole number of cents from 0 to 10,000,000.
 
-**Fetch plan.** Products come from the map, limited to `NETQUOR_CATALOG_PRODUCTS`. One conditional GET per product (its own `If-None-Match`), 10 s timeout, body read as a stream and cut at 512 KB, https only (http only to localhost, for tests), `User-Agent: netquor-web-worker`, redirects refused. A 429 is honoured: that product is not asked again until `Retry-After` passes (bounded to an hour) and the worker waits at least that long. A product that fails (error, timeout, 5xx, not published, malformed) leaves its keys unchanged and never blocks the others.
+**Fetch plan.** Products come from the map, limited to `NETQUOR_CATALOG_PRODUCTS`. One conditional GET per product (its own `If-None-Match`), 10 s timeout, body read as a stream and cut at 512 KB, https only (http only to localhost, for tests), `User-Agent: netquor-web-worker`, redirects refused. A 429 is honored: that product is not asked again until `Retry-After` passes (bounded to an hour) and the worker waits at least that long. A product that fails (error, timeout, 5xx, not published, malformed) leaves its keys unchanged and never blocks the others.
 
 **Candidate.** `buildCandidate(current, books, map)` returns `{candidate | null, changes, warnings, sources}`. The candidate is the web process's current snapshot with only the changed catalog-managed prices replaced (units kept), `version = current.version + 1`, `source: "poll"`. There is no candidate unless a price actually changed. It goes through the normal ingest, so the sanity guards still apply.
 
@@ -143,7 +143,7 @@ PRICING_WEBHOOK_SECRET_NEXT=<the API-generated subscriber secret>
 
 - Failures back off exponentially (interval doubled each time, jittered, never under the interval, never over an hour) and recover on the next success.
 - A version the web answered 409, or 422 `change_too_large`, for is not sent again until the API shows a newer version (heartbeats continue). Content the web called invalid is not resent unchanged. The log line says so, once per poll.
-- One log line per outcome, never a URL, token or secret. SIGTERM or SIGINT stops it cleanly (in-flight requests are cancelled). Without a valid API address, web address or secret it logs once and idles (alive, so a container does not restart in a loop).
+- One log line per outcome, never a URL, token or secret. SIGTERM or SIGINT stops it cleanly (in-flight requests are canceled). Without a valid API address, web address or secret it logs once and idles (alive, so a container does not restart in a loop).
 - An API wrapper `{ snapshot, ... }` is unwrapped; any flag in it is ignored. Only a signed operator body can accept a large change.
 
 ## Status (`GET /health/detail`, `prices`)

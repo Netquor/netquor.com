@@ -1,6 +1,11 @@
 <script lang="ts">
+    import { page } from "$app/state";
     import Price from "#lib/components/Price.svelte";
+    import { checkoutHref } from "#lib/checkout.ts";
     import { EXTRAS, TIERS } from "./data";
+
+    // A referral code on the incoming page URL (?ref=code) is kept on every checkout link.
+    const ref = $derived(page.url.searchParams.get("ref"));
 </script>
 
 <section class="py-5" id="plans">
@@ -11,6 +16,7 @@
         </div>
         <div class="row g-4">
             {#each TIERS as t (t.name)}
+                {@const checkout = checkoutHref(t.cta.id, ref)}
                 <div class="col-md-6 col-xl-3"><div class={["feature-card tier", t.cardClass]}>
                     {#if t.ribbon}<span class="ribbon">{t.ribbon}</span>{/if}
                     <h3 class={["h5 fw-bold", !t.nameStyle && "text-info"]} style={t.nameStyle}>{t.name}</h3>
@@ -20,7 +26,12 @@
                             <li class="mb-2">{#if f.off}<i class="bi bi-dash text-muted me-2"></i>{:else if t.tickStyle}<i class="bi bi-check2 me-2" style={t.tickStyle}></i>{:else}<i class="bi bi-check2 text-info me-2"></i>{/if}{f.text}</li>
                         {/each}
                     </ul>
-                    <a href={t.cta.href} class={["btn", t.cta.primary ? "btn-primary-cyber" : "btn-outline-info rounded-pill"]}>{t.cta.label}</a>
+                    {#if checkout}
+                        <a href={checkout} class={["btn", t.cta.primary ? "btn-primary-cyber" : "btn-outline-info rounded-pill"]}>{t.cta.checkoutLabel}</a>
+                        <a href={t.cta.href} class="d-block text-center small text-muted mt-2">Ask us first</a>
+                    {:else}
+                        <a href={t.cta.href} class={["btn", t.cta.primary ? "btn-primary-cyber" : "btn-outline-info rounded-pill"]}>{t.cta.label}</a>
+                    {/if}
                 </div></div>
             {/each}
         </div>

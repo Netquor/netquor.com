@@ -65,7 +65,7 @@ Exit codes: 0 success, 1 a step failed, 2 usage or config error or `--edge` not 
 5. Verifies `phone.netquor.com` answers 200 through the edge: `curl --resolve phone.netquor.com:443:127.0.0.1` on the server, retried for about 16 s.
 6. On a failed reload or verification the backup is restored and Caddy reloaded (or compose restored and brought up); the run exits 1 and says so.
 
-## Failure behaviour in one place
+## Failure behavior in one place
 
 - Before step 6 nothing on the server's running stack has changed; a failure just stops.
 - After step 6 any compose or health failure triggers the automatic rollback described in step 10.

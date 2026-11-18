@@ -1,4 +1,4 @@
-// background.ts: the DOM wiring of bg.js. The hero's grid and traces always; the travelling pulse and the pause control unless reduced motion or Save-Data. Pass the .nq-bg wrapper's svg and canvas (the component renders them); the pause button is appended to the hero like the legacy script does.
+// background.ts: the DOM wiring of bg.js. The hero's grid and traces always; the traveling pulse and the pause control unless reduced motion or Save-Data. Pass the .nq-bg wrapper's svg and canvas (the component renders them); the pause button is appended to the hero like the legacy script does.
 import { buildPaths, initialPulse, stepPulse, svgMarkup, type Path } from "./geometry.ts";
 
 export const STORAGE_KEY = "nq-bg-paused";

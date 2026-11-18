@@ -16,7 +16,7 @@ export const progressScale = (scrollHeight: number, innerHeight: number, scrollY
 /** The inline `transform` value the progress line carries. */
 export const progressTransform = (v: number): string => `scaleX(${v})`;
 
-/** Label index to trace index. The centre label (Netquor Central) is authored first and its trace last. */
+/** Label index to trace index. The center label (Netquor Central) is authored first and its trace last. */
 export const LABEL_TRACE_ORDER: readonly number[] = [8, 0, 1, 2, 3, 4, 5, 6, 7];
 export const traceIndexForLabel = (labelIndex: number): number | undefined => LABEL_TRACE_ORDER[labelIndex];
 

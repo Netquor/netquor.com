@@ -1,4 +1,4 @@
-// collapse.ts: the Bootstrap collapse accordions (data-bs-toggle="collapse" with data-bs-parent="#faq") on vpn, network, sdn and homeassistant. The behaviour comes from bootstrap.bundle.min.js 5.3.3 on a CDN today; a port has to reproduce it without that script.
+// collapse.ts: the Bootstrap collapse accordions (data-bs-toggle="collapse" with data-bs-parent="#faq") on vpn, network, sdn and homeassistant. The behavior comes from bootstrap.bundle.min.js 5.3.3 on a CDN today; a port has to reproduce it without that script.
 import type { Page } from "../browser";
 import type { Scenario, Step } from "../scenario";
 import type { Observed } from "../observe";

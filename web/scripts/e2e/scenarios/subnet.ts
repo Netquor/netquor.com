@@ -1,4 +1,4 @@
-// subnet.ts: the subnet calculator on /subnet-calculator.html: subnet-calc.js (pure maths, window.NQSubnet) plus the page's inline script that wires it up (live calculation on every input event, Calculate button, Enter key, split table, IPv6 count).
+// subnet.ts: the subnet calculator on /subnet-calculator.html: subnet-calc.js (pure math, window.NQSubnet) plus the page's inline script that wires it up (live calculation on every input event, Calculate button, Enter key, split table, IPv6 count).
 import type { Page } from "../browser";
 import type { Scenario, Step } from "../scenario";
 import type { Observed, ObserveSpec } from "../observe";

@@ -13,7 +13,7 @@ export interface Step {
     run?: (page: Page, side: Side) => Promise<void>;
     /** Extra observation for this step, merged over the scenario's (selectors, attrs and computed are unioned, the rest replaced). */
     observe?: ObserveSpec;
-    /** An assertion on the snapshot of EACH side, so a scenario also documents the absolute behaviour, not only parity. Throw to fail. */
+    /** An assertion on the snapshot of EACH side, so a scenario also documents the absolute behavior, not only parity. Throw to fail. */
     expect?: (observed: Observed, side: Side, page: Page) => void | Promise<void>;
 }
 

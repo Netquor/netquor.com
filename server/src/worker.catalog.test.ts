@@ -110,7 +110,7 @@ describe("catalog worker cycles", () => {
         expect(b.posts).toHaveLength(0);
     });
 
-    test("429 with Retry-After: that product is not asked again before it passes, the delay honours it, the other product still delivers", async () => {
+    test("429 with Retry-After: that product is not asked again before it passes, the delay honors it, the other product still delivers", async () => {
         const c = catalog({ "netquor-fleet": [new Response("", { status: 429, headers: { "retry-after": "900" } })], "netquor-phone": [book(phoneWith(29_000_000)), nm()] });
         const b = build(c);
         const r = await b.worker.step(b.signal);

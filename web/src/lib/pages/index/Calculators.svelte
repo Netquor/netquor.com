@@ -1,5 +1,5 @@
 <script lang="ts">
-    // The two calculators. The markup is server-rendered with empty outputs, as in the legacy page; cost-calc.js (pure maths, loaded by the route) and the wiring in calculators.ts fill them in after hydration.
+    // The two calculators. The markup is server-rendered with empty outputs, as in the legacy page; cost-calc.js (pure math, loaded by the route) and the wiring in calculators.ts fill them in after hydration.
     import { onMount } from "svelte";
     import { initCostCalcs } from "./calculators";
 

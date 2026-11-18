@@ -50,7 +50,7 @@ Page methods:
 | `goto(url, {waitUntil?, timeoutMs?})` | Navigate and wait for `load` (or `"networkidle"`: 500 ms without requests), then for web fonts, because a font that loads late changes text widths and so every box. |
 | `reload()` | Reload and wait for `load` and fonts. |
 | `eval(exprOrFn)` | Evaluate in the page, await promises, return the JSON value. A function is called with no arguments (it is serialised, so it cannot close over test variables). |
-| `click(selector, {scroll?, force?})` | Scroll the element to the centre, check it is really under the pointer (not covered), move, press, release. Fails with the reason when the element is missing, has no size, or is covered. |
+| `click(selector, {scroll?, force?})` | Scroll the element to the center, check it is really under the pointer (not covered), move, press, release. Fails with the reason when the element is missing, has no size, or is covered. |
 | `clickAt(x, y)`, `clickOutside(avoidSelector?)` | Click a viewport point; or a point that is not a link, button or control and not inside `avoidSelector`. |
 | `tap(selector)` | A touch tap. |
 | `hover(selector)`, `moveMouse(x, y)` | Move the pointer onto an element, or to a point (to leave one). |
@@ -73,7 +73,7 @@ To assert that nothing is fetched from a CDN (what the ports must achieve): `exp
 
 **Timers.** `timers: { scale: 0.02, min: 10000 }` wraps `setTimeout`/`setInterval`: every delay of 100 ms or more is recorded in `window.__e2e.timers` (`{kind, ms}`), and delays of `min` ms or more (default 10 s) run `scale` times as long. `nudge.js` waits 25 s; the nudge scenarios run it in 500 ms and still assert that a 25000 ms timer was set. Shorter timers (the 250 ms removal) keep their real length.
 
-**Prelude.** Every document gets `window.__e2e = { prints }`, `window.print` replaced by a counter (so "Print this result" can be asserted without a print dialog), and a style rule `html, body { scroll-behavior: auto !important }`: the pages use CSS smooth scrolling, which is still travelling when a snapshot is taken (`smoothScroll: true` keeps it).
+**Prelude.** Every document gets `window.__e2e = { prints }`, `window.print` replaced by a counter (so "Print this result" can be asserted without a print dialog), and a style rule `html, body { scroll-behavior: auto !important }`: the pages use CSS smooth scrolling, which is still traveling when a snapshot is taken (`smoothScroll: true` keeps it).
 
 ### `observe(page, spec)`: the snapshot
 

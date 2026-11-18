@@ -189,7 +189,7 @@ describe("data-bs-parent exclusivity", () => {
 });
 
 describe("events and links", () => {
-    test("show.bs.collapse can be cancelled", () => {
+    test("show.bs.collapse can be canceled", () => {
         const s = setup();
         s.panels[0].addEventListener("show.bs.collapse", (e: Event) => e.preventDefault());
         s.triggers[0].fire("click");

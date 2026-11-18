@@ -95,5 +95,5 @@ describe("normaliseObserved", () => {
         expect(e.classes).toEqual(["open"]);
     });
     test("computed keys come out sorted", () => expect(Object.keys(normaliseObserved(raw, {}).elements[".a"].items[0].computed)).toEqual(["display", "opacity"]));
-    test("textMax is honoured", () => expect(normaliseObserved(raw, { textMax: 4 }).elements[".a"].items[0].text).toBe("hi t..."));
+    test("textMax is honored", () => expect(normaliseObserved(raw, { textMax: 4 }).elements[".a"].items[0].text).toBe("hi t..."));
 });

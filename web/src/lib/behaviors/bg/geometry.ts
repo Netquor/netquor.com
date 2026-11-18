@@ -71,7 +71,7 @@ export interface PulseState {
 }
 export const initialPulse = (): PulseState => ({ pulse: null, nextAt: FIRST_PULSE_AT, last: 0, idx: 0 });
 
-/** One painted square: x, y, size and the fill colour string bg.js builds. */
+/** One painted square: x, y, size and the fill color string bg.js builds. */
 export interface Dot { x: number; y: number; size: 3; fill: string }
 
 export interface Frame { dots: Dot[]; /** The pulse just ended: clear the canvas again after painting, as bg.js does. */ clearAfter: boolean }

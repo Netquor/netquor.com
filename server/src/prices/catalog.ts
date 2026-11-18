@@ -1,6 +1,6 @@
 // catalog.ts: prices from the Netquor API price catalog (NETQUOR_CATALOG_URL, e.g. https://api.netquor.com). Pure functions plus injected fetch and clock, so the worker (backup poll) and the web process (when the API nudges it) share one implementation.
 //   parseCatalogMap   validates server/data/catalog-map.json (which site keys are catalog-managed, and the derivation rule of each).
-//   createCatalogPuller  one conditional GET per product (ETag), 10 s timeout, byte-capped stream, https only (http to loopback for tests), Retry-After honoured; a failing product never blocks another.
+//   createCatalogPuller  one conditional GET per product (ETag), 10 s timeout, byte-capped stream, https only (http to loopback for tests), Retry-After honored; a failing product never blocks another.
 //   buildCandidate    the current snapshot plus the books gives the next snapshot (version + 1) only when a catalog-managed price actually changed. It never deletes a key, never adds a key that is not in the map, and never invents a price: the web ingest guards still apply to what it returns.
 import { readBodyCapped } from "./pull";
 import { KEY_PATTERN, MAX_CENTS } from "./snapshot";

@@ -1,4 +1,4 @@
-// The bundle price tool of the home page, ported from the inline script of the legacy page. The maths is bundle-calc.js (window.NQBundle, loaded unchanged by the route). bundleView turns a calc result into rows and notes (testable without a DOM); initBundleTool reads the form, draws the rows and handles the preset buttons.
+// The bundle price tool of the home page, ported from the inline script of the legacy page. The math is bundle-calc.js (window.NQBundle, loaded unchanged by the route). bundleView turns a calc result into rows and notes (testable without a DOM); initBundleTool reads the form, draws the rows and handles the preset buttons.
 export interface BundleLine { key?: string; label: string; cents: number }
 export interface BundleTotals { lines: BundleLine[]; products: number; percent: number; listCents: number; discountCents: number; totalCents: number }
 export interface BundleResult {

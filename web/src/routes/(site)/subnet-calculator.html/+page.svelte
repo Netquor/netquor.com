@@ -1,5 +1,5 @@
 <script lang="ts">
-    // Pilot of the Svelte migration: /subnet-calculator.html, same URL, same metadata and same visible text as the legacy page. The maths is the existing pure module subnet-calc.js, loaded unchanged (it sets window.NQSubnet) and used as an island: the server renders the page with empty results (as the legacy page does before its script runs), and the browser fills them in after hydration.
+    // Pilot of the Svelte migration: /subnet-calculator.html, same URL, same metadata and same visible text as the legacy page. The math is the existing pure module subnet-calc.js, loaded unchanged (it sets window.NQSubnet) and used as an island: the server renders the page with empty results (as the legacy page does before its script runs), and the browser fills them in after hydration.
     import { onMount } from "svelte";
     import Price from "#lib/components/Price.svelte";
     import Seo from "#lib/components/Seo.svelte";

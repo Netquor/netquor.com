@@ -1,5 +1,5 @@
 <script lang="ts">
-    // A row of three centred feature cards (the intro and the tenant experience use the same markup).
+    // A row of three centered feature cards (the intro and the tenant experience use the same markup).
     let { items }: { items: readonly { icon: string; title: string; text: string }[] } = $props();
 </script>
 

@@ -840,7 +840,7 @@ export const FAQ: { q: string; a: string }[] = [
     },
     {
         "q": "Do I need a contract?",
-        "a": "Network Solutions and Netquor VPN are month to month, and Hosted Home Assistant can be cancelled any time. Netquor Fleet starts with a free 30-day trial and has no minimum number of devices."
+        "a": "Network Solutions and Netquor VPN are month to month, and Hosted Home Assistant can be canceled any time. Netquor Fleet starts with a free 30-day trial and has no minimum number of devices."
     },
     {
         "q": "Is Netquor Phone available today?",

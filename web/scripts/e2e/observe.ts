@@ -58,7 +58,7 @@ export const normaliseText = (s: string, max = 120): string => {
 export const normaliseCssValue = (s: string): string =>
     s.replace(/-?\d+\.\d+(?:e[+-]?\d+)?/gi, (n) => { const v = Math.round(Number(n) * 100) / 100; return String(Object.is(v, -0) ? 0 : v); }).replace(/\s+/g, " ").trim();
 
-/** Drops ?v=<fingerprint> from a URL-ish attribute value (the cache-busting parameter is not behaviour). */
+/** Drops ?v=<fingerprint> from a URL-ish attribute value (the cache-busting parameter is not behavior). */
 export const stripVersion = (u: string): string => u.replace(/([?&])v=[^&#]*(&?)/, (_m, a: string, b: string) => (a === "?" && b ? "?" : a === "&" && b ? "&" : "")).replace(/\?$/, "");
 
 const hashClass = /^svelte-[a-z0-9]+$/;

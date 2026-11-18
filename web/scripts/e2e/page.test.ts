@@ -116,8 +116,8 @@ describe("recorded requests", () => {
         push("Network.requestWillBeSent", { requestId: "9", request: { url: "https://www.googletagmanager.com/gtag/js?id=G-1", method: "GET" }, type: "Script" });
         push("Fetch.requestPaused", { requestId: "F1", request: { url: "https://www.googletagmanager.com/gtag/js?id=G-1", method: "GET" }, resourceType: "Script" });
         await tick();
-        const fulfil = sent.find((s) => s.method === "Fetch.fulfillRequest");
-        expect(fulfil?.params).toMatchObject({ requestId: "F1", responseCode: 200, body: "" });
+        const fulfill = sent.find((s) => s.method === "Fetch.fulfillRequest");
+        expect(fulfill?.params).toMatchObject({ requestId: "F1", responseCode: 200, body: "" });
         expect(sent.map((s) => s.method)).not.toContain("Fetch.continueRequest");
         expect(page.requests()).toHaveLength(1);
         expect(page.requests()[0].stubbed).toBe(true);

@@ -78,22 +78,22 @@ describe("createFetcher", () => {
 
 describe("the byte cap", () => {
     test("a declared Content-Length over the cap is refused without reading", async () => {
-        let cancelled = false, read = 0;
-        const body = new ReadableStream({ pull(c) { c.enqueue(new Uint8Array(10)); }, cancel() { cancelled = true; } });
+        let canceled = false, read = 0;
+        const body = new ReadableStream({ pull(c) { c.enqueue(new Uint8Array(10)); }, cancel() { canceled = true; } });
         const origGetReader = body.getReader.bind(body);
         body.getReader = ((...a: []) => { read++; return origGetReader(...a); }) as typeof body.getReader;
         const f = make(async () => new Response(body, { headers: { "content-length": "999999" } }), { maxBytes: 1000 });
         expect(await f()).toEqual({ kind: "failed", reason: "the API answer is too large" });
         expect(read).toBe(0);
-        expect(cancelled).toBe(true);
+        expect(canceled).toBe(true);
     });
 
-    test("a stream with no length is cut off as soon as it passes the cap, and cancelled", async () => {
-        let produced = 0, cancelled = false;
-        const body = new ReadableStream({ pull(c) { produced += 100; c.enqueue(new Uint8Array(100)); }, cancel() { cancelled = true; } });
+    test("a stream with no length is cut off as soon as it passes the cap, and canceled", async () => {
+        let produced = 0, canceled = false;
+        const body = new ReadableStream({ pull(c) { produced += 100; c.enqueue(new Uint8Array(100)); }, cancel() { canceled = true; } });
         const f = make(async () => new Response(body), { maxBytes: 1000 });
         expect(await f()).toEqual({ kind: "failed", reason: "the API answer is too large" });
-        expect(cancelled).toBe(true);
+        expect(canceled).toBe(true);
         expect(produced).toBeLessThanOrEqual(2000); // never the whole (endless) stream
     });
 

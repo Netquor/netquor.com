@@ -17,7 +17,7 @@ describe("core", () => {
         expect(progressScale(500, 900, 50)).toBe(0);
         expect(progressTransform(0.5)).toBe("scaleX(0.5)");
     });
-    test("label to trace mapping: centre label first, trace last", () => {
+    test("label to trace mapping: center label first, trace last", () => {
         expect(LABEL_TRACE_ORDER).toEqual([8, 0, 1, 2, 3, 4, 5, 6, 7]);
         expect(traceIndexForLabel(0)).toBe(8);
         expect(traceIndexForLabel(1)).toBe(0);

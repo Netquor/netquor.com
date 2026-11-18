@@ -101,7 +101,7 @@ describe("runOperator against the real routes", () => {
         expect(err[0]).toContain("could not reach");
     });
 
-    test("WEB_INTERNAL_URL is honoured", async () => {
+    test("WEB_INTERNAL_URL is honored", async () => {
         const urls: string[] = [];
         await runOperator({ argv: ["s.json", "--reason", "x"], env: { PRICING_WEBHOOK_SECRET: SECRET, WEB_INTERNAL_URL: "http://netquor-web:3000" }, now: () => NOW_MS, out: () => {}, err: () => {}, readFile: () => "{}", fetch: async (u) => { urls.push(u); return new Response("{}"); } });
         expect(urls).toEqual(["http://netquor-web:3000/hooks/pricing"]);

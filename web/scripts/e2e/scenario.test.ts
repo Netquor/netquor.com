@@ -70,7 +70,7 @@ describe("compareTraces", () => {
 });
 
 describe("the registered scenarios", () => {
-    test("there are scenarios for every legacy behaviour in the brief", () => {
+    test("there are scenarios for every legacy behavior in the brief", () => {
         const names = SCENARIOS.map((s) => s.name);
         for (const prefix of ["nav", "fx", "bg", "nudge", "analytics", "readiness", "collapse", "subnet", "fleet"]) expect(names.some((n) => n === prefix || n.startsWith(`${prefix}-`))).toBe(true);
     });
