@@ -1,0 +1,35 @@
+# Runs on doc-iad-c-02 at /opt/edge: the only thing that listens on ports 80 and 443 (tcp).
+# Phone is on the shared "edge" network; the web container is on "web_front" (created once with
+# `docker network create web_front`) so it never shares a network with Phone. This proxy joins both.
+# Each site is a container on one of those networks. This file matches what is running on the host:
+# the certificate store is the EXISTING external volume netquor-phone_caddy_data (it was created by the Phone
+# stack's own Caddy, so it already holds the issued certificates; do not create a new one).
+services:
+  edge:
+    image: caddy:2-alpine
+    container_name: netquor-edge
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./holding:/srv/holding:ro
+      - phone_caddy_data:/data
+      - caddy_config:/config
+    networks: [edge, web_front]
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+
+networks:
+  edge:
+    external: true
+  web_front:
+    external: true
+
+volumes:
+  phone_caddy_data:
+    external: true
+    name: netquor-phone_caddy_data
+  caddy_config:

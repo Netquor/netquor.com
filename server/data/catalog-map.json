@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "note": "Which site price keys come from the Netquor API price catalog (https://api.netquor.com), and exactly how. Reviewed by hand: a key is listed here only when it can be derived from a published price book without guessing. Every other key in prices.seed.json is MANUAL and is never touched by the catalog worker: the keys under vpn., network., homeassistant. and digitalaccess. change only by a signed snapshot (webhook or operator). Rules: flat_micros = the sku's structure.amountMicros / 10000 (must divide exactly, else the key is refused); fleet_month = the kind's monthlyCents; fleet_year = monthlyCents x annualMonthsPaid; fleet_lifetime = fleet_year x lifetimeAnnualMultiple; fleet_dedicated = the dedicated block's field. Fleet rules read the engine entry fleet.device-packs, structure.config.",
+  "manual": ["vpn.*", "network.*", "homeassistant.*", "digitalaccess.*"],
+  "keys": {
+    "phone.planned_launch.month": { "product": "netquor-phone", "sku": "phone.starter.monthly", "rule": "flat_micros" },
+    "fleet.mac.month": { "product": "netquor-fleet", "sku": "fleet.device-packs", "rule": "fleet_month", "kind": "fleet-mac" },
+    "fleet.mac.year": { "product": "netquor-fleet", "sku": "fleet.device-packs", "rule": "fleet_year", "kind": "fleet-mac" },
+    "fleet.mac.lifetime": { "product": "netquor-fleet", "sku": "fleet.device-packs", "rule": "fleet_lifetime", "kind": "fleet-mac" },
+    "fleet.mobile.month": { "product": "netquor-fleet", "sku": "fleet.device-packs", "rule": "fleet_month", "kind": "fleet-ios" },
+    "fleet.mobile.year": { "product": "netquor-fleet", "sku": "fleet.device-packs", "rule": "fleet_year", "kind": "fleet-ios" },
+    "fleet.mobile.lifetime": { "product": "netquor-fleet", "sku": "fleet.device-packs", "rule": "fleet_lifetime", "kind": "fleet-ios" },
+    "fleet.dedicated.month": { "product": "netquor-fleet", "sku": "fleet.device-packs", "rule": "fleet_dedicated", "field": "monthlyCents" },
+    "fleet.dedicated.setup": { "product": "netquor-fleet", "sku": "fleet.device-packs", "rule": "fleet_dedicated", "field": "setupCents" },
+    "fleet.dedicated.year": { "product": "netquor-fleet", "sku": "fleet.device-packs", "rule": "fleet_dedicated", "field": "yearlyCents" }
+  }
+}

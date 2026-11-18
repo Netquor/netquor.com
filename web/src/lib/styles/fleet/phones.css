@@ -1,0 +1,46 @@
+/* Fleet phone rules. */
+
+/* ---- Phones ---- */
+.card h3, .steps h3, .packs h3, .plan h3, .free-banner h3 { line-height: 1.1; }
+@media (max-width: 960px) {
+  /* Keep one useful link beside the button instead of an empty bar. */
+  .links { display: flex; margin-left: auto; gap: 4px; }
+  .links a:not([href="#pricing"]) { display: none; }
+  .links a { padding: 11px 12px; }
+  .nav-in { gap: 8px; }
+  .nav-in .btn { margin-left: 0; }
+}
+@media (max-width: 640px) {
+  .btn { min-height: 46px; justify-content: center; }
+  .btn-small { min-height: 42px; }
+  .cta-row .btn { flex: 1 1 100%; }
+  .hero { padding: 48px 0 40px; }
+  h1 { font-size: clamp(38px, 11.5vw, 48px); }
+  .section { padding: 52px 0; }
+  .card, .steps li, .plan, .packs, .form, .ded-card { padding: 22px 20px; }
+  .grid, .steps { margin-top: 28px; gap: 14px; }
+  .card h3 { font-size: 24px; margin-top: 10px; }
+  /* A screenshot of a whole console is unreadable at phone width: show the phone, which is. */
+  .hero-visual { max-width: none; }
+  .hero-visual .mock { display: none; }
+  .hero-visual .shot-phone { position: static; display: block; width: min(250px, 72%); margin: 8px auto 0; }
+  .hero-visual { margin-top: 12px; }
+  .price-pills li { font-size: 14px; }
+  /* Wide screenshots scroll sideways instead of shrinking to nothing. */
+  .showcase figure { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 12px; padding-bottom: 4px; }
+  .showcase img { min-width: 760px; width: 760px; }
+  .showcase figcaption { position: sticky; left: 0; width: calc(100vw - 40px); box-sizing: border-box; }
+  /* The tier table: four columns fit; "You buy" is implied by the licenses column. */
+  .tiers { font-size: 13px; }
+  .tiers th, .tiers td { padding: 9px 6px; }
+  .tiers th:nth-child(2), .tiers td:nth-child(2) { display: none; }
+  .tiers th { font-size: 11px; }
+  .check { padding: 8px 0; }
+  .calc .check input, .check input { width: 22px; height: 22px; }
+  .plan-card { padding: 16px; }
+  .foot-in { gap: 14px; }
+}
+@media (max-width: 380px) {
+  .wrap { width: calc(100% - 32px); }
+  .amount { font-size: 54px; }
+}

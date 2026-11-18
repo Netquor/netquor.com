@@ -1,0 +1,7 @@
+/* central.html's own rules (the legacy inline style block: the product map; the change-preview figure, the capability table and the safety grid are scoped styles of Hero.svelte, Capabilities.svelte and Safe.svelte). The legacy head has them before nq.css; they use the nq tokens and set nothing nq.css sets with the same weight, so coming after it changes nothing. */
+
+.nq-map-labels text { font: 500 15px var(--nq-body); fill: var(--nq-ink); }
+.nq-map-labels text.sub { font: 400 12px var(--nq-mono); fill: var(--nq-ink-3); }
+.nq-map-lines path { stroke: var(--nq-accent); opacity: .85; }
+.nq-map-nodes circle { fill: var(--nq-accent); }
+.nq-map { width: 100%; height: auto; display: block; }

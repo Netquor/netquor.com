@@ -1,0 +1,49 @@
+{
+  "name": "netquor-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "The netquor.com web process: SvelteKit pages rendered per request from an in-memory price cache, with the Elysia API mounted in hooks.server.ts.",
+  "imports": {
+    "#lib/*": "./src/lib/*",
+    "#server/*": "../server/src/*"
+  },
+  "scripts": {
+    "dev": "bun --bun vite dev",
+    "build": "bun --bun vite build",
+    "start": "bun build/index.js",
+    "check": "svelte-kit sync && tsc --noEmit && svelte-check --tsconfig ./tsconfig.json",
+    "test": "bun test src scripts",
+    "baseline": "bun scripts/baseline/cli.ts",
+    "smoke": "bun scripts/smoke.ts",
+    "parity": "bun scripts/parity.ts",
+    "visual": "bun scripts/visual.ts",
+    "payload": "bun scripts/payload.ts",
+    "payload:report": "bun scripts/payloadReport.ts",
+    "e2e": "bun scripts/e2e/run.ts",
+    "e2e:audit": "bun scripts/e2e/audit.ts",
+    "e2e:hydration": "bun scripts/e2e/hydration.ts"
+  },
+  "dependencies": {
+    "elysia": "^1.4.30"
+  },
+  "devDependencies": {
+    "@fontsource/geist": "5.3.0",
+    "@fontsource/geist-mono": "5.3.0",
+    "@fontsource/ibm-plex-mono": "5.3.0",
+    "@fontsource/ibm-plex-sans": "5.3.0",
+    "@sveltejs/adapter-node": "^6.0.2",
+    "@sveltejs/kit": "^3.2.0",
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "@types/bun": "^1.4.2",
+    "@types/pngjs": "^6.0.5",
+    "bootstrap": "5.3.3",
+    "bootstrap-icons": "1.11.3",
+    "pixelmatch": "^8.0.0",
+    "pngjs": "^7.0.0",
+    "svelte": "^5.57.3",
+    "svelte-check": "^4.7.8",
+    "typescript": "^6.0.0",
+    "vite": "^8.0.12"
+  }
+}

@@ -1,0 +1,37 @@
+#!/bin/sh
+# Pull the newest web image and recreate web and worker only when the image id changed. Idempotent: safe to run
+# every two minutes, and a run that failed half way is finished by the next one (it compares the id the containers
+# RUN with, not just what was pulled). Prints exactly one line.
+# Local deploy mode: if /opt/netquor-web/.deploy.env sets WEB_IMAGE to something that is not a ghcr.io image
+# (an image loaded by hand from the owner's Mac), this script does nothing so it cannot replace it.
+set -eu
+dir=${NETQUOR_WEB_DIR:-/opt/netquor-web}
+cd "$dir"
+envfile=$dir/.deploy.env
+img=ghcr.io/netquor/netquor-com-web:main
+if [ -f "$envfile" ]; then
+	cfg=$(sed -n 's/^WEB_IMAGE=//p' "$envfile" | tail -n 1 | tr -d "\"'")
+	if [ -n "$cfg" ]; then
+		case "$cfg" in
+			ghcr.io/*) img=$cfg ;;
+			*) echo "local deploy mode, skipping registry pull"; exit 0 ;;
+		esac
+	fi
+	set -- --env-file "$envfile"
+else
+	set --
+fi
+docker compose "$@" pull --quiet web worker
+want=$(docker image inspect --format '{{.Id}}' "$img")
+stale=0
+for c in netquor-web netquor-web-worker; do
+	have=$(docker inspect --format '{{.Image}}' "$c" 2>/dev/null || echo none)
+	[ "$have" = "$want" ] || stale=1
+done
+if [ "$stale" = 1 ]; then
+	docker compose "$@" up -d --remove-orphans web worker >/dev/null
+	docker image prune -f >/dev/null 2>&1 || true
+	echo "netquor-web: updated to $want"
+else
+	echo "netquor-web: unchanged $want"
+fi

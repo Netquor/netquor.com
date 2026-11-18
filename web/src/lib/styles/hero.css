@@ -1,0 +1,20 @@
+/* Hero: the eyebrow and trace ornaments, the audience paths under the hero actions, and the quiet grid and traces behind the hero (HeroBackground). */
+
+/* Signature: the circuit trace. A hairline that turns a corner and ends in a node. */
+.nq-trace { display: block; width: 100%; height: 24px; color: var(--nq-accent); opacity: .7; }
+.nq-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-family: var(--nq-mono); font-size: .8125rem; color: var(--nq-ink-2); margin: 0 0 24px; }
+.nq-eyebrow::before { content: ""; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--nq-accent); box-shadow: inset 0 0 0 2px var(--nq-bg), inset 0 0 0 6px var(--nq-accent); }
+
+/* Audience paths under the hero actions. */
+.nq-paths { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 32px 0 0; padding: 0; list-style: none; font-size: .9375rem; }
+.nq-paths li { display: flex; align-items: center; gap: 8px; color: var(--nq-ink-3); }
+.nq-paths a { color: var(--nq-ink-2); text-decoration: none; border-bottom: 1px solid var(--nq-line-2); transition: color .15s, border-color .15s; }
+.nq-paths a:hover { color: var(--nq-ink); border-color: var(--nq-accent-t); }
+
+/* Hero background (bg.js): quiet grid and traces behind the content. */
+.hero-section > .container { position: relative; z-index: 1; }
+.nq-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.nq-bg svg, .nq-bg canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.nq-bg-pause { position: absolute; right: 24px; bottom: 8px; z-index: 2; min-height: 44px; padding: 0 12px; background: transparent; border: 0; color: var(--nq-ink-3); font: 400 .75rem var(--nq-mono); cursor: pointer; border-radius: 8px; }
+.nq-bg-pause:hover { color: var(--nq-ink-2); }
+.nq-bg-pause:focus-visible { outline: 2px solid var(--nq-accent-t); outline-offset: 2px; }

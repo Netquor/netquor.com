@@ -1,0 +1,9 @@
+{
+  "name": "netquor-com-deploy",
+  "private": true,
+  "scripts": {
+    "deploy": "bun deploy/deploy.ts",
+    "deploy:dry": "bun deploy/deploy.ts --dry-run",
+    "deploy:status": "bun deploy/deploy.ts --status"
+  }
+}

@@ -1,0 +1,25 @@
+/* Design tokens of the Netquor site system. Every other stylesheet reads these custom properties; change a color or a font here and it changes everywhere.
+
+   Palette: it comes from the logo. Graphite surfaces, the #2F8FE0 node blue as the one accent, #EAF1F8 (the logo's ring white) as ink.
+   Signature: the circuit trace from the logo, a right-angle line that ends in a node dot (see .nq-trace, .nq-rule and .nq-eyebrow).
+
+   Naming: --nq-<role>. Fleet (fleet.html) has its own system in fleet/tokens.css and does not use these.
+
+   Group      Tokens                         Use
+   surface    --nq-bg, --nq-s1, --nq-s2, --nq-s3   page background, then three steps of raised surface (cards, inputs, hovers)
+   line       --nq-line, --nq-line-2         hairline borders, quiet (9 percent) and firm (16 percent)
+   ink        --nq-ink, --nq-ink-2, --nq-ink-3     text: primary, secondary, tertiary (labels, captions)
+   accent     --nq-accent, --nq-accent-t, --nq-accent-s   the node blue, its text-safe tint, and its 12 percent wash
+   status     --nq-ok                        the one success green
+   type       --nq-display, --nq-body, --nq-mono   IBM Plex Sans for headings and text, IBM Plex Mono for labels and numbers (fonts.css)
+   motion     --nq-ease                      the easing curve every transition uses
+*/
+:root {
+    --nq-bg: #12161c; --nq-s1: #1b212b; --nq-s2: #222a36; --nq-s3: #2a3342;
+    --nq-line: rgba(234, 241, 248, .09); --nq-line-2: rgba(234, 241, 248, .16);
+    --nq-ink: #eaf1f8; --nq-ink-2: #a2aebf; --nq-ink-3: #8794a7;
+    --nq-accent: #2f8fe0; --nq-accent-t: #5eaaf0; --nq-accent-s: rgba(47, 143, 224, .12);
+    --nq-ok: #4ec9a0;
+    --nq-display: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; --nq-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; --nq-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    --nq-ease: cubic-bezier(.2, .7, .2, 1);
+}

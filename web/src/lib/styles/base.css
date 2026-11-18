@@ -1,0 +1,26 @@
+/* Base: the page-wide look. Typography scale on top of Bootstrap, link and selection colors, focus ring, the clip that stops sideways scrolling, and the anchor offset under the sticky nav. */
+
+html { scroll-behavior: smooth; }
+body { background: var(--nq-bg); color: var(--nq-ink); font-family: var(--nq-body); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+body h1, body h2, body h3, body h4, body h5, body .display-4, body .display-5 { font-family: var(--nq-display); font-weight: 500; letter-spacing: -.02em; color: var(--nq-ink); line-height: 1.12; }
+body h1, body .display-4 { font-size: clamp(2.25rem, 4.6vw, 3.75rem); letter-spacing: -.035em; }
+body h2, body .display-5 { font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -.028em; }
+body h3 { font-size: 1.25rem; }
+body h4 { font-size: 1.125rem; }
+body .h5, body h5 { font-size: 1.0625rem; }
+body .fw-bold, body .fw-black, body .fw-semibold, body b, body strong { font-weight: 600; }
+body .lead { font-size: 1.125rem; font-weight: 400; line-height: 1.65; }
+body .text-muted, body .text-secondary, body .text-body-secondary { color: var(--nq-ink-2) !important; }
+body .small, body small { font-size: .875rem; }
+body .text-uppercase { text-transform: none !important; }
+body .tracking-widest { letter-spacing: 0 !important; }
+body a { color: var(--nq-accent-t); text-underline-offset: 3px; }
+body a:hover { color: #8cc4f7; }
+body ::selection { background: rgba(47, 143, 224, .35); }
+body :focus-visible { outline: 2px solid var(--nq-accent-t); outline-offset: 2px; }
+
+/* Phones: Bootstrap's 3rem gutter on g-5 rows is wider than the container padding and scrolls the page sideways. */
+@media (max-width: 767.98px) { body .row.g-5 { --bs-gutter-x: 1.5rem; --bs-gutter-y: 2rem; } }
+body { overflow-x: clip; }
+
+html { scroll-padding-top: 84px; }

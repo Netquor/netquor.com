@@ -1,0 +1,11 @@
+/* Fleet navigation: the page's own sticky header. */
+
+/* Navigation */
+.nav { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--base) 82%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid var(--hair); }
+.nav-in { display: flex; align-items: center; gap: 28px; height: 64px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+.mark { width: 30px; height: 30px; border-radius: 8px; display: block; }
+.brand-name { font: 700 26px/1 var(--display); letter-spacing: .06em; }
+.links { display: flex; gap: 22px; margin-left: auto; }
+.links a { color: var(--muted); text-decoration: none; font-size: 15px; }
+.links a:hover { color: var(--ink); }

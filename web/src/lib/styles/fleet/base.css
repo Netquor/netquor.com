@@ -1,0 +1,17 @@
+/* Fleet base: box sizing, page, links, the content width classes, icons and the grid-cell shrink rule (a wide code block or table scrolls inside its card instead of stretching the page). */
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 76px; }
+body { margin: 0; background: var(--base); color: var(--ink); font: 400 16px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; height: auto; display: block; }
+/* Grid cells must be allowed to shrink below their content: a wide code block or table scrolls inside its card instead of stretching the whole page (which left the right edge of every section unpainted on phones). */
+.split > *, .hero-grid > *, .demo > *, .showcase > * { min-width: 0; }
+body { overflow-x: clip; }
+
+a { color: var(--accent-2); text-underline-offset: 3px; }
+.wrap { width: min(1160px, 100% - 40px - env(safe-area-inset-left) - env(safe-area-inset-right)); margin-inline: auto; }
+.narrow { width: min(820px, 100% - 40px); }
+.ico { width: 1.15em; height: 1.15em; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.ico.big { width: 30px; height: 30px; color: var(--accent-2); }
+.muted { color: var(--muted); }
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }

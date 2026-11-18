@@ -1,0 +1,34 @@
+/* Home page: the readiness cards, the app grids by card count (so no card sits alone on a row), the quote and the social row. After motion on purpose: the readiness card hover is allowed to win over the reveal transform. */
+
+/* ---- Readiness cards on the homepage ---- */
+.nq-ready-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.nq-ready { display: flex; flex-direction: column; gap: 8px; padding: 24px; background: var(--nq-s1); border: 1px solid var(--nq-line); border-radius: 16px; text-decoration: none; transition: border-color .2s var(--nq-ease), background-color .2s var(--nq-ease), transform .2s var(--nq-ease); }
+.nq-ready:hover { border-color: var(--nq-accent); background: var(--nq-s2); transform: translateY(-2px); }
+.nq-ready .nq-app-icon { margin-bottom: 6px; }
+.nq-ready h3 { margin: 0; font-size: 1.0625rem; color: var(--nq-ink); }
+.nq-ready p { margin: 0; font-size: .9375rem; color: var(--nq-ink-2); line-height: 1.5; }
+.nq-ready-go { margin-top: auto; padding-top: 10px; font: 400 .75rem var(--nq-mono); color: var(--nq-accent-t); }
+@media (max-width: 991.98px) { .nq-ready-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 575.98px) { .nq-ready-grid { grid-template-columns: 1fr; } }
+
+/* App grids by card count, so no card sits alone on a row. */
+.nq-apps.n4 { grid-template-columns: repeat(4, 1fr); }
+.nq-apps.n3 { grid-template-columns: repeat(3, 1fr); }
+.nq-apps.n2 { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 1199.98px) { .nq-apps.n4, .nq-apps.n3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 639.98px) { .nq-apps.n4, .nq-apps.n3, .nq-apps.n2 { grid-template-columns: 1fr; } }
+@media (min-width: 1200px) and (max-width: 1399.98px) { .nq-app { padding: 20px; } }
+
+.chip { max-width: 100%; }
+@media (max-width: 575.98px) { .chip { white-space: normal; } }
+
+.nq-app-top { gap: 12px; }
+.nq-app-icon { flex: none; }
+
+.nq-quote { margin: 16px 0; padding: 18px 20px; border-left: 2px solid var(--nq-accent); background: var(--nq-s1); border-radius: 0 12px 12px 0; color: var(--nq-ink); font-size: 1.0625rem; line-height: 1.55; }
+.nq-social { display: flex; gap: 14px; margin-top: 14px !important; }
+.nq-social a { display: inline-grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--nq-line-2); border-radius: 10px; color: var(--nq-ink-2); text-decoration: none; transition: color .15s, border-color .15s; }
+.nq-social a:hover { color: var(--nq-ink); border-color: var(--nq-accent); }
+.nq-ready-grid-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 991.98px) { .nq-ready-grid-3 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 575.98px) { .nq-ready-grid-3 { grid-template-columns: 1fr; } }

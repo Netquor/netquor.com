@@ -1,0 +1,43 @@
+/* The home page's own rules (the legacy inline style block). Imported by the route after the site styles, with two rules left out that never applied on the legacy page: the `body` colors (nq.css overrides them there) and the map label hover color (nq.css has the same rule and wins there). */
+
+:root {
+    --cyber-blue: #5eaaf0;
+    --obsidian: #12161c;
+    --slate-800: #1e293b;
+}
+
+.navbar {
+    backdrop-filter: blur(15px);
+    background: rgba(2, 6, 23, 0.8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.icon-accent {
+    font-size: 2rem;
+    color: var(--cyber-blue);
+    margin-bottom: 1.5rem;
+    display: inline-block;
+}
+
+footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 60px 0;
+}
+
+/* Logo is dark slate on transparent, so it sits on a light plate */
+.brand-logo-img { height: 44px; width: auto; background: #f1f5f9; border-radius: 10px; padding: 3px 8px; }
+.brand-logo-img-lg { height: 96px; padding: 6px 14px; border-radius: 14px; }
+
+section[id], header[id] { scroll-margin-top: 84px; }
+
+/* --- Hello, Homelabbers: the section and the terminal are scoped styles of Homelab.svelte; .chip shares its name with the site system, so it stays here --- */
+.chip { display: inline-flex; align-items: center; gap: .4rem; padding: .35rem .8rem; border-radius: 50px; font-size: .82rem; font-weight: 600; color: #e2e8f0; background: rgba(56, 189, 248, 0.09); border: 1px solid rgba(56, 189, 248, 0.25); }
+.chip i { color: var(--cyber-blue); }
+    /* Product map: the logo's trace-and-node idea, linking the six products to one network. */
+.nq-map { width: 100%; height: auto; display: block; }
+.nq-map-lines path { stroke: var(--nq-accent); opacity: .85; }
+.nq-map-nodes circle { fill: var(--nq-accent); }
+.nq-map-labels text { font: 500 15px var(--nq-body); fill: var(--nq-ink); transition: fill .15s; }
+.nq-map-labels text.sub { font: 400 12px var(--nq-mono); fill: var(--nq-ink-3); }
+.nq-map-labels a { cursor: pointer; }
+@media (max-width: 575.98px) { .nq-map-labels text { font-size: 17px; } .nq-map-labels text.sub { font-size: 14px; } }

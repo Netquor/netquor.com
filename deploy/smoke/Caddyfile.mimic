@@ -1,0 +1,17 @@
+# A throwaway stand-in for the edge Caddy, used by deploy/smoke.sh only. Same routing rule as deploy/edge/Caddyfile
+# (reverse_proxy to the web container, X-Real-IP overwritten from {client_ip}); plain HTTP, no certificates.
+# SUBNET is replaced with the throwaway network's range (the "trusted" mimic) or removed (the "untrusted" mimic).
+{
+	auto_https off
+	admin off
+	servers {
+		#TRUST trusted_proxies static SUBNET
+		client_ip_headers CF-Connecting-IP
+	}
+}
+
+:80 {
+	reverse_proxy netquor-web:3000 {
+		header_up X-Real-IP {client_ip}
+	}
+}

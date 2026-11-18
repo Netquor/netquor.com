@@ -1,0 +1,7 @@
+/* The stylesheet of every (site) page, in the cascade order of the legacy pages: Bootstrap, Bootstrap Icons, nav.css, then the site system (nq.css, split in site.css). One entry file with @import, so Vite emits one hashed stylesheet with exactly this order (separate imports in JavaScript can be split into chunks that load in another order). Fonts go first: @font-face rules do not take part in the cascade. A page's own rules (page.css) are imported by the page and come after this. */
+@import "./fonts.css";
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.min.css";
+@import "./nav.css";
+@import "./site.css";
+@import "./after-baseline.css";

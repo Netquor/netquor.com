@@ -1,0 +1,10 @@
+/* Fleet buttons. */
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px; border: 1px solid transparent; border-radius: 10px; background: var(--accent); color: #fff; font: 600 15px/1 var(--body); text-decoration: none; cursor: pointer; transition: transform .12s, background .12s, box-shadow .12s; }
+.btn:hover { filter: brightness(1.1); box-shadow: 0 8px 28px var(--glow); transform: translateY(-1px); }
+.btn:active { transform: none; }
+.btn:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus-visible, a:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--hair); }
+.btn-ghost:hover { background: var(--surface); border-color: var(--muted); color: var(--ink); box-shadow: none; }
+.btn-small { padding: 9px 16px; font-size: 14px; }
